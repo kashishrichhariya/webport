@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kashish Richhariya — Interior Designer</title>
+  <meta name="description" content="Portfolio of Kashish Richhariya, interior designer creating spaces rooted in heritage and contemporary living." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --gold:     #a78154;
+      --cream:    #fcfcfc;
+      --warm:     #f7f6f0;
+      --heading:  #4a4540;
+      --charcoal: #343230;
+      --mid:      #4c4a46;
+      --muted:    #9b957d;
+      --stone:    #9c948a;
+      --powder:   #dbe8ea;
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'Manrope', system-ui, sans-serif;
+      --nav-h:    72px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #fff;
+      color: var(--heading);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    .label {
+      display: block; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .s-h2 {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.6vw, 38px);
+      font-weight: 400; color: var(--heading);
+      line-height: 1.22; letter-spacing: -0.04em;
+    }
+
+    /* ═══════════════════════════════
+       NAV — fixed, scroll-triggered
+    ═══════════════════════════════ */
+    #site-nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: var(--cream);
+      border-bottom: 1px solid rgba(74,69,64,0.1);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 56px; z-index: 200;
+      transform: translateY(-100%);
+      transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #site-nav.visible { transform: translateY(0); }
+    .nav-logo-wrap img { height: 48px; width: auto; display: block; }
+    .nav-menu {
+      display: flex; gap: 48px; align-items: center;
+      list-style: none;
+    }
+    .nav-menu a {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--mid); transition: color 0.22s;
+    }
+    .nav-menu a:hover { color: var(--heading); }
+
+    /* ═══════════════════════════════
+       INTRO — full-viewport logo
+    ═══════════════════════════════ */
+    #intro {
+      height: 100vh; min-height: 540px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: #fff; position: relative;
+      overflow: hidden;
+    }
+    .intro-name {
+      font-family: var(--serif);
+      font-size: clamp(60px, 13.5vw, 210px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.03em; line-height: 0.90;
+      text-align: center;
+    }
+    .intro-role {
+      font-size: 10px; font-weight: 400;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--stone); margin-top: 44px;
+    }
+    .intro-scroll {
+      position: absolute; bottom: 44px;
+      left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column;
+      align-items: center; gap: 12px;
+    }
+    .scroll-label {
+      font-size: 9px; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--stone);
+    }
+    .scroll-line {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, transparent, var(--stone));
+      animation: lineGrow 2.2s ease-in-out infinite;
+    }
+    @keyframes lineGrow {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      40%  { transform: scaleY(1); transform-origin: top; opacity: 0.6; }
+      80%  { transform: scaleY(1); transform-origin: bottom; opacity: 0.2; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ═══════════════════════════════
+       SLIDESHOW
+    ═══════════════════════════════ */
+    #slideshow {
+      position: relative; height: 86vh;
+      overflow: hidden; background: var(--charcoal);
+    }
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 1.4s ease;
+    }
+    .slide.active { opacity: 1; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(12,10,8,0.65) 0%,
+        rgba(12,10,8,0.18) 50%,
+        transparent 100%);
+    }
+    .slide-caption {
+      position: absolute; bottom: 56px; left: 64px; z-index: 2;
+      max-width: 600px;
+    }
+    .slide-project {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(252,252,252,0.5); margin-bottom: 12px;
+    }
+    .slide-title {
+      font-family: var(--serif);
+      font-size: clamp(24px, 3.2vw, 48px);
+      font-weight: 400; color: var(--cream);
+      letter-spacing: -0.03em; line-height: 1.18;
+    }
+    .slide-dots {
+      position: absolute; bottom: 64px; right: 64px;
+      display: flex; gap: 10px; z-index: 2;
+      align-items: center;
+    }
+    .s-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(252,252,252,0.3);
+      border: none; cursor: pointer; padding: 0;
+      transition: all 0.35s ease;
+    }
+    .s-dot.active {
+      background: var(--cream);
+      width: 24px; border-radius: 3px;
+    }
+
+    /* ═══════════════════════════════
+       ABOUT
+    ═══════════════════════════════ */
+    #about { background: var(--powder); padding: 120px 0; }
+    .about-inner {
+      max-width: 1440px; margin: 0 auto; padding: 0 64px;
+      display: grid; grid-template-columns: 5fr 7fr;
+      gap: 100px; align-items: center;
+    }
+    .about-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: rgba(74,69,64,0.08);
+      position: relative;
+    }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; }
+    .about-img-placeholder {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(74,69,64,0.35);
+    }
+    .about-heading {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.2vw, 46px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.035em; line-height: 1.18;
+      margin-bottom: 32px;
+    }
+    .about-body {
+      font-size: 15px; font-weight: 400;
+      color: var(--mid); line-height: 1.88;
+      max-width: 520px; margin-bottom: 20px;
+    }
+    .about-body:last-of-type { margin-bottom: 48px; }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 14px 40px;
+      border: 1px solid var(--heading);
+      font-family: var(--sans);
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--heading); background: transparent;
+      transition: all 0.28s ease; cursor: pointer;
+    }
+    .btn-outline:hover { background: var(--heading); color: var(--cream); }
+    .btn-arrow { font-size: 18px; letter-spacing: 0; line-height: 1; }
+
+    /* ═══════════════════════════════
+       SELECTED WORK
+    ═══════════════════════════════ */
+    #work { padding: 120px 0 0; background: var(--cream); }
+    .work-header {
+      max-width: 1440px; margin: 0 auto;
+      padding: 0 64px 64px;
+    }
+
+    /* Full-width project */
+    .work-full {
+      display: block; position: relative;
+      overflow: hidden;
+    }
+    .wf-img { overflow: hidden; }
+    .wf-img img {
+      width: 100%; height: 74vh;
+      object-fit: cover; display: block;
+      transition: transform 0.9s ease;
+    }
+    .work-full:hover .wf-img img { transform: scale(1.04); }
+    .wf-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(12,10,8,0.68) 0%,
+        rgba(12,10,8,0.1) 45%,
+        transparent 70%);
+      pointer-events: none;
+    }
+    .wf-caption {
+      position: absolute; bottom: 52px; left: 64px; z-index: 2;
+      max-width: 560px;
+    }
+    .wf-year {
+      font-size: 10px; letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(252,252,252,0.5); margin-bottom: 10px;
+    }
+    .wf-title {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3.4vw, 50px);
+      font-weight: 400; color: var(--cream);
+      letter-spacing: -0.03em; line-height: 1.14;
+    }
+    .wf-desc {
+      font-size: 14px; color: rgba(252,252,252,0.6);
+      margin-top: 12px; line-height: 1.65;
+    }
+    .wf-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 24px; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(252,252,252,0.7);
+      border-bottom: 1px solid rgba(252,252,252,0.3);
+      padding-bottom: 2px;
+      transition: color 0.22s, border-color 0.22s;
+    }
+    .work-full:hover .wf-link { color: #fff; border-color: rgba(252,252,252,0.7); }
+
+    /* Half-width pair */
+    .work-pair {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3px; margin-top: 3px;
+    }
+    .work-half { display: block; overflow: hidden; }
+    .wh-img { overflow: hidden; }
+    .wh-img img {
+      width: 100%; height: 52vh;
+      object-fit: cover; display: block;
+      transition: transform 0.9s ease;
+    }
+    .work-half:hover .wh-img img { transform: scale(1.04); }
+    .wh-info { padding: 28px 40px 38px; background: var(--warm); }
+    .wh-year {
+      display: block; font-size: 10px; letter-spacing: 0.26em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    }
+    .wh-title {
+      font-family: var(--serif);
+      font-size: clamp(20px, 2.2vw, 30px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.03em; line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .wh-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
+
+    /* ═══════════════════════════════
+       JOURNAL
+    ═══════════════════════════════ */
+    #journal { padding: 120px 0; background: #fff; }
+    .journal-inner {
+      max-width: 1440px; margin: 0 auto; padding: 0 64px;
+      display: grid; grid-template-columns: 32fr 68fr;
+      gap: 80px; align-items: start;
+    }
+    .j-left { position: sticky; top: 100px; }
+    .j-heading {
+      font-family: var(--serif);
+      font-size: clamp(48px, 7vw, 100px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.05em; line-height: 0.9;
+      margin-bottom: 52px;
+    }
+    .j-count {
+      font-family: var(--sans);
+      font-size: 0.36em; letter-spacing: 0;
+      color: var(--muted); vertical-align: super;
+    }
+    .j-item {
+      display: flex; justify-content: space-between;
+      align-items: baseline; gap: 28px;
+      padding: 30px 0;
+      border-top: 1px solid rgba(74,69,64,0.1);
+      color: inherit;
+    }
+    .j-item:last-child { border-bottom: 1px solid rgba(74,69,64,0.1); }
+    .j-title-wrap { flex: 1; }
+    .j-title-text {
+      font-family: var(--serif);
+      font-size: clamp(18px, 2vw, 26px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.02em; line-height: 1.3;
+      transition: color 0.22s;
+    }
+    .j-item:hover .j-title-text { color: var(--gold); }
+    .j-meta { font-size: 12px; color: var(--muted); margin-left: 10px; }
+    .j-date {
+      font-size: 12px; color: var(--stone);
+      white-space: nowrap; letter-spacing: 0.04em;
+    }
+    .j-cta { margin-top: 0; }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer {
+      background: var(--charcoal);
+      padding: 80px 64px 56px;
+    }
+    .footer-inner {
+      max-width: 1440px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      align-items: center;
+      padding-bottom: 52px;
+      border-bottom: 1px solid rgba(252,252,252,0.1);
+    }
+    .footer-logo img {
+      height: 56px; width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+    .footer-links { display: flex; gap: 52px; }
+    .footer-links a {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(252,252,252,0.45);
+      transition: color 0.22s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-copy {
+      max-width: 1440px; margin: 36px auto 0;
+      font-size: 10px; color: rgba(252,252,252,0.2);
+      text-align: center; letter-spacing: 0.08em;
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 1024px) {
+      #site-nav { padding: 0 32px; }
+      .about-inner { padding: 0 48px; gap: 64px; }
+      .work-header { padding: 0 48px 56px; }
+      .wf-caption { left: 48px; }
+      .journal-inner { padding: 0 48px; }
+      footer { padding: 72px 48px 48px; }
+    }
+    @media (max-width: 860px) {
+      .about-inner { grid-template-columns: 1fr; gap: 48px; padding: 0 32px; }
+      .about-img { max-width: 520px; }
+      .journal-inner { grid-template-columns: 1fr; gap: 56px; padding: 0 32px; }
+      .j-left { position: static; }
+      .footer-inner { flex-direction: column; gap: 40px; text-align: center; }
+    }
+    @media (max-width: 640px) {
+      #site-nav { padding: 0 20px; }
+      .nav-menu { gap: 24px; }
+      .nav-menu li:nth-child(n+3) { display: none; }
+      .intro-name { font-size: clamp(48px, 14vw, 88px); }
+      #slideshow { height: 65vh; }
+      .slide-caption { left: 24px; bottom: 40px; }
+      .slide-dots { right: 24px; bottom: 40px; }
+      .about-inner { padding: 0 20px; }
+      #work { padding: 88px 0 0; }
+      .work-header { padding: 0 24px 44px; }
+      .wf-img img { height: 56vh; }
+      .wf-caption { left: 24px; bottom: 32px; }
+      .work-pair { grid-template-columns: 1fr; }
+      .wh-img img { height: 48vh; }
+      .journal-inner { padding: 0 20px; }
+      footer { padding: 56px 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════
+       NAV — scroll-triggered
+  ══════════════════════ -->
+  <nav id="site-nav">
+    <a href="#" class="nav-logo-wrap">
+      <img src="Logo-web.png" alt="Kashish Richhariya" />
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#journal">Journal</a></li>
+      <li><a href="#footer">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══════════════════════
+       INTRO — large name
+  ══════════════════════ -->
+  <section id="intro">
+    <h1 class="intro-name">Kashish<br>Richhariya</h1>
+    <p class="intro-role">Interior Designer &nbsp;&middot;&nbsp; Mumbai</p>
+    <div class="intro-scroll">
+      <div class="scroll-line"></div>
+      <span class="scroll-label">Scroll</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       PROJECT SLIDESHOW
+  ══════════════════════ -->
+  <section id="slideshow">
+
+    <div class="slide active">
+      <img src="Jaipur%20Images/Foyer.png" alt="Tanishq Jaipur MI Road" loading="eager" />
+      <div class="slide-scrim"></div>
+      <div class="slide-caption">
+        <p class="slide-project">Tanishq MI Road &mdash; Jaipur &mdash; 2024</p>
+        <h2 class="slide-title">Rooted in Royalty,<br>Reimagined for today</h2>
+      </div>
+    </div>
+
+    <div class="slide">
+      <img src="CG%20Road%20Images/ff-cc-straight.png" alt="Tanishq CG Road Ahmedabad" loading="lazy" />
+      <div class="slide-scrim"></div>
+      <div class="slide-caption">
+        <p class="slide-project">Tanishq CG Road &mdash; Ahmedabad &mdash; 2023</p>
+        <h2 class="slide-title">Where craft meets<br>everyday moments</h2>
+      </div>
+    </div>
+
+    <div class="slide">
+      <img src="Rivaah%20Images/FF%202.jpg" alt="Rivaah by Tanishq" loading="lazy" />
+      <div class="slide-scrim"></div>
+      <div class="slide-caption">
+        <p class="slide-project">Rivaah by Tanishq &mdash; 2023</p>
+        <h2 class="slide-title">Designed for stillness,<br>before certainty arrives</h2>
+      </div>
+    </div>
+
+    <div class="slide-dots">
+      <button class="s-dot active" data-i="0" aria-label="Slide 1"></button>
+      <button class="s-dot" data-i="1" aria-label="Slide 2"></button>
+      <button class="s-dot" data-i="2" aria-label="Slide 3"></button>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════
+       ABOUT
+  ══════════════════════ -->
+  <section id="about">
+    <div class="about-inner">
+
+      <div class="about-img">
+        <!-- Replace with personal photo — 4:3 aspect ratio -->
+        <div class="about-img-placeholder">Your photo here</div>
+      </div>
+
+      <div class="about-text">
+        <p class="label">About</p>
+        <h2 class="about-heading">Spaces that carry the weight of meaning</h2>
+        <p class="about-body">
+          I design interiors for retail and hospitality — spaces that hold more than they show. Each project begins with a question about place, culture, and the person who will inhabit it. The answer shapes everything: material, proportion, light.
+        </p>
+        <p class="about-body">
+          Working across three Tanishq flagships, I've learned that the most enduring spaces borrow from tradition without imitating it — where heritage is distilled, not displayed.
+        </p>
+        <a href="#" class="btn-outline">About Me <span class="btn-arrow">&nbsp;&#8594;</span></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       SELECTED WORK
+  ══════════════════════ -->
+  <section id="work">
+
+    <div class="work-header">
+      <p class="label">Portfolio</p>
+      <h2 class="s-h2">Selected Work</h2>
+    </div>
+
+    <!-- Jaipur — full width -->
+    <a class="work-full" href="miroadjaipur.html">
+      <div class="wf-img">
+        <img src="Jaipur%20Images/jaipur-ff-cc.png" alt="Tanishq Jaipur MI Road" loading="lazy" />
+      </div>
+      <div class="wf-scrim"></div>
+      <div class="wf-caption">
+        <p class="wf-year">Jaipur &nbsp;/&nbsp; 2024</p>
+        <h3 class="wf-title">Tanishq MI Road, Jaipur</h3>
+        <p class="wf-desc">Retail flagship rooted in the heritage of Jaipur's historic streetscape</p>
+        <span class="wf-link">View Project &nbsp;&#8594;</span>
+      </div>
+    </a>
+
+    <!-- CG Road + Rivaah — half width -->
+    <div class="work-pair">
+
+      <a class="work-half" href="cgroad.html">
+        <div class="wh-img">
+          <img src="CG%20Road%20Images/gf-cash-counter.png" alt="Tanishq CG Road" loading="lazy" />
+        </div>
+        <div class="wh-info">
+          <span class="wh-year">Ahmedabad &nbsp;/&nbsp; 2023</span>
+          <h3 class="wh-title">Tanishq CG Road, Ahmedabad</h3>
+          <p class="wh-desc">Where the spirit of Gujarat's craft traditions meets contemporary retail design</p>
+        </div>
+      </a>
+
+      <a class="work-half" href="rivaah.html">
+        <div class="wh-img">
+          <img src="Rivaah%20Images/FF%202.jpg" alt="Rivaah by Tanishq" loading="lazy" />
+        </div>
+        <div class="wh-info">
+          <span class="wh-year">Mumbai &nbsp;/&nbsp; 2023</span>
+          <h3 class="wh-title">Rivaah by Tanishq</h3>
+          <p class="wh-desc">A space designed for stillness — for the woman considering her most meaningful purchase</p>
+        </div>
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════
+       JOURNAL
+  ══════════════════════ -->
+  <section id="journal">
+    <div class="journal-inner">
+
+      <div class="j-left">
+        <h2 class="j-heading">Journal <span class="j-count">[3]</span></h2>
+        <a href="https://medium.com" target="_blank" rel="noopener" class="btn-outline j-cta">
+          Read More <span class="btn-arrow">&nbsp;&#8594;</span>
+        </a>
+      </div>
+
+      <div class="j-right">
+        <div class="j-list">
+
+          <a class="j-item" href="https://medium.com" target="_blank" rel="noopener">
+            <div class="j-title-wrap">
+              <span class="j-title-text">Designing Heritage for Today's Consumer</span>
+              <span class="j-meta">· 5 min read</span>
+            </div>
+            <span class="j-date">June 2025</span>
+          </a>
+
+          <a class="j-item" href="https://medium.com" target="_blank" rel="noopener">
+            <div class="j-title-wrap">
+              <span class="j-title-text">Craft as Currency</span>
+              <span class="j-meta">· 3 min read</span>
+            </div>
+            <span class="j-date">March 2025</span>
+          </a>
+
+          <a class="j-item" href="https://medium.com" target="_blank" rel="noopener">
+            <div class="j-title-wrap">
+              <span class="j-title-text">When Space Whispers</span>
+              <span class="j-meta">· 4 min read</span>
+            </div>
+            <span class="j-date">January 2025</span>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       FOOTER
+  ══════════════════════ -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="Logo-web.png" alt="Kashish Richhariya" />
+      </div>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/kashishrichhariya" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:kashishrichhariya@gmail.com">kashishrichhariya@gmail.com</a>
+      </div>
+    </div>
+    <p class="footer-copy">© 2025 Kashish Richhariya. All rights reserved.</p>
+  </footer>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ── Scroll-triggered nav ── */
+    const nav = document.getElementById('site-nav');
+    ScrollTrigger.create({
+      start: 'top -60',
+      onEnter:     () => nav.classList.add('visible'),
+      onLeaveBack: () => nav.classList.remove('visible')
+    });
+
+    /* ── Intro entrance ── */
+    gsap.fromTo('.intro-name',
+      { opacity: 0, y: 64 },
+      { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out', delay: 0.15 }
+    );
+    gsap.fromTo('.intro-role',
+      { opacity: 0 },
+      { opacity: 1, duration: 1.2, ease: 'power2.out', delay: 1.0 }
+    );
+    gsap.fromTo('.intro-scroll',
+      { opacity: 0 },
+      { opacity: 1, duration: 0.9, ease: 'power2.out', delay: 1.6 }
+    );
+
+    /* ── Slideshow ── */
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dots   = Array.from(document.querySelectorAll('.s-dot'));
+    let current  = 0;
+    let timer;
+
+    function goTo(n) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function startAuto() { timer = setInterval(() => goTo(current + 1), 5500); }
+    function stopAuto()  { clearInterval(timer); }
+
+    dots.forEach(dot => dot.addEventListener('click', () => {
+      stopAuto(); goTo(+dot.dataset.i); startAuto();
+    }));
+    startAuto();
+
+    /* ── Section scroll reveals ── */
+    [
+      '.about-img', '.about-text',
+      '.work-header', '.work-full', '.work-half',
+      '.j-left', '.j-right'
+    ].forEach(sel => {
+      document.querySelectorAll(sel).forEach((el, i) => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 52 },
+          {
+            opacity: 1, y: 0,
+            duration: 0.95,
+            ease: 'power3.out',
+            delay: sel === '.work-half' ? i * 0.14 : 0,
+            scrollTrigger: { trigger: el, start: 'top 87%', once: true }
+          }
+        );
+      });
+    });
+  </script>
+
+</body>
+</html>

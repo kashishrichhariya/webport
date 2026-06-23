@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CG Road — Kashish Richhariya</title>
+  <meta name="description" content="Experience design for Tanishq's Ahmedabad flagship inspired by Gujarat's diverse culture — from Kutch to CG Road." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --accent:    #b5845a;
+      --accent-d:  #96703e;
+      --cream:     #faf8f4;
+      --warm:      #e8e0d4;
+      --warm-lt:   #f0ebe3;
+      --rose-sand: #e2d5c7;
+      --dark:      #1a1815;
+      --heading:   #4a4540;
+      --charcoal:  #343230;
+      --slate:     #3a3938;
+      --mid:       #4c4a46;
+      --muted:     #9b957d;
+      --stone:     #9c948a;
+      --serif:     'Playfair Display', Georgia, serif;
+      --sans:      'Manrope', system-ui, sans-serif;
+      --nav-h:     96px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--heading);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: linear-gradient(to bottom, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.18) 60%, transparent 100%);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 48px; z-index: 100;
+    }
+    .nav-logo { margin: 0 56px; }
+    .nav-logo img { height: 64px; width: auto; display: block; }
+    .nav-side {
+      font-size: 12px; font-weight: 400; color: rgba(252,252,252,0.7);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    .nav-side:hover { color: var(--cream); }
+    .nav-links { display: none; list-style: none; }
+    .nav-links a { font-size: 12px; font-weight: 400; color: rgba(252,252,252,0.7); letter-spacing: 0.1em; text-transform: uppercase; transition: color .25s; }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; position: absolute; right: 20px; }
+    .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
+
+    /* ── LABEL ── */
+    .label {
+      display: block;
+      font-family: var(--sans);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    /* ── SECTION HEADING ── */
+    .s-h2 {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.6vw, 38px);
+      font-weight: 400;
+      color: var(--heading);
+      line-height: 1.22;
+      letter-spacing: -0.04em;
+      margin-top: 14px;
+    }
+
+    /* ── Containers ── */
+    .wrap    { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .wrap-md { max-width: 860px;  margin: 0 auto; padding: 0 48px; }
+    .wrap-sm { max-width: 680px;  margin: 0 auto; padding: 0 48px; }
+    .wrap-80 { width: 80%; max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+    /* ══════════════════════════════
+       HERO — full-viewport video
+    ══════════════════════════════ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 80px;
+      background: #2c2118;
+    }
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(12,12,11,0.65) 0%,
+        rgba(12,12,11,0.22) 50%,
+        rgba(12,12,11,0.15) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 64px;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(252,252,252,0.5);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(36px, 5.2vw, 70px);
+      font-weight: 400; line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 22px;
+      letter-spacing: -0.04em;
+    }
+    .hero-title em { font-style: italic; }
+    .hero-sub {
+      font-size: clamp(14px, 1.2vw, 16px);
+      font-weight: 300;
+      color: rgba(252,252,252,0.6);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    /* Audio toggle button */
+    .hero-audio-btn {
+      position: absolute; bottom: 32px; left: 64px; z-index: 3;
+      background: rgba(12,12,11,0.38);
+      border: 1px solid rgba(252,252,252,0.22);
+      color: rgba(252,252,252,0.75);
+      width: 44px; height: 44px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .25s, color .25s;
+      padding: 0;
+    }
+    .hero-audio-btn:hover { background: rgba(12,12,11,0.62); color: var(--cream); }
+    .hero-audio-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .hero-audio-btn .icon-muted { display: none; }
+    .hero-audio-btn.muted .icon-sound { display: none; }
+    .hero-audio-btn.muted .icon-muted { display: block; }
+
+    .hero-scroll {
+      position: absolute; bottom: 32px; right: 64px; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: rgba(252,252,252,0.4); font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(252,252,252,0.4), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* ══════════════════════════════
+       PROJECT META
+    ══════════════════════════════ */
+    #project-meta {
+      background: var(--cream);
+      padding: 64px 48px;
+      border-bottom: 1px solid rgba(181,132,90,0.18);
+    }
+    .meta-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    }
+    .meta-divider { background: rgba(181,132,90,0.2); min-height: 60px; }
+    .meta-item { padding: 0 44px; }
+    .meta-item:first-child { padding-left: 0; }
+    .meta-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .meta-value { font-family: var(--sans); font-size: 14px; font-weight: 400; color: var(--mid); line-height: 1.7; }
+
+    /* ══════════════════════════════
+       INTRO
+    ══════════════════════════════ */
+    #intro { padding: 72px 0 56px; background: var(--cream); }
+    .intro-para { font-size: clamp(13px, 1.15vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-bottom: 20px; }
+    .intro-pull {
+      font-family: var(--serif); font-style: normal;
+      font-size: clamp(20px, 2.2vw, 28px); color: var(--heading);
+      font-weight: 500; line-height: 1.4; border-left: 1.5px solid var(--accent);
+      padding-left: 28px; letter-spacing: -0.02em;
+      margin-top: 40px;
+    }
+
+    /* Role block under intro */
+    .role-block {
+      max-width: 680px; margin: 0 auto;
+      padding: 0 48px 56px;
+    }
+    .role-block .meta-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .role-block .meta-value { font-family: var(--sans); font-size: 14px; font-weight: 400; color: var(--mid); line-height: 1.7; }
+
+    /* ══════════════════════════════
+       MOODBOARD — split: video left + text right
+    ══════════════════════════════ */
+    #moodboard { padding: 0; background: var(--cream); }
+    .mb-split {
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .mb-video-side {
+      position: relative;
+      overflow: hidden;
+      background: #1a1815;
+      aspect-ratio: auto;
+    }
+    .mb-video-side video {
+      width: 100%;
+      display: block;
+    }
+    /* Moodboard mute button */
+    .mb-audio-btn {
+      position: absolute; bottom: 24px; left: 24px; z-index: 3;
+      background: rgba(12,12,11,0.38);
+      border: 1px solid rgba(252,252,252,0.22);
+      color: rgba(252,252,252,0.75);
+      width: 40px; height: 40px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .25s, color .25s;
+      padding: 0;
+    }
+    .mb-audio-btn:hover { background: rgba(12,12,11,0.62); color: var(--cream); }
+    .mb-audio-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .mb-audio-btn .icon-muted { display: none; }
+    .mb-audio-btn.muted .icon-sound { display: none; }
+    .mb-audio-btn.muted .icon-muted { display: block; }
+    .mb-text-side {
+      background: var(--warm-lt);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 72px 64px;
+    }
+
+    /* ══════════════════════════════
+       SPATIAL JOURNEY
+       Left text + Right carousel (like reference image)
+    ══════════════════════════════ */
+    #spatial { padding: 100px 0; background: var(--warm); }
+    .sp-layout { display: grid; grid-template-columns: 38fr 62fr; gap: 0; align-items: start; }
+    .sp-left { padding: 56px 48px 56px 0; }
+    .sp-desc { font-size: clamp(13px, 1.1vw, 14px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 20px; }
+    .sp-floor-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 400;
+      color: var(--heading);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-top: 8px;
+    }
+    .sp-spaces { margin-top: 28px; list-style: none; }
+    .sp-spaces li {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--mid);
+      padding: 6px 0;
+    }
+
+    /* Carousel (right side) */
+    .sp-carousel-wrap { position: relative; background: transparent; }
+    .sp-carousel { position: relative; overflow: hidden; }
+    .sp-slide { display: none; }
+    .sp-slide.active { display: block; animation: spFade 0.6s ease; }
+    @keyframes spFade { from { opacity: 0; } to { opacity: 1; } }
+
+    .sp-plan-img {
+      width: 100%; height: auto; display: block;
+      mix-blend-mode: multiply;
+    }
+
+    .sp-btn {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(252,252,252,0.92);
+      border: 1px solid rgba(181,132,90,0.35);
+      color: var(--mid); font-size: 22px; font-weight: 300;
+      width: 44px; height: 44px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s;
+      backdrop-filter: blur(4px);
+    }
+    .sp-btn-prev { left: 16px; }
+    .sp-btn-next { right: 16px; }
+    .sp-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--cream); }
+    .sp-dots { display: flex; gap: 8px; justify-content: center; padding: 18px 0; }
+    .sp-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(155,149,125,0.35); cursor: pointer; transition: all 0.25s; }
+    .sp-dot.active { background: var(--accent); transform: scale(1.3); }
+
+    /* Spatial text slides */
+    .sp-text-slide { display: none; }
+    .sp-text-slide.active { display: block; animation: spFade 0.6s ease; }
+
+    /* ══════════════════════════════
+       DESIGN SECTIONS
+    ══════════════════════════════ */
+    .ds { padding: 88px 0; }
+    .ds-white { background: var(--cream); }
+    .ds-alt { background: var(--warm-lt); }
+    .ds-warm { background: var(--warm); }
+
+    /* Split: image left + text right */
+    .ds-split {
+      display: grid; grid-template-columns: 55fr 45fr;
+      max-width: 1400px; margin: 0 auto; padding: 0 0 0 48px;
+      align-items: center;
+    }
+    .ds-split-img { overflow: hidden; }
+    .ds-split-img img { width: 100%; height: auto; display: block; transition: transform 1.4s ease; }
+    .ds-split-text { padding: 48px 56px 48px 64px; }
+
+    .ds-body { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 24px; }
+    .ds-body + .ds-body { margin-top: 14px; }
+    .whisper {
+      font-family: var(--serif); font-style: normal;
+      font-size: clamp(17px, 1.6vw, 22px); color: var(--heading);
+      font-weight: 500; border-left: 1.5px solid var(--accent); padding-left: 22px;
+      margin-top: 40px; line-height: 1.4; letter-spacing: -0.02em;
+    }
+
+    /* Standalone section header */
+    .ds-header { max-width: 1200px; margin: 0 auto; padding: 0 48px 24px; }
+    .ds-header .label { margin-bottom: 24px; }
+    .ds-header .s-h2 { margin-top: 0; }
+    .ds-body-block { max-width: 1200px; margin: 0 auto; padding: 0 48px 0; }
+    .ds-body-block.breather { padding-top: 44px; padding-bottom: 44px; }
+
+    /* Kutch branding split layout */
+    .kutch-split {
+      max-width: 1400px; margin: 0 auto; padding: 0 48px;
+      display: grid; grid-template-columns: 55fr 45fr;
+      gap: 48px; align-items: center;
+    }
+    .kutch-split-img img { width: 100%; height: auto; display: block; }
+    .kutch-split-text { padding: 24px 0; }
+
+    /* Overlay header on image */
+    .bleed-overlay {
+      position: relative; width: 100%; overflow: hidden;
+    }
+    .bleed-overlay img { width: 100%; height: auto; display: block; }
+    .bleed-overlay-header {
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: 56px 64px;
+      z-index: 2;
+    }
+    .bleed-overlay-header .label { color: rgba(252,252,252,0.55); }
+    .bleed-overlay-header .s-h2 { color: #fff; }
+
+    /* Partition split — proportional height matching, 80% screen width */
+    .partition-split {
+      max-width: 80vw; margin: 0 auto; padding: 0;
+      display: flex; gap: 4px; align-items: stretch;
+    }
+    .partition-static { overflow: hidden; display: flex; align-items: center; }
+    .partition-static img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .partition-carousel { position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .partition-slides-wrap { flex: 1; position: relative; overflow: hidden; }
+    .partition-slide { display: none; position: absolute; inset: 0; }
+    .partition-slide.active { display: flex; align-items: center; animation: spFade 0.5s ease; }
+    .partition-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ds-body-block p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; max-width: 680px; }
+
+    /* Sub-section label */
+    .ds-sub-label {
+      font-family: var(--sans);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--mid);
+      display: block; margin-bottom: 10px;
+    }
+
+    /* Full-bleed image */
+    .bleed { width: 100%; overflow: hidden; }
+    .bleed img { width: 100%; height: auto; display: block; transition: transform 0.1s; }
+
+    /* Full-bleed 2-col grid — equal height */
+    .bleed-row2 {
+      display: flex;
+      gap: 4px;
+      align-items: stretch;
+      width: 100%;
+      height: 60vh;
+    }
+    .bleed-row2 .img-wrap {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: var(--warm-lt);
+    }
+    .bleed-row2 .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Photo rows — viewport height, proportionally matched, no cropping */
+    .ds-row2 {
+      display: flex; gap: 4px; align-items: stretch;
+      margin: 0 auto;
+    }
+    .ds-row2 .img-wrap {
+      flex: 1; overflow: hidden;
+      display: flex; align-items: center;
+      background: var(--warm-lt);
+    }
+    .ds-row2 .img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+    /* Contained image */
+    .ds-img { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
+    .ds-img img { width: 100%; height: auto; display: block; }
+
+    /* Caption */
+    .img-caption {
+      max-width: 1400px; margin: 0 auto; padding: 8px 48px 0;
+      margin-bottom: 40px;
+      font-family: var(--sans); font-size: 12px;
+      color: var(--muted); letter-spacing: 0.02em; line-height: 1.6;
+    }
+
+    /* Partition navigation */
+    .partition-nav {
+      display: flex; gap: 6px; justify-content: center; align-items: center; padding: 8px 0;
+    }
+    .partition-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(155,149,125,0.3); cursor: pointer;
+      transition: all 0.25s;
+    }
+    .partition-dot.active { background: var(--accent); transform: scale(1.2); }
+    .partition-btn {
+      background: none; border: 1px solid rgba(181,132,90,0.3);
+      color: var(--mid); font-size: 16px; font-weight: 300;
+      width: 30px; height: 30px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s; margin: 0 6px;
+    }
+    .partition-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Sadeli grid — proportionally matched heights, no cropping */
+    .sadeli-grid {
+      max-width: 1400px; margin: 0 auto; padding: 0 48px;
+      display: flex; gap: 4px; align-items: stretch;
+    }
+    .sadeli-grid .img-wrap {
+      flex: 1; overflow: hidden;
+      display: flex; align-items: center;
+      background: var(--warm-lt);
+    }
+    .sadeli-grid .img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+    /* Other Spaces — captioned gallery */
+    .other-carousel { position: relative; overflow: hidden; }
+    .other-slide { display: none; }
+    .other-slide.active { display: block; animation: spFade 0.5s ease; }
+    .other-slide img { width: 100%; height: auto; display: block; }
+    .other-nav {
+      display: flex; gap: 8px; justify-content: center; padding: 14px 0;
+    }
+    .other-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(155,149,125,0.35); cursor: pointer;
+      transition: all 0.25s;
+    }
+    .other-dot.active { background: var(--accent); transform: scale(1.3); }
+
+    /* BTS scroll strip */
+    .bts-scroll-outer { overflow: hidden; margin-top: 48px; cursor: grab; }
+    .bts-scroll-track { display: flex; gap: 6px; will-change: transform; }
+    .bts-scroll-track img { height: 56vh; width: auto; flex-shrink: 0; object-fit: cover; display: block; }
+
+    /* ══════════════════════════════
+       DIVIDER — editorial rule
+    ══════════════════════════════ */
+    .divider-editorial {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 48px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .divider-editorial-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent);
+      white-space: nowrap;
+    }
+    .divider-editorial-rule {
+      flex: 1; height: 1px;
+      background: var(--accent); opacity: 0.4;
+    }
+    .divider-wrap { padding: 48px 0; }
+
+    /* ══════════════════════════════
+       CTA / FOOTER
+    ══════════════════════════════ */
+    #cta { background: var(--charcoal); padding: 100px 48px 72px; text-align: center; }
+    .cta-eyebrow { font-size: 12px; font-weight: 300; color: var(--stone); margin-bottom: 24px; letter-spacing: 0.06em; }
+    .cta-heading { font-family: var(--serif); font-size: clamp(29px, 4.4vw, 60px); font-weight: 400; color: var(--cream); line-height: 1; margin-bottom: 44px; letter-spacing: -0.04em; }
+    .cta-heading em { font-style: italic; }
+    .cta-btn { display: inline-block; padding: 15px 48px; border: 1px solid rgba(252,252,252,0.3); color: var(--cream); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; transition: all .3s; }
+    .cta-btn:hover { background: var(--cream); color: var(--charcoal); border-color: var(--cream); }
+    .cta-credit { font-size: 11px; color: var(--stone); margin-top: 72px; opacity: 0.4; }
+
+    /* GSAP sets initial states — no CSS opacity:0 so fallback is always visible */
+
+    .mt-3  { margin-top: 3px; }
+    .mt-24 { margin-top: 24px; }
+    .mt-40 { margin-top: 40px; }
+    .mt-48 { margin-top: 48px; }
+    .mt-56 { margin-top: 56px; }
+    .mb-40 { margin-bottom: 40px; }
+    .mb-48 { margin-bottom: 48px; }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 1200px) {
+      .ds-split { grid-template-columns: 1fr; padding: 0; }
+      .ds-split-text { padding: 40px 48px; }
+      .kutch-split { grid-template-columns: 1fr; gap: 24px; }
+    }
+    @media (max-width: 1040px) {
+      .sp-layout { grid-template-columns: 1fr; gap: 36px; }
+      .sp-left { padding: 0; }
+      .partition-split { flex-direction: column; }
+      .sadeli-grid { flex-direction: column; }
+      .mb-split { grid-template-columns: 1fr; }
+      .mb-text-side { padding: 56px 48px; }
+    }
+    @media (max-width: 860px) {
+      nav { padding: 0 24px; }
+      .wrap, .wrap-md, .wrap-sm, .wrap-80 { padding-left: 24px; padding-right: 24px; }
+      #project-meta, #cta { padding-left: 24px; padding-right: 24px; }
+      .meta-grid { grid-template-columns: 1fr; gap: 28px; }
+      .meta-divider { display: none; }
+      .meta-item { padding: 0; }
+      .ds-row2, .ds-img, .ds-header, .ds-body-block,
+      .img-caption, .sadeli-grid { padding-left: 24px; padding-right: 24px; }
+      .divider-editorial { padding: 0 24px; }
+      .hero-content { padding: 0 32px; }
+      .hero-audio-btn { left: 32px; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-side { display: none; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: rgba(12,11,10,0.97); padding: 24px 20px; gap: 20px; }
+      .nav-hamburger { display: flex; }
+      .hero-content { padding: 0 24px; }
+      .hero-scroll { display: none; }
+      .ds-row2 { flex-direction: column; padding: 0 20px; }
+      .bleed-row2 { flex-direction: column; }
+      .mb-text-side { padding: 40px 20px; }
+      .kutch-split { padding: 0 20px; gap: 20px; }
+      .bleed-overlay-header { padding: 32px 24px; }
+      .role-block { padding-left: 20px; padding-right: 20px; }
+      .ds-img { padding: 0 20px; }
+      .ds-header, .ds-body-block { padding-left: 20px; padding-right: 20px; }
+      .img-caption { padding-left: 20px; padding-right: 20px; }
+      .divider-editorial { padding: 0 20px; }
+      .wrap, .wrap-md, .wrap-sm, .wrap-80 { padding-left: 20px; padding-right: 20px; }
+      #project-meta { padding-left: 20px; padding-right: 20px; }
+      #cta { padding: 80px 20px 64px; }
+      .ds-split-text { padding: 32px 20px; }
+      .sadeli-grid { padding: 0 20px; flex-direction: column; }
+      .partition-split { padding: 0; }
+      .hero-audio-btn { left: 24px; bottom: 24px; }
+      .hero-scroll { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════
+       NAV
+  ══════════════════════ -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-side">Work</a>
+    <a href="index.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
+    <a href="#cta" class="nav-side">Contact</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- ══════════════════════
+       HERO — video
+  ══════════════════════ -->
+  <section id="hero">
+    <video
+      id="heroVideo"
+      class="hero-video"
+      src="CG%20Road%20Images/cg-road-video.mp4"
+      autoplay loop playsinline
+    ></video>
+    <div class="hero-scrim"></div>
+
+    <div class="hero-content reveal">
+      <p class="hero-eyebrow">CG Road &mdash; Tanishq Ahmedabad &mdash; 2023</p>
+      <h1 class="hero-title">
+        <em>Celebrating Gujarat</em>:<br>
+        From Kutch to Ahmedabad
+      </h1>
+      <p class="hero-sub">Experience design for Tanishq's Ahmedabad flagship inspired by the state's diverse culture.</p>
+    </div>
+
+    <!-- Audio toggle -->
+    <button class="hero-audio-btn muted" id="heroAudioBtn" title="Toggle audio" aria-label="Toggle audio">
+      <svg class="icon-sound" viewBox="0 0 24 24" aria-hidden="true">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+      </svg>
+      <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <line x1="23" y1="9" x2="17" y2="15"/>
+        <line x1="17" y1="9" x2="23" y2="15"/>
+      </svg>
+    </button>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       PROJECT META
+  ══════════════════════ -->
+  <div id="project-meta" class="reveal">
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Project</div>
+        <div class="meta-value">Tanishq CG Road, Ahmedabad</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <div class="meta-label">Year of Completion</div>
+        <div class="meta-value">2023</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <div class="meta-label">Key Contributions</div>
+        <div class="meta-value">Lead Spatial Designer &mdash; experience design and cultural narrative for key feature spaces including jaali partition, cash counters across three floors, chandelier, craft integration, and brand touchpoints.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       INTRODUCTION
+  ══════════════════════ -->
+  <section id="intro">
+    <div class="wrap-sm">
+      <p class="intro-para reveal">
+        Gujarat's history of trade has made it uniquely diverse. For centuries, it has welcomed different communities to weave their own traditions into the local Gujarati fabric. CG Road is the beating heart of Ahmedabad where all these worlds meet.
+      </p>
+      <p class="intro-pull reveal">
+        The Tanishq store had to capture this exact legacy&mdash; a modern, shared stage where every community belongs.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       SECTION 2 — THE THINKING / MOODBOARD (split: video left + text right)
+  ══════════════════════ -->
+  <section id="moodboard">
+    <div class="mb-split reveal">
+      <!-- Video left -->
+      <div class="mb-video-side">
+        <video id="mbVideo" autoplay loop playsinline muted>
+          <source src="CG%20Road%20Images/Moodboard-01.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <!-- Text right -->
+      <div class="mb-text-side">
+        <p class="label">The Thinking</p>
+        <h2 class="s-h2">Where architecture and craft blends beauty with purpose.</h2>
+        <p class="ds-body" style="max-width:520px;">Gujarat has a legacy of turning environmental challenges into architectural masterpieces. From the glowing lippan interiors of Kutch to the mathematical precision of its stepwells, every local craft blends profound beauty with utility. Our moodboard is deeply rooted in this shared ethos, an attempt to celebrate this union of craft, purpose, and community identity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       SECTION 3 — SPATIAL JOURNEY
+       Left text + Right carousel with floor plans
+  ══════════════════════ -->
+  <section id="spatial">
+    <div class="wrap-80">
+      <div class="sp-layout">
+
+        <!-- LEFT: text that changes with slides -->
+        <div class="sp-left reveal-left">
+          <p class="label">Spatial Journey</p>
+
+          <div id="spTextCarousel">
+            <div class="sp-text-slide active">
+              <h2 class="sp-floor-title">Ground Floor</h2>
+              <p class="sp-desc">Everyday wear and diamond jewellery with unique challenges like retail around the staircase. Key spaces of intervention were identified to create impact through cultural narrative.</p>
+              <ul class="sp-spaces">
+                <li>01/ Staircase Partition</li>
+                <li>02/ Cash Counter</li>
+              </ul>
+            </div>
+            <div class="sp-text-slide">
+              <h2 class="sp-floor-title">First Floor</h2>
+              <p class="sp-desc">Diamond jewellery across a refined environment. The narrative continues through the cash counter and the centrepiece chandelier.</p>
+              <ul class="sp-spaces">
+                <li>01/ Cash Counter</li>
+                <li>02/ Chandelier</li>
+                <li>03/ Column Design</li>
+              </ul>
+            </div>
+            <div class="sp-text-slide">
+              <h2 class="sp-floor-title">Second Floor</h2>
+              <p class="sp-desc">The wedding floor — Rivaah and bridal jewellery. Celebrating Ahmedabad's pol architecture through craft, partition work, and the Exotic India space.</p>
+              <ul class="sp-spaces">
+                <li>01/ Cash Counter</li>
+                <li>02/ Centrewell Partition</li>
+                <li>03/ Exotic India Space</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: floor plan carousel -->
+        <div class="sp-carousel-wrap reveal-right">
+          <div class="sp-carousel" id="spCarousel">
+
+            <div class="sp-slide active">
+              <img class="sp-plan-img" src="CG%20Road%20Images/ground-floor-layout.png" alt="Ground floor layout" />
+            </div>
+
+            <div class="sp-slide">
+              <img class="sp-plan-img" src="CG%20Road%20Images/first-floor-layout.png" alt="First floor layout" />
+            </div>
+
+            <div class="sp-slide">
+              <img class="sp-plan-img" src="CG%20Road%20Images/second-floor-layout.png" alt="Second floor layout" />
+            </div>
+
+          </div>
+
+          <button class="sp-btn sp-btn-prev" id="spPrev">&#8249;</button>
+          <button class="sp-btn sp-btn-next" id="spNext">&#8250;</button>
+
+          <div class="sp-dots" id="spDots">
+            <span class="sp-dot active" data-i="0"></span>
+            <span class="sp-dot" data-i="1"></span>
+            <span class="sp-dot" data-i="2"></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="wrap mt-40">
+      <p class="ds-body reveal" style="max-width:800px;">The store spans across 12,000 sqft on three floors, with everyday wear and diamond jewellery on the ground and first floors, and wedding jewellery on the second. Key spaces of customer interaction were identified to create impact through cultural narrative.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4 — PARTITION AROUND STAIRCASE
+  ══════════════════════════════════════════════ -->
+  <section class="ds" id="partition">
+
+    <div class="ds-header reveal">
+      <p class="label">Partition Around Staircase</p>
+      <h2 class="s-h2">Turning a design conflict into an opportunity</h2>
+    </div>
+    <div class="ds-body-block mb-48 reveal">
+      <p>The existing layout around the staircase presented a critical design conflict. Without a clear division, the exposed staircase interfered with the display area. We aimed to turn this challenge into an opportunity by clearly dividing the zones — ensuring a pleasant experience for both staff and customers.</p>
+    </div>
+
+    <!-- Before images -->
+    <div class="ds-row2 reveal">
+      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-side-before.jpg" alt="Staircase — side view before" /></div>
+      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-front-before.jpg" alt="Staircase — front view before" /></div>
+    </div>
+    <div class="img-caption">The staircase before intervention — exposed and interfering with display</div>
+
+    <!-- Partition options: static render + slideshow -->
+    <div class="ds-body-block mt-56 reveal">
+      <p>Jaali partitions were utilised to divide the space while maintaining visual openness. Multiple options were explored taking inspiration from different cultures across the city.</p>
+    </div>
+
+    <div class="partition-split mt-40 reveal">
+      <div class="partition-static">
+        <img src="CG%20Road%20Images/partition-render.jpg" alt="Partition — 3D render overview" />
+      </div>
+      <div class="partition-carousel" id="partitionCarousel">
+        <div class="partition-slides-wrap">
+          <div class="partition-slide active">
+            <img src="CG%20Road%20Images/partition-1.png" alt="Partition option 1" />
+          </div>
+          <div class="partition-slide">
+            <img src="CG%20Road%20Images/partition-2.png" alt="Partition option 2" />
+          </div>
+          <div class="partition-slide">
+            <img src="CG%20Road%20Images/partition-3.png" alt="Partition option 3" />
+          </div>
+          <div class="partition-slide">
+            <img src="CG%20Road%20Images/final-partition.png" alt="Final partition design" />
+          </div>
+        </div>
+        <div class="partition-nav" id="partitionDots">
+          <button class="partition-btn" id="partPrev">&#8249;</button>
+          <span class="partition-dot active" data-i="0"></span>
+          <span class="partition-dot" data-i="1"></span>
+          <span class="partition-dot" data-i="2"></span>
+          <span class="partition-dot" data-i="3"></span>
+          <button class="partition-btn" id="partNext">&#8250;</button>
+        </div>
+      </div>
+    </div>
+    <div class="img-caption">Left: 3D render of the staircase zone. Right: design explorations inspired by Ahmedabad's cultural diversity</div>
+
+    <!-- Final partition narrative -->
+    <div class="ds-body-block mt-56 reveal">
+      <p>The final design is a culmination of regional heritage, blending Jaali patterns from across Ahmedabad with traditional Sankheda spindles. Wood-carved brackets anchor the partitions, reflecting the historic facades of the city's pols and creating an inviting entrance display.</p>
+    </div>
+
+    <div class="bleed-row2 mt-40 reveal">
+      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-jaali-side.jpg" alt="Staircase jaali partition — side view" /></div>
+      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-jaali.png" alt="Staircase jaali partition — front view" /></div>
+    </div>
+    <div class="img-caption">The final jaali partition — Sankheda spindles meet Ahmedabad's pol facades</div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5 — GROUND FLOOR CASHBACK WALL
+  ══════════════════════════════════════════════ -->
+  <section class="ds ds-white">
+
+    <div class="ds-header reveal">
+      <p class="label">Ground Floor Cash Counter</p>
+      <h2 class="s-h2">The spirit of Gujarat's stepwells</h2>
+    </div>
+    <div class="ds-body-block reveal">
+      <p>Vavs or stepwells are the most celebrated spaces of Gujarat's heritage, both in the past as gathering spaces, and in the present as a backdrop for wedding shoots. The ground floor counter backdrop carries that spirit. Limewash texture paint lends the space a warm, afternoon glow.</p>
+    </div>
+
+    <div class="bleed mt-48 reveal-scale">
+      <img src="CG%20Road%20Images/gf-cash-counter.png" alt="Ground floor cash counter — stepwell-inspired backdrop" />
+    </div>
+
+    <div class="kutch-split mt-56 reveal">
+      <div class="kutch-split-img">
+        <img src="CG%20Road%20Images/kutch-branding.png" alt="Kutch wood carving branding — geometric relief work by Jamal ji" />
+        <div class="img-caption" style="padding: 16px 0 0; max-width: none;">Shallow relief branding in the geometric motifs of Kutch wood carving</div>
+      </div>
+      <div class="kutch-split-text">
+        <p class="ds-body" style="margin-top:0;">Taking center stage in the branding is shallow relief work defined by the geometric motifs of Kutch wood carving. Handcrafted by Jamal ji, this piece beautifully represents the mathematical precision and artistic excellence of the craft.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6 — FIRST FLOOR CASHBACK WALL
+  ══════════════════════════════════════════════ -->
+  <section class="ds ds-white">
+
+    <div class="ds-header reveal">
+      <p class="label">First Floor Cash Counter</p>
+      <h2 class="s-h2">Ahmedabad's iconic tree of life</h2>
+    </div>
+    <div class="ds-body-block reveal">
+      <p>The Sidi Saiyyed Jaali is Ahmedabad's most iconic image, known for its organic, breathing tree of life. For this space, artisan Abdul ji hand-carved a bespoke piece where the brand logo is seamlessly woven into the vines. The piece is a quiet declaration of belongingness and new beginnings.</p>
+    </div>
+
+    <div class="bleed mt-48 reveal-scale">
+      <img src="CG%20Road%20Images/ff-cc-straight.png" alt="First floor cash counter — Sidi Saiyyed Jaali inspired, hand-carved by Abdul ji" />
+    </div>
+    <div class="img-caption">The brand logo woven into the tree of life — hand-carved by artisan Abdul ji</div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6 — SECOND FLOOR CASHBACK WALL
+  ══════════════════════════════════════════════ -->
+  <section class="ds ds-white" style="padding-top: 0;">
+
+    <!-- Image with overlaid title -->
+    <div class="bleed-overlay reveal-scale">
+      <img src="CG%20Road%20Images/sf-cash-counter-01.jpg" alt="Second floor cash counter — overview" />
+      <div class="bleed-overlay-header">
+        <p class="label">Second Floor Cash Counter</p>
+        <h2 class="s-h2">Celebrating Ahmedabad's pol architecture</h2>
+      </div>
+    </div>
+
+    <div class="ds-body-block breather reveal">
+      <p>The wedding floor celebrates Ahmedabad's unique pol architecture, featuring floral wood carvings inspired by Mangaldas ni Haveli and classic facade carvings. A pink limewash backdrop completes the space with a warm, celebratory glow.</p>
+    </div>
+
+    <div class="bleed reveal-scale">
+      <img src="CG%20Road%20Images/sf-cash-counter-02.jpg" alt="Second floor cash counter — floral wood carvings and pink limewash" />
+    </div>
+
+    <div class="ds-body-block breather reveal">
+      <p>Lippan work by Ahmedabad-based artist Vishal ji of Lippan Kutir beautifully adapts this historic mud and mirror craft for a contemporary environment. Custom brass and etched-glass lamps warmly echo the traditional lighting of historic havelis.</p>
+    </div>
+
+    <div class="bleed reveal-scale">
+      <img src="CG%20Road%20Images/sf-cash-counter-03.jpg" alt="Second floor — lippan work and brass lamps" />
+    </div>
+    <div class="img-caption" style="padding-bottom: 24px;">Lippan craft by Vishal ji of Lippan Kutir — mud and mirror work adapted for contemporary retail</div>
+
+    <!-- Sadeli branding -->
+    <div class="ds-body-block mt-56 reveal">
+      <p>The branding proudly features intricate Sadeli wood inlay by National Awardee Rakesh Petigara ji. With only two practicing artisans remaining in India, highlighting this mathematically precise craft is a crucial step toward its preservation.</p>
+    </div>
+
+    <div class="sadeli-grid mt-40 reveal">
+      <div class="img-wrap"><img src="CG%20Road%20Images/sadeli-branding.jpg" alt="Sadeli wood inlay branding" /></div>
+      <div class="img-wrap"><img src="CG%20Road%20Images/sadeli-process.JPG" alt="Sadeli craft process — Rakesh Petigara ji" /></div>
+    </div>
+    <div class="img-caption">Sadeli wood inlay by National Awardee Rakesh Petigara ji — one of only two practicing artisans in India</div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 7 — OTHER SPACES
+  ══════════════════════════════════════════════ -->
+  <section class="ds" id="other-spaces">
+
+    <div class="ds-header reveal">
+      <p class="label">Other Spaces</p>
+      <h2 class="s-h2">Where craft meets everyday moments</h2>
+    </div>
+
+    <!-- Slideshow: sf-partition + sf-cove-rivaah -->
+    <div class="ds-img reveal" style="position: relative;">
+      <div class="other-carousel" id="otherCarousel">
+        <div class="other-slide active">
+          <img src="CG%20Road%20Images/sf-partition.png" alt="Second floor centrewell partition" />
+          <div class="img-caption" style="padding: 14px 0 0;">Centrewell partition — intricate jaali work dividing the wedding floor</div>
+        </div>
+        <div class="other-slide">
+          <img src="CG%20Road%20Images/sf-cove-rivaah.png" alt="Second floor cove — Rivaah space" />
+          <div class="img-caption" style="padding: 14px 0 0;">The Rivaah cove — an intimate bridal jewellery niche</div>
+        </div>
+      </div>
+      <div class="other-nav" id="otherDots">
+        <span class="other-dot active" data-i="0"></span>
+        <span class="other-dot" data-i="1"></span>
+      </div>
+    </div>
+
+    <!-- Column -->
+    <div class="bleed mt-56 reveal-scale">
+      <img src="CG%20Road%20Images/column.png" alt="Column design — crafted structural detail" />
+    </div>
+    <div class="img-caption">Column design — structural elements transformed into cultural statements</div>
+
+    <!-- Chandelier -->
+    <div class="bleed mt-56 reveal-scale">
+      <img src="CG%20Road%20Images/chandelier.png" alt="Chandelier — bespoke lighting centrepiece" />
+    </div>
+    <div class="img-caption">Chandelier — a bespoke centrepiece celebrating Gujarat's craft traditions</div>
+
+    <!-- Thread craft -->
+    <div class="bleed mt-56 reveal-scale">
+      <img src="CG%20Road%20Images/thread-craft.png" alt="Thread craft installation" />
+    </div>
+    <div class="img-caption">Thread craft installation — weaving community narratives into the spatial experience</div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 8 — BEHIND THE SCENES
+  ══════════════════════════════════════════════ -->
+  <section class="ds ds-warm" id="bts">
+
+    <div class="ds-header reveal">
+      <p class="label">Behind the Scenes</p>
+      <h2 class="s-h2">Making it happen</h2>
+    </div>
+
+    <div class="bts-scroll-outer">
+      <div class="bts-scroll-track" id="btsTrack">
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_111422.jpg" alt="Behind the scenes — site work" />
+        <img src="CG%20Road%20Images/BTS/IMG_0323.jpeg" alt="Behind the scenes — craft process" />
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_120451.jpg" alt="Behind the scenes — installation" />
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_152647.jpg" alt="Behind the scenes — detailing" />
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_152723.jpg" alt="Behind the scenes — on site" />
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_170339.jpg" alt="Behind the scenes — finishing" />
+        <img src="CG%20Road%20Images/BTS/lippan-process.JPG" alt="Behind the scenes — lippan craft process" />
+        <img src="CG%20Road%20Images/BTS/70DFF431-CF12-4A3E-8A48-1D2CF15433E0.JPG" alt="Behind the scenes — artisan work" />
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════
+       CTA / FOOTER
+  ══════════════════════ -->
+  <section id="cta">
+    <p class="cta-eyebrow reveal">Other Work</p>
+    <h2 class="cta-heading reveal">
+      Rivaah <em>South Ex</em><br>Next Case Study
+    </h2>
+    <a href="rivaah.html" class="cta-btn reveal">View Project</a>
+    <p class="cta-credit">&copy; 2025 Kashish Richhariya. All rights reserved.</p>
+  </section>
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ── Hero reveal on load ── */
+    gsap.fromTo('.hero-content', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.3 });
+
+    /* ── Scroll reveals ── */
+    gsap.utils.toArray('.reveal').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, y: 40 }, {
+        opacity: 1, y: 0,
+        duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+    gsap.utils.toArray('.reveal-scale').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, scale: 0.97 }, {
+        opacity: 1, scale: 1,
+        duration: 1.1, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+    gsap.utils.toArray('.reveal-left').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, x: -40 }, {
+        opacity: 1, x: 0,
+        duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+    gsap.utils.toArray('.reveal-right').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, x: 40 }, {
+        opacity: 1, x: 0,
+        duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+
+    /* ── Image pair/row stagger ── */
+    gsap.utils.toArray('.ds-row2, .ds-pair, .sadeli-grid').forEach(el => {
+      const imgs = el.querySelectorAll('img');
+      if (!imgs.length) return;
+      gsap.fromTo(imgs,
+        { y: 28, scale: 0.97 },
+        {
+          y: 0, scale: 1,
+          duration: 0.9, ease: 'power2.out',
+          stagger: 0.14,
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        }
+      );
+    });
+
+    /* ── Full-width image slow reveal ── */
+    gsap.utils.toArray('.bleed').forEach(el => {
+      const img = el.querySelector('img');
+      if (!img) return;
+      gsap.fromTo(img,
+        { scale: 1.06, opacity: 0.85 },
+        {
+          scale: 1, opacity: 1,
+          duration: 1.5, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        }
+      );
+    });
+
+    /* ── BTS auto-scroll strip ── */
+    const btsTrack = document.getElementById('btsTrack');
+    if (btsTrack) {
+      const origChildren = Array.from(btsTrack.children);
+      origChildren.forEach(child => btsTrack.appendChild(child.cloneNode(true)));
+      let pos = 0;
+      const speed = 1.8;
+      function animateBTS() {
+        pos += speed;
+        const half = btsTrack.scrollWidth / 2;
+        if (pos >= half) pos = 0;
+        btsTrack.style.transform = `translateX(-${pos}px)`;
+        requestAnimationFrame(animateBTS);
+      }
+      setTimeout(animateBTS, 400);
+    }
+
+    /* ── Nav hamburger ── */
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    if (hamburger) hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    /* ── Hero audio management (Rivaah-style) ── */
+    const heroVideoEl = document.getElementById('heroVideo');
+    const heroAudioBtn = document.getElementById('heroAudioBtn');
+    const heroSection = document.getElementById('hero');
+
+    heroVideoEl.addEventListener('canplay', () => {
+      heroVideoEl.muted = false;
+      heroAudioBtn.classList.remove('muted');
+    }, { once: true });
+
+    let heroMuted = false;
+    window.addEventListener('scroll', () => {
+      const heroPast = heroSection.getBoundingClientRect().bottom <= 0;
+      if (heroPast && !heroMuted) {
+        heroMuted = true;
+        heroVideoEl.muted = true;
+        heroAudioBtn.classList.add('muted');
+      } else if (!heroPast && heroMuted) {
+        heroMuted = false;
+        heroVideoEl.muted = false;
+        heroAudioBtn.classList.remove('muted');
+      }
+    }, { passive: true });
+
+    heroAudioBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      heroVideoEl.muted = !heroVideoEl.muted;
+      heroAudioBtn.classList.toggle('muted', heroVideoEl.muted);
+      heroMuted = heroVideoEl.muted;
+    });
+
+    heroVideoEl.addEventListener('click', () => {
+      heroVideoEl.muted = !heroVideoEl.muted;
+      heroAudioBtn.classList.toggle('muted', heroVideoEl.muted);
+      heroMuted = heroVideoEl.muted;
+    });
+
+      document.querySelectorAll('.sadeli-grid, .bleed-row2').forEach(row => {
+        const wraps = row.querySelectorAll('.img-wrap');
+        if (wraps.length < 2) return;
+        const imgs = Array.from(wraps).map(w => w.querySelector('img'));
+        wraps.forEach(w => { w.style.flex = ''; });
+        const allLoaded = imgs.every(img => img.naturalWidth > 0);
+        if (!allLoaded) return;
+        const ratios = imgs.map(img => img.naturalWidth / img.naturalHeight);
+        wraps.forEach((w, i) => { w.style.flex = ratios[i].toString(); });
+      });
+
+      // ds-row2: size for viewport height without cropping (object-fit: contain)
+      document.querySelectorAll('.ds-row2').forEach(row => {
+        const wraps = Array.from(row.querySelectorAll('.img-wrap'));
+        const imgs = wraps.map(w => w.querySelector('img'));
+        if (imgs.length < 2) return;
+        const GAP = 4;
+        function vhLayout() {
+          if (!imgs.every(img => img.complete && img.naturalWidth > 0)) return;
+          const targetH = window.innerHeight;
+          const totalW = imgs.reduce((s, img) => s + targetH * (img.naturalWidth / img.naturalHeight), 0) + GAP * (imgs.length - 1);
+          row.style.maxWidth = totalW + 'px';
+          row.style.height = targetH + 'px';
+          const ratios = imgs.map(img => img.naturalWidth / img.naturalHeight);
+          wraps.forEach((w, i) => { w.style.flex = ratios[i].toString(); });
+        }
+        imgs.forEach(img => {
+          if (img.complete && img.naturalWidth > 0) vhLayout();
+          else img.addEventListener('load', vhLayout, { once: true });
+        });
+        window.addEventListener('resize', () => requestAnimationFrame(vhLayout));
+      });
+
+      // Partition split: match render + carousel heights proportionally
+      document.querySelectorAll('.partition-split').forEach(row => {
+        const staticEl = row.querySelector('.partition-static');
+        const carouselEl = row.querySelector('.partition-carousel');
+        if (!staticEl || !carouselEl) return;
+        const staticImg = staticEl.querySelector('img');
+        const activeSlideImg = carouselEl.querySelector('.partition-slide.active img');
+        if (!staticImg || !activeSlideImg) return;
+        if (staticImg.naturalWidth <= 0 || activeSlideImg.naturalWidth <= 0) return;
+        const r1 = staticImg.naturalWidth / staticImg.naturalHeight;
+        const r2 = activeSlideImg.naturalWidth / activeSlideImg.naturalHeight;
+        staticEl.style.flex = r1.toString();
+        carouselEl.style.flex = r2.toString();
+      });
+    }
+    window.addEventListener('load', matchImageHeights);
+    window.addEventListener('resize', matchImageHeights);
+    setTimeout(matchImageHeights, 1000);
+    setTimeout(matchImageHeights, 3000);
+  </script>
+
+  <!-- ── Spatial Journey Carousel ── -->
+  <script>
+    (function () {
+      const slides     = Array.from(document.querySelectorAll('#spCarousel .sp-slide'));
+      const textSlides = Array.from(document.querySelectorAll('#spTextCarousel .sp-text-slide'));
+      const dots       = Array.from(document.querySelectorAll('#spDots .sp-dot'));
+      const prevBtn    = document.getElementById('spPrev');
+      const nextBtn    = document.getElementById('spNext');
+      let current = 0;
+      let timer;
+
+      function goTo(n) {
+        slides[current].classList.remove('active');
+        textSlides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        textSlides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      function startAuto() { timer = setInterval(() => goTo(current + 1), 5000); }
+      function stopAuto()  { clearInterval(timer); }
+
+      prevBtn.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
+      nextBtn.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
+      dots.forEach(dot => dot.addEventListener('click', () => { stopAuto(); goTo(+dot.dataset.i); startAuto(); }));
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')  { stopAuto(); goTo(current - 1); startAuto(); }
+        if (e.key === 'ArrowRight') { stopAuto(); goTo(current + 1); startAuto(); }
+      });
+
+      startAuto();
+    })();
+  </script>
+
+  <!-- ── Partition Carousel ── -->
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll('#partitionCarousel .partition-slide'));
+      const dots   = Array.from(document.querySelectorAll('#partitionDots .partition-dot'));
+      const prevBtn = document.getElementById('partPrev');
+      const nextBtn = document.getElementById('partNext');
+      let current = 0;
+      let timer;
+
+      function goTo(n) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      function startAuto() { timer = setInterval(() => goTo(current + 1), 3500); }
+      function stopAuto()  { clearInterval(timer); }
+
+      prevBtn.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
+      nextBtn.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
+      dots.forEach(dot => dot.addEventListener('click', () => { stopAuto(); goTo(+dot.dataset.i); startAuto(); }));
+      startAuto();
+    })();
+  </script>
+
+  <!-- ── Other Spaces Carousel ── -->
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll('#otherCarousel .other-slide'));
+      const dots   = Array.from(document.querySelectorAll('#otherDots .other-dot'));
+      let current = 0;
+      let timer;
+
+      function goTo(n) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      function startAuto() { timer = setInterval(() => goTo(current + 1), 4500); }
+      function stopAuto()  { clearInterval(timer); }
+
+      dots.forEach(dot => dot.addEventListener('click', () => { stopAuto(); goTo(+dot.dataset.i); startAuto(); }));
+      startAuto();
+    })();
+  </script>
+
+</body>
+</html>

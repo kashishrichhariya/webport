@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kashish Richhariya — Tanishq Jaipur MI Road</title>
+  <meta name="description" content="Designing spaces for Tanishq's flagship at Jaipur MI Road where heritage speaks in a contemporary voice." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --hero-bg:  #a87b73;
+      --gold:     #a78154;
+      --cream:    #fcfcfc;
+      --warm:     #f7f6f0;
+      --dark:     #0c0c0c;
+      --heading:  #4a4540;
+      --charcoal: #343230;
+      --slate:    #3a3938;
+      --mid:      #4c4a46;
+      --muted:    #9b957d;
+      --stone:    #9c948a;
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'Manrope', system-ui, sans-serif;
+      --nav-h:    96px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--heading);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: linear-gradient(to bottom, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.18) 60%, transparent 100%);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 48px; z-index: 100;
+    }
+    .nav-logo { margin: 0 56px; }
+    .nav-logo img { height: 64px; width: auto; display: block; }
+    .nav-side {
+      font-size: 12px; font-weight: 400; color: rgba(252,252,252,0.7);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    .nav-side:hover { color: var(--cream); }
+    .nav-links { display: none; list-style: none; }
+    .nav-links a { font-size: 12px; font-weight: 400; color: rgba(252,252,252,0.7); letter-spacing: 0.1em; text-transform: uppercase; transition: color .25s; }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; position: absolute; right: 20px; }
+    .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
+
+    /* ── LABEL — one rule, gold accent, identical everywhere ── */
+    .label {
+      display: block;
+      font-family: var(--sans);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    /* ── SECTION HEADING — unified across every section ── */
+    .s-h2 {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.6vw, 38px);
+      font-weight: 400;
+      color: var(--heading);
+      line-height: 1.22;
+      letter-spacing: -0.04em;
+      margin-top: 14px;
+    }
+
+    /* ── Containers ── */
+    .wrap    { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .wrap-md { max-width: 860px;  margin: 0 auto; padding: 0 48px; }
+    .wrap-sm { max-width: 680px;  margin: 0 auto; padding: 0 48px; }
+    .wrap-80 { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
+
+    /* ═══════════════════════════════
+       HERO  — full-bleed image, text bottom-left
+    ═══════════════════════════════ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      background: #3a2c1e;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 72px 80px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .hero-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,8,6,0.78) 0%, rgba(10,8,6,0.22) 65%, rgba(10,8,6,0.1) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-eyebrow {
+      font-size: 10px; font-weight: 400; letter-spacing: 0.25em;
+      text-transform: uppercase; color: rgba(252,252,252,0.5);
+      margin-bottom: 28px;
+    }
+    .hero-heading {
+      font-family: var(--serif);
+      font-size: clamp(32px, 3.8vw, 56px);
+      font-weight: 400; line-height: 1.15;
+      color: var(--cream); margin-bottom: 22px;
+    }
+    .hero-heading em { font-style: italic; }
+    .hero-subtitle {
+      font-size: clamp(14px, 1.3vw, 17px); font-weight: 300;
+      color: rgba(252,252,252,0.78); line-height: 1.65;
+      max-width: 560px;
+    }
+
+    /* ═══════════════════════════════
+       PROJECT META
+    ═══════════════════════════════ */
+    #project-meta {
+      background: var(--cream);
+      padding: 64px 48px 64px;
+      border-bottom: 1px solid rgba(155,149,125,0.2);
+    }
+    .meta-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    }
+    .meta-divider { background: rgba(155,149,125,0.25); min-height: 72px; }
+    .meta-item { padding: 0 44px; }
+    .meta-item:first-child { padding-left: 0; }
+    .meta-label { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .meta-value { font-family: var(--sans); font-size: 14px; font-weight: 400; color: var(--mid); line-height: 1.7; }
+
+    /* ═══════════════════════════════
+       INTRO
+    ═══════════════════════════════ */
+    #intro { padding: 88px 0; background: var(--cream); }
+    .intro-para { font-size: clamp(13px, 1.15vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-bottom: 44px; }
+    .intro-question { font-family: var(--serif); font-style: normal; font-weight: 500; font-size: clamp(21px, 2.24vw, 27px); color: var(--heading); line-height: 1.4; letter-spacing: -0.02em; border-left: 1.5px solid var(--gold); padding-left: 28px; }
+
+    /* ═══════════════════════════════
+       PREVIEW GRID — asymmetric, playful, no heading
+    ═══════════════════════════════ */
+    /* Preview grid — justified row, equal height */
+    .preview-grid {
+      display: flex;
+      gap: 3px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .preview-grid img {
+      height: 55vh; width: auto;
+      display: block; flex-shrink: 0;
+      transition: transform 0.9s ease;
+    }
+    .preview-grid img:hover { transform: scale(1.04); }
+
+    /* ═══════════════════════════════
+       THE PROCESS — 50% bigger text
+    ═══════════════════════════════ */
+    #process { padding: 160px 0 100px; background: var(--warm); }
+    .process-hd { margin-bottom: 56px; }
+    .process-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+    .process-step { background: transparent; padding: 36px 28px 44px; }
+    .step-num { font-family: var(--serif); font-style: italic; font-size: 12px; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 20px; }
+    .step-icon { width: 80px; height: 80px; object-fit: contain; margin-bottom: 24px; opacity: 0.75; }
+    .step-title { font-family: var(--serif); font-size: 18px; font-weight: 500; color: var(--heading); line-height: 1.35; margin-bottom: 14px; }
+    .step-desc { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--muted); line-height: 1.8; }
+
+    /* ═══════════════════════════════
+       MI ROAD — split: text left, gif right
+    ═══════════════════════════════ */
+    #mi-road { padding: 88px 0; background: var(--cream); }
+    .mi-split { max-width: 1440px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 60fr 40fr; gap: 72px; align-items: center; }
+    .mi-text p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 20px; }
+    .mi-image img { width: 100%; height: auto; display: block; }
+
+    /* ═══════════════════════════════
+       THE CUSTOMER — split: left text, right gif
+    ═══════════════════════════════ */
+    #customer { padding: 88px 0; background: var(--warm); }
+    .customer-split { display: grid; grid-template-columns: 45fr 55fr; gap: 72px; align-items: start; }
+    .customer-subtitle { font-family: var(--serif); font-style: italic; font-size: clamp(17px, 1.7vw, 22px); font-weight: 400; color: var(--mid); line-height: 1.4; letter-spacing: -0.02em; margin: 10px 0 0; }
+    .customer-text p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 20px; }
+    .customer-image img { width: 100%; height: auto; display: block; }
+
+    /* ═══════════════════════════════
+       GUIDING PRINCIPLES
+    ═══════════════════════════════ */
+    #principles { padding: 88px 0; background: var(--cream); }
+    .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
+    .principle-card { background: var(--warm); overflow: hidden; }
+    .principle-card img { width: 100%; height: auto; display: block; }
+    .principle-body { padding: 28px 28px 36px; }
+    .principle-title { font-family: var(--serif); font-size: clamp(20px, 2.2vw, 28px); font-weight: 400; color: var(--heading); line-height: 1.3; margin-bottom: 12px; letter-spacing: -0.03em; }
+    .principle-desc { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; }
+
+    /* ═══════════════════════════════
+       SPATIAL PLANNING
+       Wider section | Left static | Right carousel (multiply, no legend)
+    ═══════════════════════════════ */
+    #spatial { padding: 100px 0; background: var(--warm); }
+    .sp-layout { display: grid; grid-template-columns: 35fr 65fr; gap: 64px; align-items: start; }
+    .sp-desc { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 20px; }
+
+    /* Carousel (right side) */
+    .sp-carousel-wrap {
+      position: relative;
+      background: #fff;
+    }
+    .sp-carousel { position: relative; overflow: hidden; }
+    .sp-slide { display: none; }
+    .sp-slide.active {
+      display: block;
+      animation: spFade 0.6s ease;
+    }
+    @keyframes spFade { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Floor plan image: multiply blend so annotations show through white bg */
+    .sp-plan-img {
+      width: 100%; height: auto; display: block;
+      mix-blend-mode: multiply;
+    }
+    .sp-floor-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold);
+      padding: 14px 20px; text-align: center;
+      background: #fff;
+    }
+
+    /* Arrow buttons: absolute, always visible on sides */
+    .sp-btn {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(252,252,252,0.90);
+      border: 1px solid rgba(155,149,125,0.35);
+      color: var(--mid); font-size: 24px; font-weight: 300;
+      width: 48px; height: 48px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s;
+      backdrop-filter: blur(4px);
+    }
+    .sp-btn-prev { left: 16px; }
+    .sp-btn-next { right: 16px; }
+    .sp-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--cream); }
+    .sp-dots { display: flex; gap: 8px; justify-content: center; padding: 16px 0; background: #fff; }
+    .sp-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(155,149,125,0.35); cursor: pointer; transition: all 0.25s; }
+    .sp-dot.active { background: var(--gold); transform: scale(1.3); }
+
+    /* ═══════════════════════════════
+       QUOTE
+    ═══════════════════════════════ */
+    #quote { background: #f5ede9; padding: 80px 48px; text-align: center; }
+    .quote-text { font-family: var(--serif); font-style: normal; font-size: clamp(21px, 2.24vw, 27px); font-weight: 500; color: var(--heading); line-height: 1.4; max-width: 780px; margin: 0 auto 20px; letter-spacing: -0.02em; }
+    .quote-text::before { content: none; }
+    .quote-text::after  { content: none; }
+    .quote-cite { font-size: 13px; font-weight: 300; color: var(--muted); letter-spacing: 0.12em; }
+
+    /* ═══════════════════════════════
+       DESIGN SECTIONS
+    ═══════════════════════════════ */
+
+    .ds { padding: 100px 0; }
+    .ds-alt { background: var(--warm); }
+
+    /* Design Interventions editorial divider */
+    .divider-editorial {
+      max-width: 1440px; margin: 0 auto;
+      padding: 0 48px 36px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .divider-editorial-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold);
+      white-space: nowrap;
+    }
+    .divider-editorial-rule {
+      flex: 1; height: 1px;
+      background: var(--gold); opacity: 0.4;
+    }
+
+    /* Split: reference image (left) + text (right) */
+    .ds-split {
+      display: grid; grid-template-columns: 55fr 45fr;
+      max-width: 1440px; margin: 0 auto; padding: 0 0 0 48px;
+      align-items: start;
+    }
+    .ds-split-img img { width: 100%; height: auto; display: block; }
+    .ds-split-text { padding: 56px 56px 56px 64px; }
+    .ds-body { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 24px; }
+    .whisper { font-family: var(--serif); font-style: normal; font-weight: 500; font-size: clamp(18px, 1.82vw, 22px); color: var(--heading); border-left: 1.5px solid var(--gold); padding-left: 28px; margin-top: 44px; line-height: 1.4; letter-spacing: -0.02em; }
+
+    .thikri-note { font-size: 13px; font-weight: 300; color: var(--muted); font-style: italic; margin-top: 20px; border-left: 2px solid rgba(167,129,84,0.4); padding-left: 16px; }
+
+    /* Standalone section header — same wrapper as .wrap */
+    .ds-header { max-width: 1440px; margin: 0 auto; padding: 0 48px 24px; }
+    .ds-header .label { margin-bottom: 24px; }
+    .ds-header .s-h2 { margin-top: 0; }
+    .ds-body-block { max-width: 1440px; margin: 0 auto; padding: 0 48px 48px; }
+    .ds-body-block p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; max-width: 680px; }
+
+    /* Full-bleed image */
+    .bleed { width: 100%; }
+    .bleed img { width: 100%; height: auto; display: block; }
+
+    /* Full-bleed 2-col grid (edge to edge, no padding) */
+    .bleed-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .bleed-row2 img { width: 100%; height: auto; display: block; }
+
+    /* Equal-height full-bleed image pair — JS justifies to full width, no crop */
+    .bleed-pair-equal { display: flex; gap: 3px; overflow: hidden; width: 100%; }
+    .bleed-pair-equal img { height: 60vh; width: auto; display: block; }
+
+    /* 2-col grid, no height crop */
+    .ds-row2 { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .ds-row2 img { width: 100%; height: auto; display: block; }
+
+    /* 2x2 grid, no forced height crop */
+    .ds-grid4 { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .ds-grid4 img { width: 100%; height: auto; display: block; }
+
+    /* Intentional crop pair (specific use for design-detail images) */
+    .ds-pair { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .ds-pair img { width: 100%; height: 520px; object-fit: cover; object-position: top; display: block; }
+
+    /* Full-width contained image */
+    .ds-img { max-width: 1200px; margin: 0 auto; padding: 0 48px 48px; }
+    .ds-img img { width: 100%; height: auto; display: block; }
+
+    /* Caption */
+    .ds-caption { max-width: 1200px; margin: 0 auto; padding: 16px 48px 0; font-size: 12px; font-weight: 300; color: var(--muted); font-style: italic; letter-spacing: 0.04em; }
+
+    /* Sub-section label within a design section (The Mandapa, The Cash Desk…) */
+    .ds-sub-label {
+      font-family: var(--sans);
+      font-size: 10px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--mid);
+      display: block; margin-bottom: 10px;
+    }
+
+    .mt-3  { margin-top: 3px; }
+    .mt-48 { margin-top: 48px; }
+    .mb-48 { margin-bottom: 48px; }
+
+    /* ═══════════════════════════════
+       CTA / FOOTER
+    ═══════════════════════════════ */
+    #cta { background: var(--charcoal); padding: 120px 48px 80px; text-align: center; }
+    .cta-eyebrow { font-size: 13px; font-weight: 300; color: var(--stone); margin-bottom: 24px; letter-spacing: 0.05em; }
+    .cta-heading { font-family: var(--serif); font-size: clamp(36px, 5.5vw, 76px); font-weight: 400; color: var(--cream); line-height: 1.1; margin-bottom: 48px; }
+    .cta-heading em { font-style: italic; }
+    .cta-btn { display: inline-block; padding: 16px 52px; border: 1px solid rgba(252,252,252,0.35); color: var(--cream); font-size: 12px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; transition: all .3s; }
+    .cta-btn:hover { background: var(--cream); color: var(--charcoal); border-color: var(--cream); }
+    .cta-credit { font-size: 11px; color: var(--stone); margin-top: 80px; opacity: 0.45; }
+
+    /* ── BTS scroll strip ── */
+    .bts-scroll-outer { overflow: hidden; margin-top: 48px; cursor: grab; }
+    .bts-scroll-track { display: flex; gap: 6px; will-change: transform; }
+    .bts-scroll-track img { height: 56vh; width: auto; flex-shrink: 0; object-fit: cover; display: block; }
+
+    /* GSAP sets initial states — no CSS opacity:0 so fallback is always visible */
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 1040px) {
+      .process-grid { grid-template-columns: repeat(3, 1fr); }
+      .sp-layout { grid-template-columns: 1fr; gap: 48px; }
+      .ds-split { grid-template-columns: 1fr; padding: 0; }
+      .ds-split-text { padding: 48px; }
+      .wrap-80 { width: 100%; padding: 0 48px; }
+    }
+    @media (max-width: 860px) {
+      nav { padding: 0 24px; }
+      .wrap, .wrap-md, .wrap-sm, .wrap-80 { padding-left: 24px; padding-right: 24px; }
+      #project-meta, #quote, #cta { padding-left: 24px; padding-right: 24px; }
+      #hero { padding-left: 24px; padding-right: 24px; }
+      .meta-grid { grid-template-columns: 1fr; gap: 28px; }
+      .meta-divider { display: none; }
+      .meta-item { padding: 0; }
+      .principles-grid { grid-template-columns: 1fr 1fr; }
+      .customer-split { grid-template-columns: 1fr; gap: 36px; }
+      .mi-split { grid-template-columns: 1fr; }
+      .preview-grid img { height: 36vh; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .ds-row2 { padding: 0 24px; }
+      .ds-grid4 { padding: 0 24px; }
+      .ds-pair { padding: 0 24px; }
+      .ds-img { padding: 0 24px 32px; }
+      .ds-header { padding: 0 24px 36px; }
+      .ds-body-block { padding: 0 24px 36px; }
+      .ds-caption { padding: 12px 24px 0; }
+      .ds-split-text { padding: 36px 24px; }
+      .wrap-80 { width: 100%; padding: 0 24px; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-side { display: none; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: rgba(12,11,10,0.97); padding: 24px 20px; gap: 20px; }
+      .nav-hamburger { display: flex; }
+      #hero { padding: calc(var(--nav-h) + 56px) 20px 100px; }
+      .hero-motif { width: 72px; height: 72px; bottom: -36px; }
+      .wrap, .wrap-md, .wrap-sm, .wrap-80 { padding-left: 20px; padding-right: 20px; }
+      #project-meta, #quote, #cta { padding-left: 20px; padding-right: 20px; }
+      .principles-grid { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+      .preview-grid img { height: 26vh; }
+      .bleed-row2 { grid-template-columns: 1fr; }
+      .ds-row2 { grid-template-columns: 1fr; padding: 0 20px; }
+      .ds-grid4 { grid-template-columns: 1fr; padding: 0 20px; }
+      .ds-pair { grid-template-columns: 1fr; padding: 0 20px; }
+      .ds-pair img { height: 320px; }
+      .ds-img { padding: 0 20px 28px; }
+      .ds-header { padding: 0 20px 28px; }
+      .ds-body-block { padding: 0 20px 28px; }
+      #quote { padding: 80px 20px; }
+      #cta { padding: 80px 20px 60px; }
+      .wrap-80 { width: 100%; padding: 0 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════
+       NAV
+  ══════════════════════ -->
+  <nav id="navbar">
+    <a href="#" class="nav-side">Work</a>
+    <a href="index.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
+    <a href="#cta" class="nav-side">Contact</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#">Work</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- ══════════════════════
+       HERO  — taller, bigger motif
+  ══════════════════════ -->
+  <section id="hero">
+    <img class="hero-bg" src="Jaipur%20Images/Foyer.png" alt="" aria-hidden="true" />
+    <div class="hero-scrim"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Tanishq &mdash; Jaipur, MI Road &mdash; 2024</p>
+      <h1 class="hero-heading">
+        <em>Rooted</em> in Royalty,<br>
+        <em>Reimagined</em> for today
+      </h1>
+      <p class="hero-subtitle">
+        Designing spaces for Tanishq's flagship at Jaipur MI Road<br>where heritage speaks in a contemporary voice
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       PROJECT META
+  ══════════════════════ -->
+  <div id="project-meta" class="reveal">
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Project</div>
+        <div class="meta-value">Tanishq Jaipur, MI Road</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <div class="meta-label">Year of Completion</div>
+        <div class="meta-value">June 2024</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <div class="meta-label">Key Contributions</div>
+        <div class="meta-value">Conceptualising &amp; designing key spaces of interaction including facade, cashdesk backdrops, foyer, flooring, chandelier</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       INTRO
+  ══════════════════════ -->
+  <section id="intro">
+    <div class="wrap-sm">
+      <p class="intro-para reveal">
+        If Jaipur stands at the crossroads of heritage and global appeal, MI Road sits at its centre. Tanishq's flagship here had to belong to the historic streetscape while resonating with the woman of today. The project explored designing spaces of interaction with a blend of tradition and contemporary living.
+      </p>
+      <p class="intro-question reveal">
+        The challenge was to capture this spirit: familiar but not dated, grand yet warm, somewhere a modern woman could see herself reflected back — deeply rooted in heritage, yet undeniably contemporary?
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       STORE PREVIEW GRID
+       Asymmetric, playful, no heading
+  ══════════════════════ -->
+  <div class="preview-grid reveal-scale">
+    <img src="Jaipur%20Images/02-Preview.png" alt="Store interior" />
+    <img src="Jaipur%20Images/03-Preview.png" alt="Store interior" />
+    <img src="Jaipur%20Images/04-Preview.png" alt="Store interior" />
+    <img src="Jaipur%20Images/05-Preview.png" alt="Store interior" />
+  </div>
+
+  <!-- ══════════════════════
+       THE PROCESS
+  ══════════════════════ -->
+  <section id="process">
+    <div class="wrap-80">
+      <div class="process-hd reveal">
+        <p class="label">The Process</p>
+        <h2 class="s-h2">How we got here</h2>
+      </div>
+      <div class="process-grid">
+        <div class="process-step">
+          <img class="step-icon" src="Jaipur%20Images/Icons-03.png" alt="" />
+          <div class="step-title">Catching the city's drift</div>
+          <div class="step-desc">Understanding how contemporary experiences are shaped by the city's heritage backdrop</div>
+        </div>
+        <div class="process-step">
+          <img class="step-icon" src="Jaipur%20Images/Icons-04.png" alt="" />
+          <div class="step-title">Understanding the customer</div>
+          <div class="step-desc">What are her preferences and the choices she makes that define her</div>
+        </div>
+        <div class="process-step">
+          <img class="step-icon" src="Jaipur%20Images/Icons-05.png" alt="" />
+          <div class="step-title">How Tanishq belongs</div>
+          <div class="step-desc">Understanding how Tanishq creates a space for its customers by defining guiding principles for the design</div>
+        </div>
+        <div class="process-step">
+          <img class="step-icon" src="Jaipur%20Images/Icons-06.png" alt="" />
+          <div class="step-title">Spatial Planning &amp; Journey</div>
+          <div class="step-desc">Identifying key spaces of intervention and conceptualising designs</div>
+        </div>
+        <div class="process-step">
+          <img class="step-icon" src="Jaipur%20Images/Icons-07.png" alt="" />
+          <div class="step-title">Design &amp; execution</div>
+          <div class="step-desc">Concept and material finalisation, production &amp; installation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       MI ROAD — gif left, text right
+  ══════════════════════ -->
+  <section id="mi-road">
+    <div class="mi-split">
+      <div class="mi-image reveal-left">
+        <img src="Jaipur%20Images/Site.gif" alt="MI Road, Jaipur — annotated context" />
+      </div>
+      <div class="mi-text reveal-right">
+        <h2 class="s-h2">MI Road — The Modern Face of Heritage Jaipur</h2>
+        <p>Connecting Johri Bazaar to Jaipur's newer districts, MI Road marks the transition between the city's historic core and its modern identity. Designed as a colonial boulevard in the 20th century, it features contemporary labels within historic premises.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       THE CUSTOMER
+       Left text | Right gif
+  ══════════════════════ -->
+  <section id="customer">
+    <div class="wrap-80">
+      <div class="customer-split">
+        <div class="customer-text reveal-left">
+          <h2 class="s-h2">The Customer</h2>
+          <p class="customer-subtitle">A cultural custodian with an eye for global styles</p>
+          <p>She believes heritage is the true luxury, authenticity is non-negotiable, culture and traditions are living principles — not just preserved artifacts. She is a blend of her grandma's heirlooms and her Pinterest boards.</p>
+        </div>
+        <div class="customer-image reveal-right">
+          <img src="Jaipur%20Images/7-the%20customer%20section.gif" alt="The Tanishq customer" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       GUIDING PRINCIPLES
+  ══════════════════════ -->
+  <section id="principles">
+    <div class="wrap-80">
+      <h2 class="s-h2 reveal">Guiding Principles of Design</h2>
+      <div class="principles-grid">
+        <div class="principle-card reveal">
+          <img src="Jaipur%20Images/Guiding%20principles-01.png" alt="A space that belongs timelessly" />
+          <div class="principle-body">
+            <div class="principle-title">A space that belongs timelessly</div>
+            <div class="principle-desc">Root the design in the city's visual language which whispers continuity, not newness.</div>
+          </div>
+        </div>
+        <div class="principle-card reveal">
+          <img src="Jaipur%20Images/Guiding%20principles-03.png" alt="A city where culture is lived" />
+          <div class="principle-body">
+            <div class="principle-title">A city where culture is lived, not just preserved</div>
+            <div class="principle-desc">Honor traditions through craft, where artisan hands keep centuries alive.</div>
+          </div>
+        </div>
+        <div class="principle-card reveal">
+          <img src="Jaipur%20Images/Guiding%20principles-04.png" alt="A monochrome canvas" />
+          <div class="principle-body">
+            <div class="principle-title">A monochrome canvas where jewellery shines</div>
+            <div class="principle-desc">Embrace monochromes where pristine whites celebrate intricacies, allowing jewellery to perform.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       SPATIAL PLANNING
+       Wider | Left static | Right carousel (multiply blend, no legend, arrows always visible)
+  ══════════════════════ -->
+  <section id="spatial">
+    <div class="wrap-80">
+      <div class="sp-layout">
+
+        <!-- LEFT: static -->
+        <div class="sp-left reveal-left">
+          <p class="label">Spatial Planning &amp; Journey</p>
+          <h2 class="s-h2">From principles<br>to place</h2>
+          <p class="sp-desc">The design unfolds as a curated journey — from street to threshold to celebration. Three spaces, three moods, one cohesive narrative of heritage speaking in a contemporary voice.</p>
+        </div>
+
+        <!-- RIGHT: auto-carousel, arrows always visible on sides -->
+        <div class="sp-carousel-wrap reveal-right">
+          <div class="sp-carousel" id="spCarousel">
+
+            <div class="sp-slide active">
+              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-01.png" alt="Site plan" />
+              <p class="sp-floor-label">Site &amp; Location</p>
+            </div>
+
+            <div class="sp-slide">
+              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-02.png" alt="Ground floor plan" />
+              <p class="sp-floor-label">Ground Floor Plan</p>
+            </div>
+
+            <div class="sp-slide">
+              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-03.png" alt="Mezzanine plan" />
+              <p class="sp-floor-label">Mezzanine Plan</p>
+            </div>
+
+            <div class="sp-slide">
+              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-04.png" alt="First floor plan" />
+              <p class="sp-floor-label">First Floor Plan</p>
+            </div>
+
+          </div><!-- .sp-carousel -->
+
+          <!-- Arrows: absolutely positioned on sides, always visible -->
+          <button class="sp-btn sp-btn-prev" id="spPrev">&#8249;</button>
+          <button class="sp-btn sp-btn-next" id="spNext">&#8250;</button>
+
+          <div class="sp-dots" id="spDots">
+            <span class="sp-dot active" data-i="0"></span>
+            <span class="sp-dot" data-i="1"></span>
+            <span class="sp-dot" data-i="2"></span>
+            <span class="sp-dot" data-i="3"></span>
+          </div>
+        </div><!-- .sp-carousel-wrap -->
+
+      </div><!-- .sp-layout -->
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       QUOTE
+  ══════════════════════ -->
+  <section id="quote">
+    <p class="quote-text reveal">Tradition is not the worship of ashes, but the preservation of fire.</p>
+    <p class="quote-cite reveal">— Gustav Mahler</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       THE FACADE
+  ══════════════════════════════════════════════ -->
+  <section class="ds">
+
+    <div class="divider-editorial reveal">
+      <span class="divider-editorial-label">Design Interventions</span>
+      <div class="divider-editorial-rule"></div>
+    </div>
+
+    <div class="ds-split reveal">
+      <div class="ds-split-img">
+        <img src="Jaipur%20Images/jaipur-facade.png" alt="Facade — reference and design" />
+      </div>
+      <div class="ds-split-text">
+        <p class="label">The Facade</p>
+        <h2 class="s-h2">Flushed in the shade of pink that belongs to the city</h2>
+        <p class="ds-body">Being on heritage MI Road meant the façade had to belong, not announce. In a streetscape of time-worn buildings, standing out required first fitting in.</p>
+        <p class="ds-body">The design features arches borrowed from the building's existing design, washed in Jaipur pink — a colour long tied to the city's spirit of hospitality. The real challenge: finding the right shade of pink by testing swatches against centuries-old walls.</p>
+      </div>
+    </div>
+
+    <div class="bleed reveal-scale mt-48">
+      <img src="Jaipur%20Images/Facade.png" alt="Tanishq Jaipur — facade exterior" />
+    </div>
+
+    <div class="ds-body-block mt-48 reveal">
+      <p>The existing building offered the blueprint. Arches crowned the structure, jaali work created shadow patterns. We replicated these exactly, then added the diamond-and-scallop motif seen across Jaipur's havelis to the façade beam — making the new feel continuous with what already existed.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p>But colour became the real question. Jaipur pink isn't one shade — it's weathered time rendered visible. We swatched against centuries-old walls at Hawa Mahal, testing WPC boards and jaali samples until the palette matched not a paint chip, but a feeling.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p class="whisper">Not the bright pink of fresh paint, but the gentle blush of history — softened by sun, dust, and decades.</p>
+    </div>
+    <div class="ds-body-block mt-48 reveal">
+      <p>That authentic weathered pink now glows on MI Road. The arches echo the building above, the beam patterns mirror neighbouring structures, the colour speaks in the same tone as the monuments. The existing columns — mandated by heritage location norms — were retained and integrated into the design language. Double-height glazing showcases the entire foyer, making the threshold inviting and revealing the grandeur within.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p class="whisper">The façade doesn't announce arrival. It whispers it's always been here.</p>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       THE FOYER
+  ══════════════════════════════════════════════ -->
+  <section class="ds ds-alt">
+
+    <div class="ds-split reveal">
+      <div class="ds-split-img">
+        <img src="Jaipur%20Images/jaipur-foyer.png" alt="Foyer — reference and design" />
+      </div>
+      <div class="ds-split-text">
+        <p class="label">The Foyer</p>
+        <h2 class="s-h2">An imaginary Jaipur, clad in whites</h2>
+        <p class="ds-body">Step inside. The transformation is immediate — from expressive pink exterior into a world rendered in monochrome. This isn't minimalism. This is restraint in palette married to richness in craft.</p>
+        <p class="ds-body">Think of it as an imaginary Jaipur. Every architectural element that makes the city royal — layered arches, intricate jharokhas, perforated jaalis, geometric inlay — remains, but reimagined in whites and creams. Not less, but focused. Not empty, but purposeful.</p>
+        <p class="thikri-note">Thikri work is a traditional Rajasthani craft using mirrored glass fragments set into plaster — creating luminous mosaic-like surfaces that animate space with reflected light.</p>
+      </div>
+    </div>
+
+    <div class="ds-body-block mt-48 reveal">
+      <span class="ds-sub-label">The Mandapa</span>
+      <p>The double-height foyer unfolds as a threshold where city meets brand. Above, jharokha windows create palatial layering, their jaali screens casting delicate shadow play. Crystal pendant chandeliers cascade through the volume like suspended jewels, their faceted surfaces catching light and multiplying it — echoing Sheesh Mahal's shimmer but rendered in contemporary fixtures.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p class="whisper">The space breathes. Monochrome walls let architectural gestures become the drama.</p>
+    </div>
+
+    <div class="ds-body-block mt-48 reveal">
+      <span class="ds-sub-label">The Chabutra</span>
+      <p>At the foyer's centre stands the chabutra — inspired by those elevated platforms in fort gardens where royal women would gather with their sahelis, sharing stories in intimate circles. Not just display furniture. A spatial idea: elevation creates significance.</p>
+    </div>
+
+    <!-- chabutra pair — full width, equal height -->
+    <div class="bleed-pair-equal mt-48 reveal-scale">
+      <img src="Jaipur%20Images/chabutra-02.png" alt="Foyer — chabutra full view" />
+      <img src="Jaipur%20Images/chabutra-01.png" alt="Foyer — chabutra with mannequin and thikri backdrop" />
+    </div>
+
+    <!-- double height space pair -->
+    <div class="bleed-pair-equal mt-48 reveal-scale">
+      <img src="Jaipur%20Images/double%20height.png" alt="Double height foyer — view 1" />
+      <img src="Jaipur%20Images/double%20height%2002.png" alt="Double height foyer — view 2" />
+    </div>
+
+    <div class="ds-body-block mt-48 reveal">
+      <p>Atop this platform, a mannequin dressed in Jaipur bridal finery — pink and gold, layered in traditional jewellery — stands within a glass case. She becomes the ground floor's first note of colour, its only departure from monochrome restraint.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p>Behind her, the wall comes alive with thikri work. Mirror mosaic in an arched frame — hundreds of tiny mirrors catching light, fracturing it, multiplying it across the surface exactly as they do in Sheesh Mahal. Below, the patang (kite) motif flooring grounds the elevated display back to earth.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p class="whisper">An elevated platform, mirror-shimmer, and the memory of sahelis — the chabutra doesn't just display jewellery. It celebrates it.</p>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       THE CASH DESK — GROUND FLOOR
+  ══════════════════════════════════════════════ -->
+  <section class="ds">
+
+    <div class="ds-header reveal">
+      <p class="label">The Cash Desk — Ground Floor</p>
+      <h2 class="s-h2">Textures of Rajasthani architecture</h2>
+    </div>
+    <div class="ds-body-block mb-48 reveal">
+      <p>Behind the counter, an architectural statement. Inspiration came from City Palace's leheriya gate — those mesmerising layers upon layers of arches, zigzag patterns that feel simultaneously ancient and contemporary. The cash counter blends architectural references from different parts of Jaipur but reimagines them in a monochrome tone, highlighting the textures while lighting adds to the subtle elegance.</p>
+    </div>
+
+    <div class="bleed reveal-scale">
+      <img src="Jaipur%20Images/jaipur-gf-cc.png" alt="Ground floor cash counter — reference" />
+    </div>
+
+    <div class="ds-body-block mt-48 reveal">
+      <p>The design recreates this in pristine white: peacock and leaf motifs crown the composition, jharokha windows frame the space, backlit jaali screens glow softly. The Tanishq branding sits within this, crafted in tarkashi — brass wire and coloured lac inlaid into wood by one of Jaipur's few remaining master craftsmen.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p class="whisper">In Rajasthan, even functional objects celebrate beauty. Craft and purpose were always one.</p>
+    </div>
+
+    <div class="bleed mt-48 reveal-scale">
+      <img src="Jaipur%20Images/15-cash%20counter.png" alt="Cash counter — interior" />
+    </div>
+
+    <div class="bleed mt-3 reveal-scale">
+      <img src="Jaipur%20Images/Cash%20counter.png" alt="Cash counter — detail view" />
+    </div>
+
+    <!-- tarkashi craft pair — full width, equal height -->
+    <div class="bleed-pair-equal mt-48 reveal-scale">
+      <img src="Jaipur%20Images/tarkashi-01.png" alt="Tarkashi inlay — craft detail" />
+      <img src="Jaipur%20Images/tarkashi-02.png" alt="Tarkashi inlay — finished work" />
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       THE WEDDING FLOOR
+  ══════════════════════════════════════════════ -->
+  <section class="ds ds-alt">
+
+    <div class="ds-header reveal">
+      <p class="label">The Wedding Floor</p>
+      <h2 class="s-h2">A glorious wedding affair</h2>
+    </div>
+    <div class="ds-body-block mb-48 reveal">
+      <p>Climb the stairs. The mood transforms instantly. If the ground floor whispers in elegant restraint, the wedding floor sings in full voice. This is where the imaginary Jaipur dissolves and the celebratory one takes over — where monochrome releases into colour, where measured calm gives way to abundant warmth.</p>
+    </div>
+
+    <div class="bleed reveal-scale">
+      <img src="Jaipur%20Images/jaipur-ff-cc.png" alt="First floor — panoramic reference" />
+    </div>
+
+    <div class="ds-body-block mt-48 reveal">
+      <p>Because this floor honours what weddings in Jaipur truly are — never quiet, never minimal, always a joyous explosion of tradition meeting festivity. The cash counter blooms with layered detail. Jaali and arch patterns remain, but now adorned with fountain motifs pulled from Jaipur's palace frescoes — symbols of abundance, fertility, paradise gardens thriving in desert landscapes. The branding sits in meenakari: Jaipur's signature enamel work rendered in red and gold, the colours of festivity and auspiciousness.</p>
+    </div>
+
+    <!-- mannequin pair — full width, equal height -->
+    <div class="bleed-pair-equal mt-48 reveal-scale">
+      <img src="Jaipur%20Images/mannequin-1.png" alt="Wedding floor — bridal mannequin display" />
+      <img src="Jaipur%20Images/mannequin-2.jpg" alt="Wedding floor — jewellery and bridal detail" />
+    </div>
+
+    <div class="ds-body-block mt-48 reveal">
+      <p>Walls shift from cool whites to warm ochre. This is the Rivaah floor — Tanishq's wedding jewellery collection — and it embraces colour the way weddings do. A gallery wall displays miniature paintings: scenes of bridal preparation, courtly celebrations, women adorning themselves. Each framed artwork tells stories of the rituals that jewellery adorns, connecting purchase to cultural memory.</p>
+    </div>
+
+    <!-- store view — full width -->
+    <div class="bleed mt-48 reveal-scale">
+      <img src="Jaipur%20Images/20.png" alt="Wedding floor — store with mannequin display" />
+    </div>
+
+    <div class="ds-body-block mt-48 reveal">
+      <p class="whisper">Where monochrome gives way to colour, restraint to abundance — because weddings in Jaipur are never quiet.</p>
+    </div>
+
+    <div class="ds-body-block mt-48 reveal">
+      <p>Crystal chandeliers glow warmer here. Floral arrangements become lush. Furniture takes on richer, deeper tones. Even the lighting shifts — less cool white, more golden. Everything signals: this is where joy lives, where restraint no longer serves, where celebration deserves full expression.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p>The space resonates with the city's wedding culture. Jaipur marriages are grand affairs — colourful, deeply rooted in tradition yet contemporary in their expression, family gatherings that span days. The wedding floor mirrors this energy, honouring craft while creating an atmosphere that feels alive, warm, generous.</p>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       CLOSING REFLECTION
+  ══════════════════════════════════════════════ -->
+  <section class="ds">
+
+    <div class="ds-header reveal">
+      <p class="label">Closing Reflection</p>
+      <h2 class="s-h2">A space that remembers</h2>
+    </div>
+    <div class="ds-body-block reveal">
+      <p>From the weathered pink of MI Road to the monochrome grandeur within, from the ground floor's restrained elegance to the wedding floor's joyful abundance — every decision traces back to the same question: how does tradition speak confidently in the now?</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p>The answer wasn't about choosing between heritage and contemporary. It was about creating conversation between them. Like the city itself — where cafés frame monuments, where traditional restaurants serve global cuisine, where folk music collaborates with modern production — the space holds both.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p>Peacock gates reimagined in pristine white. Mirror work that echoes palaces. Craft kept alive not as museum display but as living practice.</p>
+    </div>
+    <div class="ds-body-block reveal">
+      <p class="whisper">This is Jaipur rendered in a new key. Not louder, not quieter. Just focused. Where craft commands attention, where jewellery finds its perfect stage, where a woman with both tradition and modernity in her heart can see herself reflected back — celebrated, welcomed, understood.</p>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       BEHIND THE SCENES
+  ══════════════════════════════════════════════ -->
+  <section class="ds" id="bts">
+
+    <div class="ds-header reveal">
+      <p class="label">Behind the Scenes</p>
+      <h2 class="s-h2">The process behind the place</h2>
+    </div>
+    <div class="ds-body-block reveal">
+      <p>Swatching pinks against century-old walls. Testing thikri mosaic patterns. Watching tarkashi wire-inlay take shape under a master craftsman's hands. The store was built in collaboration — with artisans, with the city, with the traditions that make Jaipur what it is.</p>
+    </div>
+
+    <div class="bts-scroll-outer">
+      <div class="bts-scroll-track" id="btsTrack">
+        <img src="Jaipur%20Images/BTS/IMG_20220623_145016_Original.jpg" alt="Construction — site visit" />
+        <img src="Jaipur%20Images/BTS/IMG_20220623_173302_Original.jpg" alt="Construction — site detail" />
+        <img src="Jaipur%20Images/BTS/IMG_20220623_173810_Original.jpg" alt="Construction — progress" />
+        <img src="Jaipur%20Images/BTS/IMG_20220623_215155_Original.jpg" alt="Construction — evening" />
+        <img src="Jaipur%20Images/BTS/IMG_20220623_222229.jpg" alt="Construction — night work" />
+        <img src="Jaipur%20Images/BTS/IMG_20220706_150445.jpg" alt="Installation — day 1" />
+        <img src="Jaipur%20Images/BTS/IMG_20220706_150848.jpg" alt="Installation — detail" />
+        <img src="Jaipur%20Images/BTS/IMG_20220706_152042.jpg" alt="Installation — progress" />
+        <img src="Jaipur%20Images/BTS/IMG_20220706_152459.jpg" alt="Installation — finishing" />
+        <img src="Jaipur%20Images/BTS/IMG_20220922_221015_Original.jpg" alt="Final installation" />
+        <img src="Jaipur%20Images/BTS/IMG_4668.jpg" alt="Craft detail" />
+        <img src="Jaipur%20Images/BTS/IMG_4669.JPG" alt="Craft process" />
+        <img src="Jaipur%20Images/BTS/IMG_4670.JPG" alt="Craft finishing" />
+        <img src="Jaipur%20Images/BTS/thikri-1.png" alt="Thikri mirror work" />
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════
+       CTA / FOOTER
+  ══════════════════════ -->
+  <section id="cta">
+    <p class="cta-eyebrow reveal">Powered by pixels and way too many desserts!</p>
+    <h2 class="cta-heading reveal">Let's work<br><em>together!</em></h2>
+    <a href="mailto:kashish@example.com" class="cta-btn reveal">Get in touch</a>
+    <p class="cta-credit">© 2024 Kashish Richhariya. All rights reserved.</p>
+  </section>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    /* Hero entrance — single block, Rivaah style */
+    gsap.fromTo('.hero-content',
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.3 }
+    );
+
+    /* Generic scroll reveals */
+    gsap.utils.toArray('.reveal').forEach(el => {
+      gsap.fromTo(el, { opacity:0, y:44 }, {
+        opacity:1, y:0, duration:0.9, ease:'power3.out',
+        scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
+      });
+    });
+    gsap.utils.toArray('.reveal-scale').forEach(el => {
+      gsap.fromTo(el, { opacity:0, scale:0.97 }, {
+        opacity:1, scale:1, duration:1, ease:'power2.out',
+        scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
+      });
+    });
+    gsap.utils.toArray('.reveal-left').forEach(el => {
+      gsap.fromTo(el, { opacity:0, x:-44 }, {
+        opacity:1, x:0, duration:1, ease:'power3.out',
+        scrollTrigger:{ trigger:el, start:'top 85%', toggleActions:'play none none none' }
+      });
+    });
+    gsap.utils.toArray('.reveal-right').forEach(el => {
+      gsap.fromTo(el, { opacity:0, x:44 }, {
+        opacity:1, x:0, duration:1, ease:'power3.out',
+        scrollTrigger:{ trigger:el, start:'top 85%', toggleActions:'play none none none' }
+      });
+    });
+
+    /* Process cards stagger */
+    gsap.fromTo('.process-step', { opacity:0, y:44 }, {
+      opacity:1, y:0, duration:0.75, ease:'power2.out', stagger:0.1,
+      scrollTrigger:{ trigger:'.process-grid', start:'top 83%', toggleActions:'play none none none' }
+    });
+
+    /* Principle cards stagger */
+    gsap.fromTo('.principle-card', { opacity:0, y:50 }, {
+      opacity:1, y:0, duration:0.85, ease:'power2.out', stagger:0.14,
+      scrollTrigger:{ trigger:'.principles-grid', start:'top 83%', toggleActions:'play none none none' }
+    });
+
+    /* Hero parallax on background image */
+    gsap.to('.hero-bg', {
+      yPercent:15, ease:'none',
+      scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub:true }
+    });
+
+    /* Quote */
+    gsap.fromTo('.quote-text', { opacity:0, y:32 }, {
+      opacity:1, y:0, duration:1.4, ease:'power2.out',
+      scrollTrigger:{ trigger:'#quote', start:'top 80%' }
+    });
+    gsap.fromTo('.quote-cite', { opacity:0 }, {
+      opacity:1, duration:1, delay:0.4, ease:'power2.out',
+      scrollTrigger:{ trigger:'#quote', start:'top 80%' }
+    });
+
+    /* BTS auto-scroll strip */
+    const btsTrack = document.getElementById('btsTrack');
+    if (btsTrack) {
+      const origChildren = Array.from(btsTrack.children);
+      origChildren.forEach(child => btsTrack.appendChild(child.cloneNode(true)));
+      let pos = 0;
+      const speed = 1.8;
+      function animateBTS() {
+        pos += speed;
+        const half = btsTrack.scrollWidth / 2;
+        if (pos >= half) pos = 0;
+        btsTrack.style.transform = `translateX(-${pos}px)`;
+        requestAnimationFrame(animateBTS);
+      }
+      setTimeout(animateBTS, 400);
+    }
+
+    /* Justified image rows — same height, full width, no crop */
+    function justifyRow(grid) {
+      const imgs = Array.from(grid.querySelectorAll('img'));
+      if (!imgs.length) return;
+      const GAP = 3;
+      function layout() {
+        if (!imgs.every(img => img.complete && img.naturalWidth > 0)) return;
+        const totalAR = imgs.reduce((s, img) => s + img.naturalWidth / img.naturalHeight, 0);
+        const availW = grid.offsetWidth - GAP * (imgs.length - 1);
+        const h = availW / totalAR;
+        imgs.forEach(img => { img.style.height = h + 'px'; img.style.width = 'auto'; });
+      }
+      imgs.forEach(img => {
+        if (img.complete && img.naturalWidth > 0) layout();
+        else img.addEventListener('load', layout, { once: true });
+      });
+      window.addEventListener('resize', () => requestAnimationFrame(layout));
+    }
+    document.querySelectorAll('.bleed-pair-equal, .preview-grid').forEach(justifyRow);
+  </script>
+
+  <!-- Spatial Planning Carousel -->
+  <script>
+    (function () {
+      const slides  = Array.from(document.querySelectorAll('#spCarousel .sp-slide'));
+      const dots    = Array.from(document.querySelectorAll('#spDots .sp-dot'));
+      const prevBtn = document.getElementById('spPrev');
+      const nextBtn = document.getElementById('spNext');
+      let current = 0;
+      let timer;
+
+      function goTo(n) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      function startAuto() { timer = setInterval(() => goTo(current + 1), 4200); }
+      function stopAuto()  { clearInterval(timer); }
+
+      prevBtn.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
+      nextBtn.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
+      dots.forEach(dot => dot.addEventListener('click', () => { stopAuto(); goTo(+dot.dataset.i); startAuto(); }));
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')  { stopAuto(); goTo(current - 1); startAuto(); }
+        if (e.key === 'ArrowRight') { stopAuto(); goTo(current + 1); startAuto(); }
+      });
+
+      startAuto();
+    })();
+  </script>
+
+</body>
+</html>

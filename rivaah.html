@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rivaah — Kashish Richhariya</title>
+  <meta name="description" content="Spatial and experience design for Rivaah by Tanishq, South Ex Delhi. A bridal space designed for stillness." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Custom Fonts ── */
+    @font-face {
+      font-family: 'Queens Sans';
+      src: local('Queens Sans Bold'), local('QueensSans-Bold'), local('QueensSansBold'), local('Queens Sans');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+
+    /* ── Tokens ── */
+    :root {
+      --accent:       #b8907c;
+      --accent-d:     #9a735f;
+      --cream:        #fcfcfc;
+      --warm:         #f7f6f2;
+      --rose-pale:    #f5ede9;
+      --dark:         #0c0c0b;
+      --heading:      #4a4540;
+      --charcoal:     #343230;
+      --slate:        #3a3938;
+      --mid:          #4c4a46;
+      --muted:        #9b957d;
+      --stone:        #9c948a;
+      /* extended palette — blues & berries */
+      --berry:        #330511;
+      --plum:         #281822;
+      --mist-blue:    #BDC5CF;
+      --powder-blue:  #DFE3EA;
+      --rose-taupe:   #E7DAD4;
+      --bubble-gum:   #E8D9D2;
+      --ivory-cream:  #F8F8EC;
+      --oat-beige:    #E3E0CF;
+      --serif:        'Playfair Display', Georgia, serif;
+      --sans:         'Manrope', system-ui, sans-serif;
+      --nav-h:        96px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--heading);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: linear-gradient(to bottom, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.18) 60%, transparent 100%);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 48px; z-index: 100;
+    }
+    .nav-logo { margin: 0 56px; }
+    .nav-logo img { height: 64px; width: auto; display: block; }
+    .nav-side {
+      font-size: 12px; font-weight: 400; color: rgba(252,252,252,0.7);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    .nav-side:hover { color: var(--cream); }
+    .nav-links { display: none; list-style: none; }
+    .nav-links a { font-size: 12px; font-weight: 400; color: rgba(252,252,252,0.7); letter-spacing: 0.1em; text-transform: uppercase; transition: color .25s; }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; position: absolute; right: 20px; }
+    .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
+
+    /* ── LABEL ── */
+    .label {
+      display: block;
+      font-family: 'Queens Sans', var(--sans);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    /* ── SECTION HEADING ── */
+    .s-h2 {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.6vw, 38px);
+      font-weight: 400;
+      color: var(--heading);
+      line-height: 1.22;
+      letter-spacing: -0.04em;
+      margin-top: 14px;
+    }
+
+    /* ── Containers ── */
+    .wrap    { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+    .wrap-md { max-width: 860px;  margin: 0 auto; padding: 0 48px; }
+    .wrap-sm { max-width: 680px;  margin: 0 auto; padding: 0 48px; }
+
+    /* ══════════════════════════════
+       HERO — full-viewport video
+    ══════════════════════════════ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 80px;
+    }
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(12,12,11,0.72) 0%,
+        rgba(12,12,11,0.28) 50%,
+        rgba(12,12,11,0.18) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 64px;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 400; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(252,252,252,0.55);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(36px, 5.2vw, 70px);
+      font-weight: 400; line-height: 1;
+      color: var(--cream);
+      margin-bottom: 20px;
+      letter-spacing: -0.04em;
+    }
+    .hero-title em { font-style: italic; font-family: var(--serif); }
+    .hero-sub {
+      font-size: clamp(14px, 1.2vw, 16px);
+      font-weight: 300;
+      color: rgba(252,252,252,0.65);
+      letter-spacing: 0.04em;
+    }
+
+    /* Audio toggle button */
+    .hero-audio-btn {
+      position: absolute; bottom: 32px; left: 64px; z-index: 3;
+      background: rgba(12,12,11,0.38);
+      border: 1px solid rgba(252,252,252,0.22);
+      color: rgba(252,252,252,0.75);
+      width: 44px; height: 44px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .25s, color .25s;
+      padding: 0;
+    }
+    .hero-audio-btn:hover { background: rgba(12,12,11,0.62); color: var(--cream); }
+    .hero-audio-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .hero-audio-btn .icon-muted { display: none; }
+    .hero-audio-btn.muted .icon-sound { display: none; }
+    .hero-audio-btn.muted .icon-muted { display: block; }
+
+    .hero-scroll {
+      position: absolute; bottom: 32px; right: 64px; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: rgba(252,252,252,0.4); font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(252,252,252,0.4), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* ══════════════════════════════
+       PROJECT META
+    ══════════════════════════════ */
+    #project-meta {
+      background: var(--cream);
+      padding: 64px 48px;
+      border-bottom: 1px solid rgba(184,144,124,0.18);
+    }
+    .meta-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    }
+    .meta-divider { background: rgba(184,144,124,0.2); min-height: 60px; }
+    .meta-item { padding: 0 44px; }
+    .meta-item:first-child { padding-left: 0; }
+    .meta-label { font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .meta-value { font-family: var(--sans); font-size: 14px; font-weight: 400; color: var(--mid); line-height: 1.7; }
+
+    /* ══════════════════════════════
+       INTRO
+    ══════════════════════════════ */
+    #intro { padding: 96px 0; background: var(--cream); }
+    .intro-para { font-size: clamp(13px, 1.15vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-bottom: 20px; }
+    .intro-pull {
+      font-family: var(--serif); font-style: normal;
+      font-size: clamp(21px, 2.24vw, 27px); color: var(--heading);
+      font-weight: 500; line-height: 1.4; border-left: 1.5px solid var(--accent);
+      padding-left: 28px; letter-spacing: -0.02em;
+      margin-top: 44px;
+    }
+
+    /* ══════════════════════════════
+       PHILOSOPHY + MATERIAL
+    ══════════════════════════════ */
+    #philosophy { padding: 0 0 24px; background: var(--cream); }
+    .phil-split {
+      display: grid; grid-template-columns: 60fr 40fr;
+      max-width: 1700px; margin: 0 auto;
+      padding: 0 0 0 48px;
+      align-items: center; gap: 0;
+    }
+    /* Material board: reduced width, no crop, no colour modification */
+    .phil-image img { width: 102%; height: auto; display: block; }
+    .phil-text { padding: 64px 72px 64px 64px; }
+    .phil-body { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 24px; }
+    .phil-body + .phil-body { margin-top: 14px; }
+    .phil-note { margin-top: 48px; font-family: var(--serif); font-style: normal; font-weight: 500; font-size: clamp(18px, 1.82vw, 22px); color: var(--heading); line-height: 1.4; letter-spacing: -0.02em; border-left: 1.5px solid var(--accent); padding-left: 28px; }
+
+    /* ══════════════════════════════
+       STANDING QUOTE
+    ══════════════════════════════ */
+    .standing-quote {
+      background: var(--powder-blue);
+      padding: 48px 48px 64px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .sq-text {
+      font-family: var(--serif); font-style: normal;
+      font-size: clamp(21px, 2.24vw, 27px);
+      font-weight: 500; color: var(--heading);
+      line-height: 1.4; max-width: 780px;
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+    .sq-attr { font-size: 12px; font-weight: 400; letter-spacing: 0.14em; color: var(--mid); text-transform: uppercase; margin-top: 20px; }
+
+    /* ══════════════════════════════
+       SECTION DIVIDER — editorial rule
+    ══════════════════════════════ */
+    .divider-editorial {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 48px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .divider-editorial-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent);
+      white-space: nowrap;
+    }
+    .divider-editorial-rule {
+      flex: 1; height: 1px;
+      background: var(--accent); opacity: 0.4;
+    }
+    .divider-wrap { padding: 48px 0; }
+
+    /* ══════════════════════════════
+       DESIGN SECTIONS
+    ══════════════════════════════ */
+    .ds { padding: 88px 0; }
+    .ds-alt { background: var(--warm); }
+    .ds-rose { background: var(--rose-pale); }
+
+    /* Split: image left + text right — align-items: center for balance */
+    .ds-split {
+      display: grid; grid-template-columns: 63fr 37fr;
+      max-width: 1600px; margin: 0 auto; padding: 0 0 0 48px;
+      align-items: center;
+    }
+    .ds-split-img { overflow: hidden; }
+    .ds-split-img img { width: 100%; height: auto; display: block; transition: transform 1.4s ease; }
+    .ds-split-text { padding: 48px 56px 48px 64px; }
+
+    /* Split reversed: text left + image right — image column reduced 20% */
+    .ds-split-r {
+      display: grid; grid-template-columns: 64fr 36fr;
+      max-width: 1600px; margin: 0 auto; padding: 0 48px 0 0;
+      align-items: center;
+    }
+    .ds-split-r .ds-split-text { padding: 48px 64px 48px 48px; }
+    .ds-split-r .ds-split-img img { width: 100%; height: auto; display: block; transition: transform 1.4s ease; }
+
+    /* Creative Visualisation sub-label — divider-editorial style, aligned with image grid */
+    .creative-vis-header {
+      max-width: 1600px; margin: 48px auto 0;
+      padding: 0 32px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .creative-vis-header .label { color: var(--muted); margin-bottom: 0; white-space: nowrap; }
+    .creative-vis-rule { flex: 1; height: 1px; background: var(--accent); opacity: 0.4; }
+
+    .ds-body { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 24px; }
+    .ds-body + .ds-body { margin-top: 14px; }
+    .whisper {
+      font-family: var(--serif); font-style: normal;
+      font-size: clamp(18px, 1.82vw, 22px); color: var(--heading);
+      font-weight: 500;
+      margin-top: 44px; line-height: 1.4; letter-spacing: -0.02em;
+    }
+
+    /* Standalone section header — equal gaps: label→h2 = h2→body = 24px */
+    .ds-header { max-width: 1200px; margin: 0 auto; padding: 0 48px 24px; }
+    .ds-header .label { margin-bottom: 24px; }
+    .ds-header .s-h2 { margin-top: 0; }
+    .ds-body-block { max-width: 1200px; margin: 0 auto; padding: 0 48px 28px; }
+    .ds-body-block p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; max-width: 680px; }
+
+    /* Sub-section label */
+    .ds-sub-label {
+      font-family: var(--sans);
+      font-size: 10px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--mid);
+      display: block; margin-bottom: 10px;
+    }
+
+    /* Full-bleed image — natural aspect ratio, no crop; overflow hidden for scale animation */
+    .bleed { width: 100%; overflow: hidden; }
+    .bleed img { width: 100%; height: auto; display: block; transition: transform 0.1s; }
+
+    /* Full-bleed viewport-height — used for immersive showcase images */
+    .bleed-vh { width: 100%; height: 100vh; overflow: hidden; position: relative; }
+    .bleed-vh img { width: 100%; height: 120vh; object-fit: cover; display: block; will-change: transform; }
+
+    /* 2-col grids */
+    .bleed-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .bleed-row2 img { width: 100%; height: auto; display: block; }
+
+    /* Photo rows — natural height, no crop */
+    .ds-row2 {
+      max-width: 1600px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+    }
+    .ds-row2 img { width: 100%; height: auto; display: block; }
+    /* Drawing images override */
+    .ds-row2 img.drawing {
+      object-fit: contain; background: transparent; mix-blend-mode: multiply;
+    }
+
+    .ds-row3 {
+      max-width: 1600px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px;
+    }
+    /* 3D renders: uniform aspect ratio keeps row tidy */
+    .ds-row3 img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+
+    /* 2-col pairs — natural height, no crop */
+    .ds-pair {
+      max-width: 1600px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+      align-items: start;
+    }
+    .ds-pair img { width: 100%; height: auto; display: block; }
+
+    /* Asymmetric: 2/3 + 1/3 — equal heights for packaging section */
+    .ds-asym {
+      max-width: 1600px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: 2fr 1fr; gap: 4px;
+      align-items: stretch;
+    }
+    .ds-asym img { width: 100%; height: 520px; object-fit: cover; display: block; }
+
+    /* Design render block — transparent so it inherits section background */
+    .render-block { background: transparent; padding: 8px 0; }
+
+    /* Annotated image rows for section E — full width, same height */
+    .pvr-render-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    }
+    .annotated-img { position: relative; overflow: hidden; }
+    .annotated-img img {
+      width: 100%; height: 60vh; display: block;
+      object-fit: cover; mix-blend-mode: normal;
+    }
+    /* Left column (render) — 10% desaturate from original color */
+    .pvr-render-row .annotated-img:first-child img {
+      filter: grayscale(10%);
+    }
+    .img-annotation {
+      position: absolute; top: 16px; left: 16px;
+      font-family: var(--sans);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.45);
+    }
+
+    /* FF 3D renders grid — 10% desaturation + RENDER annotation */
+    .ff3d-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px;
+    }
+    .ff3d-grid .annotated-img img {
+      width: 100%; height: 60vh; object-fit: cover; display: block;
+      filter: grayscale(10%);
+    }
+    @media (max-width: 860px) { .ff3d-grid { grid-template-columns: 1fr; } }
+    .render-row {
+      max-width: 1600px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      align-items: start;
+    }
+    .render-item {}
+    /* Drawings: contain + multiply blends white into section background */
+    .render-item img {
+      width: 100%; aspect-ratio: 4/3;
+      object-fit: contain; background: transparent;
+      mix-blend-mode: multiply; display: block;
+    }
+
+    /* 2-col render row */
+    .render-row2 {
+      max-width: 1600px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+      align-items: stretch;
+    }
+    .render-row2 .render-item {
+      display: flex; flex-direction: column;
+    }
+    .render-row2 .render-item img {
+      width: 100%; flex: 1;
+      aspect-ratio: 4/3; object-fit: cover;
+      background: transparent;
+      mix-blend-mode: multiply; display: block;
+    }
+
+    /* All captions — sans-serif, no italic */
+    .render-caption {
+      font-family: var(--sans); font-size: 12px;
+      color: var(--muted); margin-top: 10px; line-height: 1.5;
+    }
+    .img-caption {
+      max-width: 1600px; margin: 0 auto; padding: 8px 32px 0;
+      margin-bottom: 40px;
+      font-family: var(--sans); font-size: 12px;
+      color: var(--muted); letter-spacing: 0.01em; line-height: 1.6;
+    }
+
+    /* Full-width contained */
+    .ds-img { max-width: 1600px; margin: 0 auto; padding: 0 32px; }
+    .ds-img img { width: 100%; height: auto; display: block; }
+
+    /* Facade 3-col grid */
+    .facade-row3 {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px;
+    }
+    .facade-row3 img,
+    .facade-row3 video {
+      width: 100%; height: 60vh; object-fit: cover; display: block;
+    }
+
+    /* Motif + product lighting — 2-col viewport height */
+    .motif-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    }
+    .motif-row img { width: 100%; height: 100vh; object-fit: cover; display: block; }
+
+    @media (max-width: 860px) {
+      .facade-row3 { grid-template-columns: 1fr; }
+      .motif-row { grid-template-columns: 1fr; }
+      .motif-row img { height: 60vh; }
+    }
+
+    /* GF Model — centred at 60% width */
+    .gf-model-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0; overflow: hidden;
+    }
+    .gf-model-wrap img { width: 60%; height: auto; display: block; }
+    .gf-model-caption {
+      font-family: var(--sans); font-size: 12px;
+      color: var(--muted); letter-spacing: 0.01em; line-height: 1.6;
+      text-align: center; margin-top: 12px;
+    }
+    @media (max-width: 860px) {
+      .gf-model-wrap img { width: 80%; }
+    }
+    @media (max-width: 600px) {
+      .gf-model-wrap img { width: 100%; }
+    }
+
+    .mt-3  { margin-top: 3px; }
+    .mt-24 { margin-top: 24px; }
+    .mt-40 { margin-top: 40px; }
+    .mt-56 { margin-top: 56px; }
+    .mb-40 { margin-bottom: 40px; }
+
+    /* ══════════════════════════════
+       QUOTE — dark slate strip
+    ══════════════════════════════ */
+    #quote-mid {
+      background: var(--oat-beige); padding: 112px 48px; text-align: center;
+    }
+    .quote-text { font-family: var(--serif); font-style: normal; font-size: clamp(18px, 2.4vw, 32px); font-weight: 400; color: var(--charcoal); line-height: 1.1; max-width: 740px; margin: 0 auto; letter-spacing: -0.03em; }
+    .quote-cite { display: none; }
+
+    /* ══════════════════════════════
+       CLOSING
+    ══════════════════════════════ */
+    #closing {
+      padding: 120px 48px 80px;
+      background: var(--dark);
+      text-align: center;
+    }
+    .closing-text {
+      font-family: var(--serif); font-size: clamp(16px, 2.2vw, 27px);
+      font-weight: 400; color: var(--cream); letter-spacing: -0.03em;
+      line-height: 1.15; max-width: 780px;
+      margin: 0 auto 40px;
+    }
+    .closing-text em { font-style: normal; font-family: var(--serif); }
+
+    /* ══════════════════════════════
+       CTA / FOOTER
+    ══════════════════════════════ */
+    #cta { background: var(--charcoal); padding: 100px 48px 72px; text-align: center; }
+    .cta-eyebrow { font-size: 12px; font-weight: 300; color: var(--stone); margin-bottom: 24px; letter-spacing: 0.06em; }
+    .cta-heading { font-family: var(--serif); font-size: clamp(29px, 4.4vw, 60px); font-weight: 400; color: var(--cream); line-height: 1; margin-bottom: 44px; letter-spacing: -0.04em; }
+    .cta-heading em { font-style: normal; font-family: var(--serif); }
+    .cta-btn { display: inline-block; padding: 15px 48px; border: 1px solid rgba(252,252,252,0.3); color: var(--cream); font-size: 11px; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; transition: all .3s; }
+    .cta-btn:hover { background: var(--cream); color: var(--charcoal); border-color: var(--cream); }
+    .cta-credit { font-size: 11px; color: var(--stone); margin-top: 72px; opacity: 0.4; }
+
+    /* Staircase split — text left, image right */
+    .staircase-split {
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      padding-right: 72px;
+    }
+    .staircase-text {
+      padding: 72px 64px 72px 72px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .staircase-text .label { margin-bottom: 16px; }
+    .staircase-text .s-h2 { margin-top: 0; margin-bottom: 32px; }
+    .staircase-text .ds-body { margin-top: 0; }
+    .staircase-text .ds-body + .ds-body { margin-top: 14px; }
+    .staircase-img {
+      overflow: hidden; display: flex; flex-direction: column;
+      height: 75vh;
+    }
+    .staircase-img img {
+      width: 100%; flex: 1; min-height: 0;
+      object-fit: contain; display: block;
+    }
+    .staircase-caption {
+      font-family: var(--sans); font-size: 12px; color: var(--muted);
+      letter-spacing: 0.01em; line-height: 1.6;
+      padding: 8px 0 0;
+    }
+    @media (max-width: 860px) {
+      .staircase-split { grid-template-columns: 1fr; padding-right: 24px; }
+      .staircase-img { height: 60vh; }
+      .staircase-img img { flex: none; width: 100%; height: 100%; }
+      .staircase-text { padding: 48px 24px; }
+    }
+
+    /* Meenakari grid — no crop, contain, height matched */
+    .meenakari-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+      background: var(--warm);
+    }
+    .meenakari-grid video, .meenakari-grid img {
+      width: 100%; height: 70vh; object-fit: contain; display: block;
+    }
+    /* Packaging grid — full viewport height, cover */
+    .packaging-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    }
+    .packaging-grid img {
+      width: 100%; height: 100vh; object-fit: cover; display: block;
+    }
+    @media (max-width: 860px) {
+      .meenakari-grid, .packaging-grid { grid-template-columns: 1fr; }
+      .meenakari-grid video, .meenakari-grid img { height: 50vh; }
+      .packaging-grid img { height: 60vh; }
+    }
+
+    /* BTS horizontal auto-scroll */
+    .bts-scroll-outer {
+      overflow: hidden; margin-top: 48px; cursor: grab;
+    }
+    .bts-scroll-track {
+      display: flex; gap: 6px; will-change: transform;
+    }
+    .bts-scroll-track img {
+      height: 56vh; width: auto; flex-shrink: 0;
+      object-fit: cover; display: block;
+    }
+
+    /* ══════════════════════════════
+       BEFORE / AFTER SLIDER
+    ══════════════════════════════ */
+    .ba-slider {
+      position: relative;
+      width: 100%;
+      /* No fixed height — the result (.ba-after) image sets it naturally */
+      overflow: hidden;
+      cursor: col-resize;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+    /* Both images fill the container */
+    .ba-slider img {
+      display: block;
+      pointer-events: none;
+      border: none;
+    }
+    /* "After" (result) — in normal flow, sets the slider height at its natural ratio */
+    .ba-after {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+    /* "Before" (render) clips on the left — wrapper shrinks, image stays full-size */
+    .ba-before-wrap {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      z-index: 2;
+      overflow: hidden;
+      width: 50%; /* JS overrides this */
+    }
+    .ba-before-wrap img {
+      /* Span the full slider width so it aligns with the after image.
+         --ba-full-w is set by JS on each slider element. */
+      position: absolute;
+      top: 0; left: 0;
+      width: var(--ba-full-w, 100%);
+      height: 100%;
+      object-fit: cover;
+      object-position: left top;
+    }
+    /* Divider line */
+    .ba-handle {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      z-index: 3;
+      width: 2px;
+      background: rgba(255,255,255,0.7);
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    /* Circle knob */
+    .ba-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.22);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--mid);
+      font-size: 18px;
+      letter-spacing: -2px;
+    }
+    /* Label badges */
+    .ba-label {
+      position: absolute;
+      bottom: 20px;
+      z-index: 4;
+      font-family: var(--sans);
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      pointer-events: none;
+    }
+    .ba-label-render { left: 24px; }
+    .ba-label-result { right: 24px; }
+
+    /* Centred wrapper — 60% on desktop, full width on mobile */
+    .ba-wrap {
+      width: 60%;
+      margin: 0 auto;
+    }
+    .ba-wrap .img-caption {
+      max-width: none;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    @media (max-width: 860px) {
+      .ba-wrap { width: 100%; }
+    }
+
+    /* GSAP sets initial states — no CSS opacity:0 so fallback is always visible */
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 1200px) {
+      .ds-split { grid-template-columns: 1fr; padding: 0; }
+      .ds-split-text { padding: 40px 48px; }
+      .ds-split-r { grid-template-columns: 1fr; padding: 0; }
+      .ds-split-r .ds-split-text { padding: 40px 48px; }
+    }
+    @media (max-width: 1040px) {
+      .phil-split { grid-template-columns: 1fr; padding: 0; }
+      .phil-text { padding: 48px; }
+      .render-row { grid-template-columns: 1fr 1fr; }
+      .ds-row3 { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 860px) {
+      nav { padding: 0 24px; }
+      .wrap, .wrap-md, .wrap-sm { padding-left: 24px; padding-right: 24px; }
+      #project-meta, .standing-quote, #quote-mid, #closing, #cta { padding-left: 24px; padding-right: 24px; }
+      .meta-grid { grid-template-columns: 1fr; gap: 28px; }
+      .meta-divider { display: none; }
+      .meta-item { padding: 0; }
+      .ds-row2, .ds-pair, .ds-asym, .ds-img, .ds-header, .ds-body-block,
+      .img-caption, .render-row, .render-row2 { padding-left: 24px; padding-right: 24px; }
+      .divider-editorial { padding: 0 24px; }
+      .creative-vis-header { padding: 0 24px; }
+      .pvr-render-row { grid-template-columns: 1fr; }
+      .pvr-render-row .annotated-img img { height: 50vh; }
+      .ds-row3 { grid-template-columns: 1fr; padding: 0 24px; }
+      .hero-content { padding: 0 32px; }
+      .hero-audio-btn { left: 32px; }
+      .hero-scroll { right: 32px; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-side { display: none; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: rgba(12,11,10,0.97); padding: 24px 20px; gap: 20px; }
+      .nav-hamburger { display: flex; }
+      .hero-content { padding: 0 24px; }
+      .hero-audio-btn { left: 24px; bottom: 24px; }
+      .hero-scroll { display: none; }
+      .ds-row2 { grid-template-columns: 1fr; padding: 0 20px; }
+      .ds-pair { grid-template-columns: 1fr; padding: 0 20px; }
+      .ds-asym { grid-template-columns: 1fr; padding: 0 20px; }
+      .bleed-row2 { grid-template-columns: 1fr; }
+      .render-row { grid-template-columns: 1fr; padding: 0 20px; }
+      .render-row2 { grid-template-columns: 1fr; padding: 0 20px; }
+      .pvr-render-row { grid-template-columns: 1fr; }
+      .creative-vis-header { padding: 0 20px; }
+      .ds-img { padding: 0 20px; }
+      .ds-row3 { grid-template-columns: 1fr; padding: 0 20px; }
+      .ds-header, .ds-body-block { padding-left: 20px; padding-right: 20px; }
+      .img-caption { padding-left: 20px; padding-right: 20px; }
+      .divider-editorial { padding: 0 20px; }
+      .wrap, .wrap-md, .wrap-sm { padding-left: 20px; padding-right: 20px; }
+      #project-meta { padding-left: 20px; padding-right: 20px; }
+      #quote-mid, #closing, #cta { padding: 80px 20px 64px; }
+      .ds-split-text, .ds-split-r .ds-split-text, .phil-text { padding: 32px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════
+       NAV
+  ══════════════════════ -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-side">Work</a>
+    <a href="index.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
+    <a href="#cta" class="nav-side">Contact</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- ══════════════════════
+       HERO — video + text
+  ══════════════════════ -->
+  <section id="hero">
+    <!-- starts muted for autoplay; audio btn lets user unmute -->
+    <video
+      id="heroVideo"
+      class="hero-video"
+      src="Rivaah%20Images/Rivaah%20Video.mp4"
+      poster="Rivaah%20Images/web/Foyer.jpg"
+      autoplay muted loop playsinline
+    ></video>
+    <div class="hero-scrim"></div>
+
+    <div class="hero-content reveal">
+      <p class="hero-eyebrow">Tanishq &mdash; South Ex, Delhi &mdash; 2025</p>
+      <h1 class="hero-title">
+        Rivaah<br>
+        <em>A space that invites stillness</em>
+      </h1>
+      <p class="hero-sub">Spatial &amp; experience design for premium bridal jewellery retail</p>
+    </div>
+
+    <!-- Audio toggle -->
+    <button class="hero-audio-btn muted" id="audioBtn" title="Toggle audio" aria-label="Toggle audio">
+      <!-- Sound on icon -->
+      <svg class="icon-sound" viewBox="0 0 24 24" aria-hidden="true">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+      </svg>
+      <!-- Muted icon -->
+      <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <line x1="23" y1="9" x2="17" y2="15"/>
+        <line x1="17" y1="9" x2="23" y2="15"/>
+      </svg>
+    </button>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       PROJECT META
+  ══════════════════════ -->
+  <div id="project-meta" class="reveal">
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Project</div>
+        <div class="meta-value">Rivaah by Tanishq<br>South Extension, Delhi</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <div class="meta-label">Year of Completion</div>
+        <div class="meta-value">2025</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-item">
+        <div class="meta-label">Key Contributions</div>
+        <div class="meta-value">Lead Spatial Designer — material &amp; colour palette, furniture &amp; fixture design, surface finishes, lighting, flooring, sensory detailing, brand touchpoints</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       THE CHALLENGE
+  ══════════════════════ -->
+  <section id="intro">
+    <div class="wrap-sm">
+      <p class="intro-para reveal">
+        A bride arrives carrying more than excitement. There's the weight of choosing what's just right, the overwhelm of too many voices, too many options. She wants her family's blessings; their suggestions shape what she chooses. She's modern and rooted at once — travelling the world styled graciously in her grandmother's heirlooms.
+      </p>
+      <p class="intro-para reveal">
+        The physical space for Rivaah, Tanishq's premium bridal jewellery brand, needed to hold all of this: her clarity and her questions, her family's presence and her need for quiet, her desire for tradition and her eye for what feels fresh.
+      </p>
+      <p class="intro-pull reveal">
+        It needed to feel elevated without feeling overwhelming, celebratory without being loud — and create space for her voice to emerge.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       DESIGN PHILOSOPHY + MATERIAL BOARD
+  ══════════════════════ -->
+  <section id="philosophy">
+    <div class="phil-split reveal">
+      <div class="phil-image">
+        <!-- Natural height, no crop, no colour change -->
+        <img src="Rivaah%20Images/1.%20Material%20Board.png" alt="Material palette — soft greys, warm whites, dusty rose, copper" />
+      </div>
+      <div class="phil-text">
+        <p class="label">Design Philosophy</p>
+        <h2 class="s-h2">Designed for stillness.<br>For the moment before certainty arrives.</h2>
+        <p class="phil-body">The palette stays muted — soft greys, warm whites, dusty rose. Nothing competes with what truly shines: her jewellery, her joy, her certainty when she finds it.</p>
+        <p class="phil-body">Textures play the role here: lime wash walls that feel cool under your palm, copper that warms as light shifts, fabrics that move like breeze, surfaces that invite touch and hold the quiet weight of heritage.</p>
+        <p class="phil-note">The journey unfolds in chapters. An entrance that slows time. A gallery that invites wandering. Intimate floors that create pockets of privacy within a family affair.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       STANDING QUOTE
+  ══════════════════════ -->
+  <div class="standing-quote">
+    <p class="sq-text reveal">Each space asks a different question: What calls to you? What feels like yours? How do you want to be seen?</p>
+  </div>
+
+  <!-- ══════════════════════
+       A. ARRIVAL AS RITUAL
+  ══════════════════════ -->
+  <section class="ds">
+
+    <div class="divider-editorial reveal" style="max-width: 1600px; margin: 0 auto; padding: 32px 48px 24px;">
+      <span class="divider-editorial-label">Design Interventions</span>
+      <div class="divider-editorial-rule"></div>
+    </div>
+
+    <div class="ds-split reveal" style="align-items: stretch;">
+      <div class="ds-split-img" style="max-height: 100vh; overflow: hidden;">
+        <img src="Rivaah%20Images/web/2.%20Facade.jpg" alt="Rivaah facade — natural white stone, warm copper columns" style="height: 100vh; width: 100%; object-fit: cover; object-position: center;" />
+      </div>
+      <div class="ds-split-text">
+        <p class="label">A — Arrival as Ritual</p>
+        <h2 class="s-h2">An arch that suggests heritage without insisting on it</h2>
+        <p class="ds-body">The facade greets you first — natural white stone, warm copper columns framing an arch that suggests heritage without demanding it. The street outside is South Ex at full pitch: busy, purposeful, unmissable. And yet.</p>
+        <p class="ds-body">At dusk, light pools at the entrance like an invitation, warm and patient. Your pace begins to slow. The busy streets fade, and you feel a calm drawing you in — the first intervention before you've even crossed the threshold.</p>
+        <p class="whisper">The arch that doesn't announce heritage — it simply remembers it</p>
+      </div>
+    </div>
+
+    <!-- Facade image grid — 3 col full width -->
+    <div class="facade-row3 reveal-scale" style="margin-top:48px;">
+      <img src="Rivaah%20Images/Facade%202.JPG" alt="Rivaah facade — view 2" />
+      <img src="Rivaah%20Images/Facade%203.jpg" alt="Rivaah facade — view 3" />
+      <video src="Rivaah%20Images/Facade%203D.mov" autoplay muted loop playsinline aria-label="Rivaah facade — 3D view"></video>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════
+       B. A MOMENT TO SHIFT
+  ══════════════════════ -->
+  <section class="ds ds-alt">
+
+    <div class="ds-header reveal">
+      <p class="label">B — A Moment to Shift</p>
+      <h2 class="s-h2">Step through, and you're invited to pause</h2>
+    </div>
+
+    <div class="ds-body-block reveal">
+      <p>The foyer opens unhurried. A mannequin styled in full bridal elegance sets the tone. Above, the bougainvillea chandelier by Glass Forest — customised in dusty pink and warm grey to echo Rivaah's palette — holds a subtle celebration without announcing it. You're invited to sit, sip, to let the rhythm of the day set itself.</p>
+    </div>
+
+    <!-- Photographs -->
+    <div class="bleed reveal-scale mt-40">
+      <img src="Rivaah%20Images/web/Foyer.jpg" alt="Rivaah foyer — bougainvillea chandelier and bridal mannequin" />
+    </div>
+    <div class="img-caption">The foyer before a customer decides what kind of afternoon this will be</div>
+
+
+
+  </section>
+
+  <!-- ══════════════════════
+       C. GALLERY AS DISCOVERY
+  ══════════════════════ -->
+  <section class="ds">
+
+    <div class="ds-header reveal">
+      <p class="label">C — Gallery as Discovery</p>
+      <h2 class="s-h2">The ground floor opens like a question</h2>
+    </div>
+
+    <div class="ds-body-block reveal">
+      <p>What draws me in? What feels like mine? Display cases curve through the space, each holding karigari from a different region of India — hands that have shaped metal for generations. Plants soften edges.</p>
+      <p style="margin-top:16px;">The modern bride has travelled the world; she returns with a blend of traditions she's chosen and the ones she's inherited. Here, clarity doesn't come from seeing everything — it comes from discovering what speaks quietly to you.</p>
+    </div>
+    <div class="wrap-sm reveal" style="margin-top: 44px;">
+      <p class="whisper">Not every piece calls to every person. The gallery trusts the jewellery to do its own choosing.</p>
+    </div>
+
+    <!-- GF Model after text -->
+    <div class="gf-model-wrap reveal-scale" style="margin-top:56px;">
+      <img src="Rivaah%20Images/GF%20Model.jpg" alt="Ground floor model — spatial overview" />
+      <p class="gf-model-caption">Ground floor model — spatial layout and flow overview</p>
+    </div>
+
+    <!-- Gallery 1 — full width -->
+    <div class="bleed mt-56 reveal-scale">
+      <img src="Rivaah%20Images/web/Gallery%201.jpg" alt="Gallery floor — curved display cases, karigari on view" />
+    </div>
+    <div class="img-caption">Display cases curve through the space, each holding karigari from a different region of India</div>
+
+    <!-- Gallery 2 — full width -->
+    <div class="bleed mt-3 reveal-scale">
+      <img src="Rivaah%20Images/web/Gallery%202.jpg" alt="Gallery — regional craft on display" />
+    </div>
+    <div class="img-caption">Plants soften edges; the space breathes around what it holds</div>
+
+    <!-- Gallery 3 — full width -->
+    <div class="bleed mt-3 reveal-scale">
+      <img src="Rivaah%20Images/web/Gallery%203.jpg" alt="Gallery — jewellery display cases" />
+    </div>
+    <div class="img-caption">Clarity comes from discovering what speaks quietly to you</div>
+
+    <!-- Gallery 4 — full width -->
+    <div class="bleed mt-3 reveal-scale">
+      <img src="Rivaah%20Images/web/Gallery%204.jpg" alt="Gallery — full ground floor view" />
+    </div>
+    <div class="img-caption">Display cases curve like a question, not a command</div>
+
+    <!-- Motif + product lighting — 2-col viewport height -->
+    <div class="motif-row mt-3 reveal">
+      <img src="Rivaah%20Images/web/Motif.jpg" alt="Rivaah motif — craft and heritage detail" />
+      <img src="Rivaah%20Images/web/product%20lighting.jpg" alt="Product lighting — jewellery rendered in its best light" />
+    </div>
+    <div class="img-caption">The motif that carries heritage forward; jewellery rendered in its best light</div>
+
+  </section>
+
+  <!-- ══════════════════════
+       D. INTIMACY BY DESIGN
+  ══════════════════════ -->
+  <section class="ds ds-rose">
+
+    <div class="ds-header reveal">
+      <p class="label">D — Intimacy by Design</p>
+      <h2 class="s-h2">Upstairs, the experience grows quieter, closer</h2>
+    </div>
+
+    <div class="ds-body-block reveal">
+      <p>Each floor begins with a focal display of what it offers, then divides into pockets — seating large enough for a family, sheer curtains that filter light while maintaining privacy, planters that create intimacy without isolation. Jewellery arrives at your counter. Conversations unfold without rush. Time belongs to you here.</p>
+    </div>
+
+    <!-- FF Top View Model — after text, centred like GF Model -->
+    <div class="gf-model-wrap reveal-scale" style="margin-top:56px;">
+      <img src="Rivaah%20Images/web/FF%20Top%20View%20Model.jpg" alt="First floor model — top view" />
+      <p class="gf-model-caption">First floor model — spatial layout and flow overview</p>
+    </div>
+
+    <!-- Photographs — full-screen immersive -->
+    <div class="bleed-vh reveal-scale" style="margin-top:56px;">
+      <img src="Rivaah%20Images/web/FF1.jpg" alt="First floor — family seating area" />
+    </div>
+    <div class="img-caption">The first floor opens into family — a stage before the conversation begins</div>
+
+    <div class="bleed-vh mt-3 reveal-scale">
+      <img src="Rivaah%20Images/web/FF%202.jpg" alt="First floor — jewellery counter" />
+    </div>
+    <div class="img-caption">Jewellery arrives at the counter; the rest of the world waits outside</div>
+
+    <div class="bleed-vh mt-3 reveal-scale">
+      <img src="Rivaah%20Images/web/FF3.jpg" alt="First floor — view 3" />
+    </div>
+    <div class="img-caption">Sheer curtains filter light, not presence — private without becoming distant</div>
+
+    <div class="bleed-vh mt-3 reveal-scale">
+      <img src="Rivaah%20Images/web/FF4.jpg" alt="First floor — view 4" />
+    </div>
+    <div class="img-caption">Intimacy by degrees — the family gathered, the conversation slow, no moment rushed</div>
+
+    <!-- FF 3D renders — grid of 3 with RENDER annotation -->
+    <div class="ff3d-grid reveal-scale">
+      <div class="annotated-img">
+        <img src="Rivaah%20Images/web/FF%203D.jpg" alt="First floor 3D render — view 1" />
+        <span class="img-annotation">Render</span>
+      </div>
+      <div class="annotated-img">
+        <img src="Rivaah%20Images/web/FF%203D%202.jpg" alt="First floor 3D render — view 2" />
+        <span class="img-annotation">Render</span>
+      </div>
+      <div class="annotated-img">
+        <img src="Rivaah%20Images/web/FF%203D%203.jpg" alt="First floor 3D render — view 3" />
+        <span class="img-annotation">Render</span>
+      </div>
+    </div>
+    <div class="img-caption">First floor — 3D visualisation</div>
+
+  </section>
+
+  <!-- ══════════════════════
+       E. ROOMS FOR WHAT MATTERS
+  ══════════════════════ -->
+  <section class="ds ds-alt">
+
+    <div class="ds-header reveal">
+      <p class="label">E — Rooms for What Matters</p>
+      <h2 class="s-h2">Space for what a wedding actually needs</h2>
+    </div>
+
+    <div class="ds-body-block reveal">
+      <p>Long conversations. Trials that take their time. Video calls with the sister who couldn't make it. The private rooms hold the weight of real decision-making — not just selection, but becoming.</p>
+      <p style="margin-top:16px;">Trial rooms have full-length mirrors and room to move — you see yourself in context, wearing the outfit you'll actually wear, making the choice feel real before it is. A stylist understands that customisation isn't about luxury; it's about honouring the bride you imagined as a little girl and the woman you've become.</p>
+    </div>
+
+    <!-- Trial room: interactive before/after slider -->
+    <div class="ba-wrap mt-40">
+      <div class="ba-slider reveal-scale" id="baSlider1" data-pos="50">
+        <!-- After (result) — always visible below -->
+        <img class="ba-after" src="Rivaah%20Images/web/Trial%20Room.jpg" alt="Trial room — actual result" />
+        <!-- Before (render) — clipped to left side -->
+        <div class="ba-before-wrap" id="baWrap1">
+          <img src="Rivaah%20Images/web/Trial%20Room%20Render.jpg" alt="Trial room — 3D render" />
+        </div>
+        <!-- Divider + knob -->
+        <div class="ba-handle" id="baHandle1">
+          <div class="ba-knob">&#8596;</div>
+        </div>
+        <!-- Labels -->
+        <span class="ba-label ba-label-render">Render</span>
+        <span class="ba-label ba-label-result">Result</span>
+      </div>
+      <div class="img-caption">Trial room — full mirrors, room to move, space to become</div>
+    </div>
+
+    <!-- gap -->
+    <div style="height: 56px;"></div>
+
+    <!-- PVR: interactive before/after slider -->
+    <div class="ba-wrap">
+      <div class="ba-slider reveal-scale" id="baSlider2" data-pos="50">
+        <!-- After (result) — always visible below -->
+        <img class="ba-after" src="Rivaah%20Images/web/PVR.jpg" alt="Private viewing room — actual result" />
+        <!-- Before (render) — clipped to left side -->
+        <div class="ba-before-wrap" id="baWrap2">
+          <img src="Rivaah%20Images/web/PVR%20Render.jpg" alt="Private viewing room — 3D render" />
+        </div>
+        <!-- Divider + knob -->
+        <div class="ba-handle" id="baHandle2">
+          <div class="ba-knob">&#8596;</div>
+        </div>
+        <!-- Labels -->
+        <span class="ba-label ba-label-render">Render</span>
+        <span class="ba-label ba-label-result">Result</span>
+      </div>
+      <div class="img-caption">The private viewing room — where certainty is allowed to arrive at its own pace</div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════
+       F. PRESENCE IN THE DETAILS
+  ══════════════════════ -->
+  <section class="ds" style="padding: 0;">
+
+    <!-- Staircase split: text left, image right -->
+    <div class="staircase-split reveal">
+      <div class="staircase-text">
+        <p class="label">F — Presence in the Details</p>
+        <h2 class="s-h2">The experience lives in what you almost don't notice</h2>
+        <p class="ds-body">Contemporary miniature paintings reinterpreted with modern sensibility. Gesso work by traditional artisans adorning walls like heirlooms you're meeting for the first time. Everything here knows how to wait, how to make space, how to celebrate without announcing itself.</p>
+        <p class="ds-body" style="margin-top:16px;">A cinnamon fragrance with hints of burgundy. Soft music carrying Indian instruments through elegant phrasing. The staircase walls shimmer with fabric sandwiched between glass, catching light as you move between floors.</p>
+      </div>
+      <div class="staircase-img">
+        <img src="Rivaah%20Images/web/Staircase.jpg" alt="Staircase — fabric sandwiched between glass panels, light caught in transit" />
+        <p class="staircase-caption">Fabric sandwiched in glass — the shimmer of things that move when you're not looking</p>
+      </div>
+    </div>
+
+    <!-- Meenakari Process video (left) + meenakari photo (right) -->
+    <div class="meenakari-grid mt-3 reveal-scale">
+      <video src="Rivaah%20Images/Meenakari%20Process.mp4" autoplay muted loop playsinline aria-label="Meenakari craft process"></video>
+      <img src="Rivaah%20Images/web/meenakari.jpg" alt="Meenakari — traditional jewellery craft" />
+    </div>
+
+    <!-- Packaging + Bag motif grid -->
+    <div style="height: 56px;"></div>
+    <div class="packaging-grid reveal-scale">
+      <img src="Rivaah%20Images/web/Packaging.jpg" alt="Rivaah packaging — brand touchpoint design" />
+      <img src="Rivaah%20Images/web/Bag%20motif.jpg" alt="Bag motif — the last detail the bride touches" />
+    </div>
+    <div class="img-caption">The bag you carry home — the last detail the bride touches before she steps back into the world</div>
+
+  </section>
+
+  <!-- ══════════════════════
+       BEHIND THE SCENES
+  ══════════════════════ -->
+  <section class="ds ds-alt">
+
+    <div class="ds-header reveal">
+      <p class="label">Behind the Scenes</p>
+      <h2 class="s-h2">The fun is in the process</h2>
+    </div>
+
+    <div class="ds-body-block reveal">
+      <p>It was the moments that made the space — unhurried, often unseen — where the real excitement of designing our new identity lived. Watching everyone tickle their brains for unexpected <em>oops</em> moments, the bond that built over team dinners and joy of sharing a common pride made this process incredibly fun.</p>
+    </div>
+
+    <!-- Auto-scroll BTS image strip -->
+    <div class="bts-scroll-outer reveal-scale">
+      <div class="bts-scroll-track" id="btsTrack">
+        <img src="Rivaah%20Images/BTS/IMG_5120.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/IMG_5129.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/IMG_5130.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/IMG_5133.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/IMG_5134.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/IMG_5140.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/IMG_5147.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/IMG_5159.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/IMG_9231.jpeg" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/E67A56A7-522D-40E8-B68A-D75CACF0E571.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/156689fd-fc78-46f0-b2ef-168943efa217.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/1cb9b64a-85bb-435d-9384-8484ea3abb45.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/3ac5dd2f-2607-4fcc-8cb3-b2b480949c4e.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/6a63bf49-3ee4-4962-8a75-be8cd9a4baa3.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/6e858acc-443a-4f17-a685-6104d5a3ceec.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/c187f539-6158-4b21-9c22-db30748d80fc.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/ca8852e8-3a7a-48b2-9814-717ff3369785.JPG" alt="Behind the scenes" loading="lazy" />
+        <img src="Rivaah%20Images/BTS/f535c6d6-d756-4547-8863-b8aeca3ff7d3.JPG" alt="Behind the scenes" loading="lazy" />
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════
+       CTA / FOOTER
+  ══════════════════════ -->
+  <section id="cta">
+    <p class="cta-eyebrow reveal">Other Work</p>
+    <h2 class="cta-heading reveal">
+      Jaipur <em>MI Road</em><br>Next Case Study
+    </h2>
+    <a href="miroadjaipur.html" class="cta-btn reveal">View Project</a>
+    <p class="cta-credit">© 2025 Kashish Richhariya. All rights reserved.</p>
+  </section>
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // hero reveal on load
+    gsap.fromTo('.hero-content', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.3 });
+
+    // scroll reveals
+    gsap.utils.toArray('.reveal').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, y: 40 }, {
+        opacity: 1, y: 0,
+        duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+    gsap.utils.toArray('.reveal-scale').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, scale: 0.97 }, {
+        opacity: 1, scale: 1,
+        duration: 1.1, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+    gsap.utils.toArray('.reveal-left').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, x: -40 }, {
+        opacity: 1, x: 0,
+        duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+    gsap.utils.toArray('.reveal-right').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, x: 40 }, {
+        opacity: 1, x: 0,
+        duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+
+    // Stagger for image pairs/rows — parent .reveal handles opacity, children stagger on transform only
+    gsap.utils.toArray('.ds-pair, .ds-row2, .ds-row3').forEach(el => {
+      const imgs = el.querySelectorAll('img');
+      if (!imgs.length) return;
+      gsap.fromTo(imgs,
+        { y: 28, scale: 0.97 },
+        {
+          y: 0, scale: 1,
+          duration: 0.9, ease: 'power2.out',
+          stagger: 0.14,
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        }
+      );
+    });
+
+    // Soft reveal for render items (drawings, 3Ds)
+    gsap.utils.toArray('.render-item').forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1, y: 0,
+          duration: 0.75, ease: 'power2.out',
+          delay: (i % 3) * 0.1,
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        }
+      );
+    });
+
+    // Full-width image scroll entrance — subtle scale-down reveal
+    gsap.utils.toArray('.bleed').forEach(el => {
+      const img = el.querySelector('img');
+      if (!img) return;
+      gsap.fromTo(img,
+        { scale: 1.06, opacity: 0.85 },
+        {
+          scale: 1, opacity: 1,
+          duration: 1.5, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        }
+      );
+    });
+
+    // Immersive viewport-height images (FF1–FF4) — parallax + slow reveal
+    gsap.utils.toArray('.bleed-vh').forEach(el => {
+      const img = el.querySelector('img');
+      if (!img) return;
+
+      // Slow reveal on enter
+      gsap.fromTo(img,
+        { scale: 1.08, opacity: 0 },
+        {
+          scale: 1, opacity: 1,
+          duration: 2.4, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 95%', once: true }
+        }
+      );
+
+      // Parallax: image translates upward as user scrolls
+      gsap.to(img, {
+        yPercent: -15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.8
+        }
+      });
+    });
+
+    // ds-img (contained full-width photos) — same treatment
+    gsap.utils.toArray('.ds-img').forEach(el => {
+      const img = el.querySelector('img');
+      if (!img) return;
+      gsap.fromTo(img,
+        { scale: 1.04, opacity: 0.9 },
+        {
+          scale: 1, opacity: 1,
+          duration: 1.3, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        }
+      );
+    });
+
+    // Audio — unmute on load, mute when scrolled past hero
+    const videoEl = document.getElementById('heroVideo');
+    const audioBtn = document.getElementById('audioBtn');
+    const heroSection = document.getElementById('hero');
+
+    // Attempt to play with audio as soon as the video is ready
+    videoEl.addEventListener('canplay', () => {
+      videoEl.muted = false;
+      audioBtn.classList.remove('muted');
+    }, { once: true });
+
+    // Mute when user scrolls past the hero; unmute if they scroll back
+    let heroMuted = false;
+    window.addEventListener('scroll', () => {
+      const heroPast = heroSection.getBoundingClientRect().bottom <= 0;
+      if (heroPast && !heroMuted) {
+        heroMuted = true;
+        videoEl.muted = true;
+        audioBtn.classList.add('muted');
+      } else if (!heroPast && heroMuted) {
+        heroMuted = false;
+        videoEl.muted = false;
+        audioBtn.classList.remove('muted');
+      }
+    }, { passive: true });
+
+    // Manual toggle still works
+    audioBtn.addEventListener('click', () => {
+      videoEl.muted = !videoEl.muted;
+      audioBtn.classList.toggle('muted', videoEl.muted);
+      // Override scroll-mute state when user manually controls
+      heroMuted = videoEl.muted;
+    });
+
+    // BTS auto-scroll (infinite loop)
+    const btsTrack = document.getElementById('btsTrack');
+    if (btsTrack) {
+      // Duplicate images for seamless loop
+      const origChildren = Array.from(btsTrack.children);
+      origChildren.forEach(child => btsTrack.appendChild(child.cloneNode(true)));
+
+      let pos = 0;
+      const speed = 1.8; // px per frame
+
+      function animateBTS() {
+        pos += speed;
+        const half = btsTrack.scrollWidth / 2;
+        if (pos >= half) pos = 0;
+        btsTrack.style.transform = `translateX(-${pos}px)`;
+        requestAnimationFrame(animateBTS);
+      }
+      // Start after a short delay to let images begin loading
+      setTimeout(animateBTS, 400);
+    }
+
+    // ── Before / After Sliders ──
+    document.querySelectorAll('.ba-slider').forEach(slider => {
+      const wrap   = slider.querySelector('.ba-before-wrap');
+      const handle = slider.querySelector('.ba-handle');
+      let dragging = false;
+
+      // Sync --ba-full-w so the render image always fills the full slider width
+      function syncWidth() {
+        slider.style.setProperty('--ba-full-w', slider.offsetWidth + 'px');
+      }
+      syncWidth();
+      window.addEventListener('resize', syncWidth, { passive: true });
+
+      function setPos(pct) {
+        pct = Math.max(2, Math.min(98, pct));
+        wrap.style.width   = pct + '%';
+        handle.style.left  = pct + '%';
+        slider.dataset.pos = pct;
+      }
+
+      function getPercent(clientX) {
+        const rect = slider.getBoundingClientRect();
+        return ((clientX - rect.left) / rect.width) * 100;
+      }
+
+      // Mouse
+      slider.addEventListener('mousedown', e => {
+        dragging = true;
+        setPos(getPercent(e.clientX));
+        e.preventDefault();
+      });
+      window.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        setPos(getPercent(e.clientX));
+      });
+      window.addEventListener('mouseup', () => { dragging = false; });
+
+      // Touch
+      slider.addEventListener('touchstart', e => {
+        dragging = true;
+        setPos(getPercent(e.touches[0].clientX));
+      }, { passive: true });
+      window.addEventListener('touchmove', e => {
+        if (!dragging) return;
+        setPos(getPercent(e.touches[0].clientX));
+      }, { passive: true });
+      window.addEventListener('touchend', () => { dragging = false; });
+    });
+
+    // nav hamburger
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    if (hamburger) hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  </script>
+
+</body>
+</html>
