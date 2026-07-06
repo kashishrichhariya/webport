@@ -23,7 +23,7 @@
       --powder:   #dbe8ea;
       --serif:    'Playfair Display', Georgia, serif;
       --sans:     'Manrope', system-ui, sans-serif;
-      --nav-h:    72px;
+      --nav-h:    122px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,82 +50,43 @@
     }
 
     /* ═══════════════════════════════
-       NAV — fixed, scroll-triggered
+       NAV — Option 1 final: overlay, logo centred
     ═══════════════════════════════ */
-    #site-nav {
-      position: fixed; top: 0; left: 0; right: 0;
+    nav {
+      position: absolute; top: 0; left: 0; right: 0;
       height: var(--nav-h);
-      background: var(--cream);
-      border-bottom: 1px solid rgba(74,69,64,0.1);
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 0 56px; z-index: 200;
-      transform: translateY(-100%);
-      transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+      background: transparent;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 64px; z-index: 200;  /* match 64px page margin */
     }
-    #site-nav.visible { transform: translateY(0); }
-    .nav-logo-wrap img { height: 48px; width: auto; display: block; }
-    .nav-menu {
-      display: flex; gap: 48px; align-items: center;
-      list-style: none;
+    /* Logo truly centred regardless of link widths */
+    .nav-logo {
+      position: absolute; left: 50%; transform: translateX(-50%);
     }
-    .nav-menu a {
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--mid); transition: color 0.22s;
+    .nav-logo img {
+      height: 62px; width: auto; display: block;   /* +10% of original 56px */
+      filter: brightness(0) invert(1);              /* white */
     }
-    .nav-menu a:hover { color: var(--heading); }
+    .nav-side {
+      font-size: 13px; font-weight: 600;            /* +20% of 11px, semi-bold */
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    .nav-side:hover { color: #fff; }
+    .nav-right-links { display: none; } /* not used in option 1 */
+    .nav-links { display: none; list-style: none; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; position: absolute; right: 20px; }
+    .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: #fff; }
 
     /* ═══════════════════════════════
-       INTRO — full-viewport logo
-    ═══════════════════════════════ */
-    #intro {
-      height: 100vh; min-height: 540px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      background: #fff; position: relative;
-      overflow: hidden;
-    }
-    .intro-name {
-      font-family: var(--serif);
-      font-size: clamp(60px, 13.5vw, 210px);
-      font-weight: 400; color: var(--heading);
-      letter-spacing: -0.03em; line-height: 0.90;
-      text-align: center;
-    }
-    .intro-role {
-      font-size: 10px; font-weight: 400;
-      letter-spacing: 0.38em; text-transform: uppercase;
-      color: var(--stone); margin-top: 44px;
-    }
-    .intro-scroll {
-      position: absolute; bottom: 44px;
-      left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column;
-      align-items: center; gap: 12px;
-    }
-    .scroll-label {
-      font-size: 9px; letter-spacing: 0.28em;
-      text-transform: uppercase; color: var(--stone);
-    }
-    .scroll-line {
-      width: 1px; height: 52px;
-      background: linear-gradient(to bottom, transparent, var(--stone));
-      animation: lineGrow 2.2s ease-in-out infinite;
-    }
-    @keyframes lineGrow {
-      0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
-      40%  { transform: scaleY(1); transform-origin: top; opacity: 0.6; }
-      80%  { transform: scaleY(1); transform-origin: bottom; opacity: 0.2; }
-      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
-    }
-
-    /* ═══════════════════════════════
-       SLIDESHOW
+       HERO SLIDESHOW — full viewport
     ═══════════════════════════════ */
     #slideshow {
-      position: relative; height: 86vh;
+      position: relative; height: 100vh; min-height: 600px;
       overflow: hidden; background: var(--charcoal);
+      /* account for fixed nav */
+      margin-top: 0;
     }
     .slide {
       position: absolute; inset: 0;
@@ -133,30 +94,48 @@
     }
     .slide.active { opacity: 1; }
     .slide img { width: 100%; height: 100%; object-fit: cover; }
+    /* Hero scrim — mild gradient, 20% stronger than baseline */
     .slide-scrim {
       position: absolute; inset: 0;
-      background: linear-gradient(to top,
-        rgba(12,10,8,0.65) 0%,
-        rgba(12,10,8,0.18) 50%,
-        transparent 100%);
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.34) 0%,
+        rgba(0,0,0,0.07) 40%,
+        rgba(0,0,0,0.00) 70%,
+        rgba(0,0,0,0.26) 100%
+      );
     }
-    .slide-caption {
-      position: absolute; bottom: 56px; left: 64px; z-index: 2;
-      max-width: 600px;
+    /* Hero tagline — bottom left, aligned to page margin */
+    .hero-tagline {
+      position: absolute; bottom: 80px; left: 64px; z-index: 2;
+      max-width: 640px;
     }
-    .slide-project {
-      font-size: 10px; font-weight: 500;
-      letter-spacing: 0.3em; text-transform: uppercase;
-      color: rgba(252,252,252,0.5); margin-bottom: 12px;
-    }
-    .slide-title {
+    .hero-tagline h1 {
       font-family: var(--serif);
-      font-size: clamp(24px, 3.2vw, 48px);
+      font-size: clamp(28px, 4vw, 58px);
       font-weight: 400; color: var(--cream);
-      letter-spacing: -0.03em; line-height: 1.18;
+      letter-spacing: -0.03em; line-height: 1.12;
     }
+    .hero-tagline h1 em {
+      font-style: italic;
+      font-family: var(--serif);
+      display: block; /* forces 'tell a story' onto its own line */
+    }
+    /* VIEW PROJECT — bottom right, bigger & bolder */
+    .hero-view-project {
+      position: absolute; bottom: 80px; right: 64px; z-index: 2;
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(252,252,252,0.9);
+      border-bottom: 2px solid rgba(252,252,252,0.5);
+      padding-bottom: 5px;
+      transition: color 0.22s, border-color 0.22s;
+      text-decoration: none;
+    }
+    .hero-view-project:hover { color: #fff; border-color: #fff; }
     .slide-dots {
-      position: absolute; bottom: 64px; right: 64px;
+      position: absolute; bottom: 36px; left: 64px;
       display: flex; gap: 10px; z-index: 2;
       align-items: center;
     }
@@ -174,14 +153,14 @@
     /* ═══════════════════════════════
        ABOUT
     ═══════════════════════════════ */
-    #about { background: var(--powder); padding: 120px 0; }
+    #about { background: #f2ece3; padding: 120px 0; }
     .about-inner {
       max-width: 1440px; margin: 0 auto; padding: 0 64px;
       display: grid; grid-template-columns: 5fr 7fr;
       gap: 100px; align-items: center;
     }
     .about-img {
-      aspect-ratio: 4/3;
+      aspect-ratio: 3/4;
       overflow: hidden;
       background: rgba(74,69,64,0.08);
       position: relative;
@@ -231,8 +210,7 @@
 
     /* Full-width project */
     .work-full {
-      display: block; position: relative;
-      overflow: hidden;
+      display: block;
     }
     .wf-img { overflow: hidden; }
     .wf-img img {
@@ -241,48 +219,31 @@
       transition: transform 0.9s ease;
     }
     .work-full:hover .wf-img img { transform: scale(1.04); }
-    .wf-scrim {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top,
-        rgba(12,10,8,0.68) 0%,
-        rgba(12,10,8,0.1) 45%,
-        transparent 70%);
-      pointer-events: none;
-    }
-    .wf-caption {
-      position: absolute; bottom: 52px; left: 64px; z-index: 2;
-      max-width: 560px;
+    .wf-info {
+      background: var(--warm);
+      padding: 36px 64px 44px;
     }
     .wf-year {
-      font-size: 10px; letter-spacing: 0.3em;
+      display: block; font-size: 10px; letter-spacing: 0.26em;
       text-transform: uppercase;
-      color: rgba(252,252,252,0.5); margin-bottom: 10px;
+      color: var(--gold); margin-bottom: 10px;
     }
     .wf-title {
       font-family: var(--serif);
-      font-size: clamp(26px, 3.4vw, 50px);
-      font-weight: 400; color: var(--cream);
-      letter-spacing: -0.03em; line-height: 1.14;
+      font-size: clamp(20px, 2.2vw, 30px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.03em; line-height: 1.2;
+      margin-bottom: 10px;
     }
     .wf-desc {
-      font-size: 14px; color: rgba(252,252,252,0.6);
-      margin-top: 12px; line-height: 1.65;
+      font-size: 13px; color: var(--muted);
+      line-height: 1.75;
     }
-    .wf-link {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 24px; font-size: 10px; font-weight: 600;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(252,252,252,0.7);
-      border-bottom: 1px solid rgba(252,252,252,0.3);
-      padding-bottom: 2px;
-      transition: color 0.22s, border-color 0.22s;
-    }
-    .work-full:hover .wf-link { color: #fff; border-color: rgba(252,252,252,0.7); }
 
-    /* Half-width pair */
-    .work-pair {
+    /* 2-col project grid (Jaipur + CG Road) */
+    .work-grid {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 3px; margin-top: 3px;
+      gap: 3px;
     }
     .work-half { display: block; overflow: hidden; }
     .wh-img { overflow: hidden; }
@@ -316,12 +277,16 @@
       gap: 80px; align-items: start;
     }
     .j-left { position: sticky; top: 100px; }
+    /* Journal header — same style as Selected Work header */
+    .j-section-header {
+      margin-bottom: 52px;
+    }
     .j-heading {
       font-family: var(--serif);
-      font-size: clamp(48px, 7vw, 100px);
+      font-size: clamp(22px, 2.6vw, 38px);
       font-weight: 400; color: var(--heading);
-      letter-spacing: -0.05em; line-height: 0.9;
-      margin-bottom: 52px;
+      letter-spacing: -0.04em; line-height: 1.22;
+      margin-bottom: 0;
     }
     .j-count {
       font-family: var(--sans);
@@ -371,14 +336,34 @@
       filter: brightness(0) invert(1);
       opacity: 0.8;
     }
-    .footer-links { display: flex; gap: 52px; }
-    .footer-links a {
-      font-size: 10px; font-weight: 500;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(252,252,252,0.45);
-      transition: color 0.22s;
+    .footer-links { display: flex; gap: 32px; align-items: center; }
+    .footer-links a, .footer-links button {
+      display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid rgba(252,252,252,0.18);
+      background: transparent; cursor: pointer;
+      color: rgba(252,252,252,0.5);
+      transition: color 0.22s, border-color 0.22s, background 0.22s;
+      padding: 0;
     }
-    .footer-links a:hover { color: var(--cream); }
+    .footer-links a:hover, .footer-links button:hover {
+      color: var(--cream); border-color: rgba(252,252,252,0.5);
+      background: rgba(252,252,252,0.07);
+    }
+    .footer-links svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Copy toast */
+    #copy-toast {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(12px);
+      background: var(--charcoal); color: rgba(252,252,252,0.88);
+      font-family: var(--sans); font-size: 12px; letter-spacing: 0.06em;
+      padding: 10px 22px; border-radius: 4px;
+      border: 1px solid rgba(252,252,252,0.12);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 9999; white-space: nowrap;
+    }
+    #copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .footer-copy {
       max-width: 1440px; margin: 36px auto 0;
       font-size: 10px; color: rgba(252,252,252,0.2);
@@ -389,34 +374,37 @@
        RESPONSIVE
     ═══════════════════════════════ */
     @media (max-width: 1024px) {
-      #site-nav { padding: 0 32px; }
+      nav { padding: 0 48px; }
       .about-inner { padding: 0 48px; gap: 64px; }
       .work-header { padding: 0 48px 56px; }
-      .wf-caption { left: 48px; }
+      .wf-info { padding: 28px 48px 36px; }
+      .hero-tagline { left: 48px; }
+      .hero-view-project { right: 48px; }
       .journal-inner { padding: 0 48px; }
       footer { padding: 72px 48px 48px; }
     }
     @media (max-width: 860px) {
       .about-inner { grid-template-columns: 1fr; gap: 48px; padding: 0 32px; }
-      .about-img { max-width: 520px; }
+      .about-img { max-width: 280px; aspect-ratio: 3/4; }
       .journal-inner { grid-template-columns: 1fr; gap: 56px; padding: 0 32px; }
       .j-left { position: static; }
       .footer-inner { flex-direction: column; gap: 40px; text-align: center; }
+      .work-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      #site-nav { padding: 0 20px; }
-      .nav-menu { gap: 24px; }
-      .nav-menu li:nth-child(n+3) { display: none; }
-      .intro-name { font-size: clamp(48px, 14vw, 88px); }
-      #slideshow { height: 65vh; }
-      .slide-caption { left: 24px; bottom: 40px; }
-      .slide-dots { right: 24px; bottom: 40px; }
+      nav { padding: 0 20px; }
+      .nav-side { display: none; }
+      .nav-hamburger { display: flex; }
+      #slideshow { height: 100vh; }
+      .hero-tagline { left: 24px; bottom: 56px; }
+      .hero-view-project { right: 24px; bottom: 56px; }
+      .slide-dots { left: 24px; bottom: 20px; }
       .about-inner { padding: 0 20px; }
       #work { padding: 88px 0 0; }
       .work-header { padding: 0 24px 44px; }
       .wf-img img { height: 56vh; }
-      .wf-caption { left: 24px; bottom: 32px; }
-      .work-pair { grid-template-columns: 1fr; }
+      .wf-info { padding: 24px 24px 32px; }
+      .work-grid { grid-template-columns: 1fr; }
       .wh-img img { height: 48vh; }
       .journal-inner { padding: 0 20px; }
       footer { padding: 56px 20px 40px; }
@@ -426,68 +414,72 @@
 <body>
 
   <!-- ══════════════════════
-       NAV — scroll-triggered
+       NAV — overlay style
   ══════════════════════ -->
-  <nav id="site-nav">
-    <a href="#" class="nav-logo-wrap">
-      <img src="Logo-web.png" alt="Kashish Richhariya" />
-    </a>
-    <ul class="nav-menu">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#journal">Journal</a></li>
-      <li><a href="#footer">Contact</a></li>
-    </ul>
+  <nav id="navbar">
+    <a href="#work" class="nav-side">Work</a>
+    <a href="homepage.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
+    <a href="#footer" class="nav-side">Contact</a>
+    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
   </nav>
-
-  <!-- ══════════════════════
-       INTRO — large name
-  ══════════════════════ -->
-  <section id="intro">
-    <h1 class="intro-name">Kashish<br>Richhariya</h1>
-    <p class="intro-role">Interior Designer &nbsp;&middot;&nbsp; Mumbai</p>
-    <div class="intro-scroll">
-      <div class="scroll-line"></div>
-      <span class="scroll-label">Scroll</span>
-    </div>
-  </section>
 
   <!-- ══════════════════════
        PROJECT SLIDESHOW
   ══════════════════════ -->
   <section id="slideshow">
 
-    <div class="slide active">
-      <img src="Jaipur%20Images/Foyer.png" alt="Tanishq Jaipur MI Road" loading="eager" />
+    <!-- Slide 0: FF1 — hero entry image with zoom-out animation -->
+    <div class="slide active" data-link="rivaah.html" id="slide-hero">
+      <img src="Rivaah%20Images/web/FF1.jpg" alt="Rivaah First Floor" loading="eager" id="hero-img" />
       <div class="slide-scrim"></div>
-      <div class="slide-caption">
-        <p class="slide-project">Tanishq MI Road &mdash; Jaipur &mdash; 2024</p>
-        <h2 class="slide-title">Rooted in Royalty,<br>Reimagined for today</h2>
-      </div>
     </div>
 
-    <div class="slide">
-      <img src="CG%20Road%20Images/ff-cc-straight.png" alt="Tanishq CG Road Ahmedabad" loading="lazy" />
+    <!-- Remaining slides (rendered in DOM; JS shuffles order at runtime) -->
+    <div class="slide" data-link="rivaah.html">
+      <img src="Rivaah%20Images/web/Foyer.jpg" alt="Rivaah Foyer" loading="lazy" />
       <div class="slide-scrim"></div>
-      <div class="slide-caption">
-        <p class="slide-project">Tanishq CG Road &mdash; Ahmedabad &mdash; 2023</p>
-        <h2 class="slide-title">Where craft meets<br>everyday moments</h2>
-      </div>
     </div>
 
-    <div class="slide">
-      <img src="Rivaah%20Images/FF%202.jpg" alt="Rivaah by Tanishq" loading="lazy" />
+    <div class="slide" data-link="rivaah.html">
+      <img src="Rivaah%20Images/web/Gallery%201.jpg" alt="Rivaah Gallery" loading="lazy" />
       <div class="slide-scrim"></div>
-      <div class="slide-caption">
-        <p class="slide-project">Rivaah by Tanishq &mdash; 2023</p>
-        <h2 class="slide-title">Designed for stillness,<br>before certainty arrives</h2>
-      </div>
     </div>
 
-    <div class="slide-dots">
-      <button class="s-dot active" data-i="0" aria-label="Slide 1"></button>
-      <button class="s-dot" data-i="1" aria-label="Slide 2"></button>
-      <button class="s-dot" data-i="2" aria-label="Slide 3"></button>
+    <div class="slide" data-link="cgroad.html">
+      <img src="CG%20Road%20Images/ff-cc-straight.png" alt="CG Road First Floor" loading="lazy" />
+      <div class="slide-scrim"></div>
+    </div>
+
+    <div class="slide" data-link="cgroad.html">
+      <img src="CG%20Road%20Images/gf-cash-counter.png" alt="CG Road Cash Counter" loading="lazy" />
+      <div class="slide-scrim"></div>
+    </div>
+
+    <div class="slide" data-link="miroadjaipur.html">
+      <img src="Jaipur%20Images/Foyer.png" alt="Jaipur Foyer" loading="lazy" />
+      <div class="slide-scrim"></div>
+    </div>
+
+    <div class="slide" data-link="miroadjaipur.html">
+      <img src="Jaipur%20Images/double%20height%2002.png" alt="Jaipur Double Height" loading="lazy" />
+      <div class="slide-scrim"></div>
+    </div>
+
+    <div class="slide" data-link="miroadjaipur.html">
+      <img src="Jaipur%20Images/15-cash%20counter.png" alt="Jaipur Cash Counter" loading="lazy" />
+      <div class="slide-scrim"></div>
+    </div>
+
+    <!-- Hero tagline overlay -->
+    <div class="hero-tagline">
+      <h1>Designing spaces that <em>tell a story</em></h1>
+    </div>
+
+    <!-- VIEW PROJECT link -->
+    <a class="hero-view-project" id="hero-view-link" href="rivaah.html">View Project &nbsp;&#8594;</a>
+
+    <div class="slide-dots" id="slide-dots-wrap">
+      <!-- dots injected by JS after shuffle -->
     </div>
 
   </section>
@@ -499,13 +491,12 @@
     <div class="about-inner">
 
       <div class="about-img">
-        <!-- Replace with personal photo — 4:3 aspect ratio -->
+        <!-- Replace with personal photo — 3:5 aspect ratio -->
         <div class="about-img-placeholder">Your photo here</div>
       </div>
 
       <div class="about-text">
-        <p class="label">About</p>
-        <h2 class="about-heading">Spaces that carry the weight of meaning</h2>
+        <h2 class="about-heading">Hi, I'm Kashish Richhariya</h2>
         <p class="about-body">
           I design interiors for retail and hospitality — spaces that hold more than they show. Each project begins with a question about place, culture, and the person who will inhabit it. The answer shapes everything: material, proportion, light.
         </p>
@@ -528,22 +519,31 @@
       <h2 class="s-h2">Selected Work</h2>
     </div>
 
-    <!-- Jaipur — full width -->
-    <a class="work-full" href="miroadjaipur.html">
+    <!-- Rivaah — full width, info panel below image -->
+    <a class="work-full" href="rivaah.html">
       <div class="wf-img">
-        <img src="Jaipur%20Images/jaipur-ff-cc.png" alt="Tanishq Jaipur MI Road" loading="lazy" />
+        <img src="Rivaah%20Images/web/Foyer.jpg" alt="Rivaah by Tanishq" loading="lazy" />
       </div>
-      <div class="wf-scrim"></div>
-      <div class="wf-caption">
-        <p class="wf-year">Jaipur &nbsp;/&nbsp; 2024</p>
-        <h3 class="wf-title">Tanishq MI Road, Jaipur</h3>
-        <p class="wf-desc">Retail flagship rooted in the heritage of Jaipur's historic streetscape</p>
-        <span class="wf-link">View Project &nbsp;&#8594;</span>
+      <div class="wf-info">
+        <span class="wf-year">Delhi &nbsp;/&nbsp; 2023</span>
+        <h3 class="wf-title">Rivaah by Tanishq</h3>
+        <p class="wf-desc">A space designed for stillness — for the woman considering her most meaningful purchase</p>
       </div>
     </a>
 
-    <!-- CG Road + Rivaah — half width -->
-    <div class="work-pair">
+    <!-- Jaipur + CG Road — 2-col grid -->
+    <div class="work-grid" style="margin-top:3px;">
+
+      <a class="work-half" href="miroadjaipur.html">
+        <div class="wh-img">
+          <img src="Jaipur%20Images/Foyer.png" alt="Tanishq MI Road Jaipur" loading="lazy" />
+        </div>
+        <div class="wh-info">
+          <span class="wh-year">Jaipur &nbsp;/&nbsp; 2024</span>
+          <h3 class="wh-title">Tanishq MI Road, Jaipur</h3>
+          <p class="wh-desc">Retail flagship rooted in the heritage of Jaipur's historic streetscape</p>
+        </div>
+      </a>
 
       <a class="work-half" href="cgroad.html">
         <div class="wh-img">
@@ -553,17 +553,6 @@
           <span class="wh-year">Ahmedabad &nbsp;/&nbsp; 2023</span>
           <h3 class="wh-title">Tanishq CG Road, Ahmedabad</h3>
           <p class="wh-desc">Where the spirit of Gujarat's craft traditions meets contemporary retail design</p>
-        </div>
-      </a>
-
-      <a class="work-half" href="rivaah.html">
-        <div class="wh-img">
-          <img src="Rivaah%20Images/FF%202.jpg" alt="Rivaah by Tanishq" loading="lazy" />
-        </div>
-        <div class="wh-info">
-          <span class="wh-year">Mumbai &nbsp;/&nbsp; 2023</span>
-          <h3 class="wh-title">Rivaah by Tanishq</h3>
-          <p class="wh-desc">A space designed for stillness — for the woman considering her most meaningful purchase</p>
         </div>
       </a>
 
@@ -578,7 +567,10 @@
     <div class="journal-inner">
 
       <div class="j-left">
-        <h2 class="j-heading">Journal <span class="j-count">[3]</span></h2>
+        <div class="j-section-header">
+          <p class="label">Writing</p>
+          <h2 class="j-heading">Journal</h2>
+        </div>
         <a href="https://medium.com" target="_blank" rel="noopener" class="btn-outline j-cta">
           Read More <span class="btn-arrow">&nbsp;&#8594;</span>
         </a>
@@ -626,45 +618,69 @@
         <img src="Logo-web.png" alt="Kashish Richhariya" />
       </div>
       <div class="footer-links">
-        <a href="https://linkedin.com/in/kashishrichhariya" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:kashishrichhariya@gmail.com">kashishrichhariya@gmail.com</a>
+        <a href="https://www.linkedin.com/in/kashish-richhariya" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="3" ry="3"/>
+            <path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>
+          </svg>
+        </a>
+        <button id="copy-email-btn" aria-label="Copy email address">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 4h16v16H4z" rx="2"/>
+            <polyline points="22,6 12,13 2,6"/>
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+          </svg>
+        </button>
       </div>
     </div>
     <p class="footer-copy">© 2025 Kashish Richhariya. All rights reserved.</p>
   </footer>
 
+  <div id="copy-toast">Copied E-mail ID</div>
+
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
+    if (history.scrollRestoration) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
     gsap.registerPlugin(ScrollTrigger);
 
-    /* ── Scroll-triggered nav ── */
-    const nav = document.getElementById('site-nav');
-    ScrollTrigger.create({
-      start: 'top -60',
-      onEnter:     () => nav.classList.add('visible'),
-      onLeaveBack: () => nav.classList.remove('visible')
+    /* ══════════════════════════════════════════════
+       SLIDESHOW SETUP
+       - Slide 0 is always FF1.jpg (hero entry)
+       - Slides 1-7 are shuffled randomly each load
+    ══════════════════════════════════════════════ */
+    const allSlides     = Array.from(document.querySelectorAll('.slide'));
+    const heroSlide     = allSlides[0];           // FF1 — always first
+    const restSlides    = allSlides.slice(1);     // remaining 7
+    const slideshowEl   = document.getElementById('slideshow');
+    const dotsWrap      = document.getElementById('slide-dots-wrap');
+    const heroViewLink  = document.getElementById('hero-view-link');
+
+    /* Fisher-Yates shuffle */
+    for (let i = restSlides.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [restSlides[i], restSlides[j]] = [restSlides[j], restSlides[i]];
+    }
+
+    /* Re-append shuffled slides after the hero slide */
+    restSlides.forEach(s => slideshowEl.appendChild(s));
+
+    /* Rebuild ordered slides array after DOM shuffle */
+    const slides = [heroSlide, ...restSlides];
+
+    /* Inject dots */
+    slides.forEach((_, i) => {
+      const btn = document.createElement('button');
+      btn.className = 's-dot' + (i === 0 ? ' active' : '');
+      btn.dataset.i = i;
+      btn.setAttribute('aria-label', 'Slide ' + (i + 1));
+      dotsWrap.appendChild(btn);
     });
+    const dots = Array.from(dotsWrap.querySelectorAll('.s-dot'));
 
-    /* ── Intro entrance ── */
-    gsap.fromTo('.intro-name',
-      { opacity: 0, y: 64 },
-      { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out', delay: 0.15 }
-    );
-    gsap.fromTo('.intro-role',
-      { opacity: 0 },
-      { opacity: 1, duration: 1.2, ease: 'power2.out', delay: 1.0 }
-    );
-    gsap.fromTo('.intro-scroll',
-      { opacity: 0 },
-      { opacity: 1, duration: 0.9, ease: 'power2.out', delay: 1.6 }
-    );
-
-    /* ── Slideshow ── */
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    const dots   = Array.from(document.querySelectorAll('.s-dot'));
-    let current  = 0;
+    let current = 0;
     let timer;
 
     function goTo(n) {
@@ -673,15 +689,61 @@
       current = (n + slides.length) % slides.length;
       slides[current].classList.add('active');
       dots[current].classList.add('active');
+      if (heroViewLink && slides[current].dataset.link) {
+        heroViewLink.href = slides[current].dataset.link;
+      }
     }
 
-    function startAuto() { timer = setInterval(() => goTo(current + 1), 5500); }
+    /* Speed: 5500ms / 1.5 = ~3667ms */
+    function startAuto() { timer = setInterval(() => goTo(current + 1), 3667); }
     function stopAuto()  { clearInterval(timer); }
 
     dots.forEach(dot => dot.addEventListener('click', () => {
       stopAuto(); goTo(+dot.dataset.i); startAuto();
     }));
     startAuto();
+
+    /* ── Zoom-out animation on hero entry image (FF1) ── */
+    const heroImg = document.getElementById('hero-img');
+    if (heroImg) {
+      gsap.fromTo(heroImg,
+        { scale: 1.5, transformOrigin: 'center center' },
+        { scale: 1.0, duration: 2.2, ease: 'power2.out' }
+      );
+    }
+
+    /* ── Hero tagline entrance ── */
+    gsap.fromTo('.hero-tagline h1',
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out', delay: 0.5 }
+    );
+    gsap.fromTo('.hero-view-project',
+      { opacity: 0 },
+      { opacity: 1, duration: 1.0, ease: 'power2.out', delay: 1.2 }
+    );
+
+    /* ── Mobile hamburger ── */
+    const hamburger = document.getElementById('hamburger');
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        const nl = document.getElementById('navLinks');
+        if (nl) nl.classList.toggle('open');
+      });
+    }
+
+    /* ── Copy email ── */
+    const copyBtn = document.getElementById('copy-email-btn');
+    const toast   = document.getElementById('copy-toast');
+    let toastTimer;
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('kashishrichhariya@gmail.com').then(() => {
+          toast.classList.add('show');
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+        });
+      });
+    }
 
     /* ── Section scroll reveals ── */
     [
