@@ -194,7 +194,7 @@
     /* ═══════════════════════════════
        MI ROAD — split: text left, gif right
     ═══════════════════════════════ */
-    #mi-road { padding: 88px 0; background: var(--warm); }
+    #mi-road { padding: 88px 0; background: #fff; }
     .mi-split { max-width: 1440px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 68fr 32fr; gap: 80px; align-items: center; }
     .mi-text p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 20px; }
     .mi-image img { width: 100%; height: auto; display: block; }
@@ -336,7 +336,7 @@
       gap: 80px; align-items: center;
       max-width: 1600px; margin: 0 auto; padding: 0 48px;
     }
-    .gf-cashdesk-img img { height: 100vh; width: auto; display: block; }
+    .gf-cashdesk-img img { height: 100vh; width: auto; display: block; object-fit: contain; }
     .gf-cashdesk-text { text-align: left; }
     .gf-cashdesk-text .ds-body { margin-top: 0; }
 
@@ -749,15 +749,12 @@
       </div>
     </div>
 
-    <div class="bleed reveal-scale mt-48">
-      <img src="Jaipur%20Images/Facade.png" alt="Tanishq Jaipur — facade exterior" />
+    <div class="reveal-scale" style="max-width:1440px; margin:80px auto 0; padding:0 48px;">
+      <img src="Jaipur%20Images/Facade.png" alt="Tanishq Jaipur — facade exterior" style="width:100%; height:auto; display:block;" />
     </div>
 
     <div class="ds-body-block mt-48 reveal">
-      <p>Jaipur pink isn't just one shade- it's a gentle blush weathered by history. After testing swatches against the Hawa Mahal, the perfect hue now glows on MI Road.</p>
-    </div>
-    <div class="ds-body-block reveal">
-      <p>Existing columns were retained and woven into the new design language. Alongside them, double-height glazing frames the foyer, turning the storefront into a glimpse of the grandeur inside.</p>
+      <p>Jaipur pink isn't just one shade- it's a gentle blush weathered by history. After testing swatches against the Hawa Mahal, the perfect hue now glows on MI Road.<br><br>Existing columns were retained and woven into the new design language. Alongside them, double-height glazing frames the foyer, turning the storefront into a glimpse of the grandeur inside.</p>
     </div>
 
   </section>
@@ -816,28 +813,25 @@
       <h2 class="s-h2">Textures of Rajasthani architecture</h2>
     </div>
 
-    <div class="gf-cashdesk-split mt-48 reveal">
-      <div class="gf-cashdesk-img">
-        <img src="Jaipur%20Images/jaipur-gf-cc.png" alt="Ground floor cash counter — reference" />
-      </div>
-      <div class="gf-cashdesk-text">
-        <p class="ds-body">The double-height cashdesk speaks in the vocabulary of Rajasthani carving. Jaalis and arched openings catch a quiet wash of mood light- and the everyday act of a transaction borrows a little grandeur.</p>
-      </div>
+    <div class="mt-48 reveal" style="display:flex; justify-content:center; width:100%;">
+      <img src="Jaipur%20Images/jaipur-gf-cc.png" alt="Ground floor cash counter — reference" style="width:75vw; height:auto; display:block;" />
     </div>
 
   </section>
 
   <!-- store images — warm bg discontinues here -->
-  <div class="bleed reveal-scale">
-    <img src="Jaipur%20Images/15-cash%20counter.png" alt="Cash counter — interior" />
+  <div class="reveal-scale" style="display:grid; grid-template-columns:6fr 4fr; gap:64px; align-items:center; padding:64px 48px;">
+    <img src="Jaipur%20Images/15-cash%20counter.png" alt="Cash counter — interior" style="max-height:80vh; width:100%; height:auto; display:block; object-fit:contain;" />
+    <div style="padding:0 24px;">
+      <p style="font-size:clamp(14px,1.2vw,17px); font-weight:400; color:var(--mid); line-height:1.9;">The double-height cashdesk speaks in the vocabulary of Rajasthani carving. Jaalis and arched openings catch a quiet wash of mood light- and the everyday act of a transaction borrows a little grandeur.</p>
+    </div>
   </div>
 
-  <div class="bleed mt-3 reveal-scale">
+  <div class="bleed reveal-scale">
     <img src="Jaipur%20Images/Cash%20counter.png" alt="Cash counter — detail view" />
   </div>
-
   <!-- tarkashi craft -->
-  <section class="ds">
+  <section class="ds" style="padding-top:48px;">
 
     <!-- tarkashi craft pair — full width, equal height -->
     <div class="bleed-pair-equal reveal-scale">
@@ -861,15 +855,15 @@
       <h2 class="s-h2">A glorious wedding affair</h2>
     </div>
     <div class="ds-body-block mb-48 reveal">
-      <p>Climb the stairs. The mood transforms instantly. If the ground floor whispers in elegant restraint, the wedding floor sings in full voice. This is where the imaginary Jaipur dissolves and the celebratory one takes over — where monochrome releases into colour, where measured calm gives way to abundant warmth.</p>
+      <p>Heading up to the wedding floor, the vibe changes completely from quiet and calm to warm and festive. It's a perfect tribute to Jaipur, a city known for its grand, vibrant, and rich Indian weddings.</p>
     </div>
 
     <div class="bleed reveal-scale">
-      <img src="Jaipur%20Images/jaipur-ff-cc.png" alt="First floor — panoramic reference" />
+      <img src="Jaipur%20Images/jaipur-ff-cc-2.png" alt="First floor — panoramic reference" />
     </div>
 
     <div class="ds-body-block mt-48 reveal">
-      <p>Because this floor honours what weddings in Jaipur truly are — never quiet, never minimal, always a joyous explosion of tradition meeting festivity. The cash counter blooms with layered detail. Jaali and arch patterns remain, but now adorned with fountain motifs pulled from Jaipur's palace frescoes — symbols of abundance, fertility, paradise gardens thriving in desert landscapes. The branding sits in meenakari: Jaipur's signature enamel work rendered in red and gold, the colours of festivity and auspiciousness.</p>
+      <p>The cash counter is rich with layered detail, its jaali and arch patterns adorned with fountain motifs drawn from Jaipur's palace frescoes- symbols of abundance and paradise. Warm-toned lamps cast a golden glow across the space, while the Tanishq branding is rendered in meenakari, the city's signature enamel work in celebratory red and gold.</p>
     </div>
 
     <!-- mannequin pair — full width, equal height -->
@@ -879,7 +873,7 @@
     </div>
 
     <div class="ds-body-block mt-48 reveal">
-      <p>Walls shift from cool whites to warm ochre. This is the Rivaah floor — Tanishq's wedding jewellery collection — and it embraces colour the way weddings do. A gallery wall displays miniature paintings: scenes of bridal preparation, courtly celebrations, women adorning themselves. Each framed artwork tells stories of the rituals that jewellery adorns, connecting purchase to cultural memory.</p>
+      <p>At the heart of the floor, a mannequin case displays a traditional Jaipuri poshak paired with heritage jewellery. It captures the bride as she's imagined here- rooted in Rajput tradition, dressed for her most significant day, where every layer of fabric and ornament carries meaning and belonging.</p>
     </div>
 
     <!-- store view — full width -->
@@ -888,41 +882,12 @@
     </div>
 
     <div class="ds-body-block mt-48 reveal">
-      <p class="whisper">Where monochrome gives way to colour, restraint to abundance — because weddings in Jaipur are never quiet.</p>
-    </div>
-
-    <div class="ds-body-block mt-48 reveal">
-      <p>Crystal chandeliers glow warmer here. Floral arrangements become lush. Furniture takes on richer, deeper tones. Even the lighting shifts — less cool white, more golden. Everything signals: this is where joy lives, where restraint no longer serves, where celebration deserves full expression.</p>
-    </div>
-    <div class="ds-body-block reveal">
-      <p>The space resonates with the city's wedding culture. Jaipur marriages are grand affairs — colourful, deeply rooted in tradition yet contemporary in their expression, family gatherings that span days. The wedding floor mirrors this energy, honouring craft while creating an atmosphere that feels alive, warm, generous.</p>
+      <p>A pink textured wall showcases Rajput miniature paintings depicting the solah shringar—the sixteen adornments of a bride. Each frame captures a ritual, from mehndi to jewellery, celebrating the traditions that have adorned brides for generations.</p>
     </div>
 
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       CLOSING REFLECTION
-  ══════════════════════════════════════════════ -->
-  <section class="ds">
 
-    <div class="ds-header reveal">
-      <p class="label">Closing Reflection</p>
-      <h2 class="s-h2">A space that remembers</h2>
-    </div>
-    <div class="ds-body-block reveal">
-      <p>From the weathered pink of MI Road to the monochrome grandeur within, from the ground floor's restrained elegance to the wedding floor's joyful abundance — every decision traces back to the same question: how does tradition speak confidently in the now?</p>
-    </div>
-    <div class="ds-body-block reveal">
-      <p>The answer wasn't about choosing between heritage and contemporary. It was about creating conversation between them. Like the city itself — where cafés frame monuments, where traditional restaurants serve global cuisine, where folk music collaborates with modern production — the space holds both.</p>
-    </div>
-    <div class="ds-body-block reveal">
-      <p>Peacock gates reimagined in pristine white. Mirror work that echoes palaces. Craft kept alive not as museum display but as living practice.</p>
-    </div>
-    <div class="ds-body-block reveal">
-      <p class="whisper">This is Jaipur rendered in a new key. Not louder, not quieter. Just focused. Where craft commands attention, where jewellery finds its perfect stage, where a woman with both tradition and modernity in her heart can see herself reflected back — celebrated, welcomed, understood.</p>
-    </div>
-
-  </section>
 
   <!-- ══════════════════════════════════════════════
        BEHIND THE SCENES
@@ -931,26 +896,26 @@
 
     <div class="ds-header reveal">
       <p class="label">Behind the Scenes</p>
-      <h2 class="s-h2">The process behind the place</h2>
+      <h2 class="s-h2">The real fun is in the process</h2>
     </div>
     <div class="ds-body-block reveal">
-      <p>Swatching pinks against century-old walls. Testing thikri mosaic patterns. Watching tarkashi wire-inlay take shape under a master craftsman's hands. The store was built in collaboration — with artisans, with the city, with the traditions that make Jaipur what it is.</p>
+      <p>My design research basically meant eating my weight in local food, café-hopping, and blasting Junun on loop (which I still listen to, honestly). I totally get why Radiohead's Jonny Greenwood is so obsessed with this culture. Here's a peek at the literal diet of food and architecture that built this store.</p>
     </div>
 
     <div class="bts-scroll-outer">
       <div class="bts-scroll-track" id="btsTrack">
+        <img src="Jaipur%20Images/BTS/IMG_20220407_142239_Original.jpg" alt="Construction — early site" />
         <img src="Jaipur%20Images/BTS/IMG_20220623_145016_Original.jpg" alt="Construction — site visit" />
-        <img src="Jaipur%20Images/BTS/IMG_20220623_173302_Original.jpg" alt="Construction — site detail" />
         <img src="Jaipur%20Images/BTS/IMG_20220623_173810_Original.jpg" alt="Construction — progress" />
         <img src="Jaipur%20Images/BTS/IMG_20220623_215155_Original.jpg" alt="Construction — evening" />
         <img src="Jaipur%20Images/BTS/IMG_20220623_222229.jpg" alt="Construction — night work" />
         <img src="Jaipur%20Images/BTS/IMG_20220706_150445.jpg" alt="Installation — day 1" />
-        <img src="Jaipur%20Images/BTS/IMG_20220706_150848.jpg" alt="Installation — detail" />
         <img src="Jaipur%20Images/BTS/IMG_20220706_152042.jpg" alt="Installation — progress" />
         <img src="Jaipur%20Images/BTS/IMG_20220706_152459.jpg" alt="Installation — finishing" />
+        <img src="Jaipur%20Images/BTS/IMG_20220708_113235_Original.jpg" alt="Installation — detail" />
         <img src="Jaipur%20Images/BTS/IMG_20220922_221015_Original.jpg" alt="Final installation" />
+        <img src="Jaipur%20Images/BTS/IMG_20220923_172748_Original.jpg" alt="Completion — site" />
         <img src="Jaipur%20Images/BTS/IMG_4668.jpg" alt="Craft detail" />
-        <img src="Jaipur%20Images/BTS/IMG_4669.JPG" alt="Craft process" />
         <img src="Jaipur%20Images/BTS/IMG_4670.JPG" alt="Craft finishing" />
         <img src="Jaipur%20Images/BTS/thikri-1.png" alt="Thikri mirror work" />
       </div>
