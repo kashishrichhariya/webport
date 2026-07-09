@@ -68,14 +68,14 @@
       background: linear-gradient(to bottom, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.18) 60%, transparent 100%);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
-      display: flex; align-items: center; justify-content: center;
-      padding: 0 48px; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 64px; z-index: 100;
     }
-    .nav-logo { margin: 0 56px; }
-    .nav-logo img { height: 64px; width: auto; display: block; }
+    .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    .nav-logo img { height: 62px; width: auto; display: block; filter: brightness(0) invert(1); }
     .nav-side {
-      font-size: 12px; font-weight: 400; color: rgba(252,252,252,0.7);
-      letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 13px; font-weight: 600; color: rgba(252,252,252,0.88);
+      letter-spacing: 0.18em; text-transform: uppercase;
       transition: color .25s;
     }
     .nav-side:hover { color: var(--cream); }
@@ -475,16 +475,46 @@
       width: 100%; height: 60vh; object-fit: cover; display: block;
     }
 
-    /* Motif + product lighting — 2-col viewport height */
+    /* Motif + product lighting — equal height, no crop */
     .motif-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+      display: flex; align-items: flex-start; gap: 3px;
     }
-    .motif-row img { width: 100%; height: 100vh; object-fit: cover; display: block; }
+    .motif-row .motif-cell {
+      overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0;
+      background: var(--cream);
+    }
+    .motif-row .motif-cell img {
+      width: 100%; height: 100%; object-fit: contain; display: block; flex: 1;
+    }
+    .motif-cell-caption {
+      font-family: var(--sans); font-size: 12px; color: var(--muted);
+      letter-spacing: 0.01em; line-height: 1.6; padding: 8px 0 0;
+    }
+
+    /* ── fill-row: two media items, same height, combined width = 100%, no crop
+       Usage: wrap items in .fill-row > .fill-row-cell > img/video
+       JS sizes cells at runtime. Name this command "fill-row" to reuse. ── */
+    .fill-row {
+      display: flex; width: 100%; gap: 3px; align-items: flex-start;
+    }
+    .fill-row-cell {
+      overflow: hidden; flex-shrink: 0; display: flex; flex-direction: column;
+      background: var(--cream);
+    }
+    .fill-row-cell > img, .fill-row-cell > video {
+      width: 100%; height: 100%; object-fit: contain; display: block; flex: 1;
+    }
+    .fill-row-caption {
+      font-family: var(--sans); font-size: 12px; color: var(--muted);
+      letter-spacing: 0.01em; line-height: 1.6; padding: 8px 0 0;
+    }
 
     @media (max-width: 860px) {
       .facade-row3 { grid-template-columns: 1fr; }
-      .motif-row { grid-template-columns: 1fr; }
-      .motif-row img { height: 60vh; }
+      .motif-row { flex-direction: column; }
+      .motif-row .motif-cell { width: 100% !important; height: 60vh !important; }
+      .fill-row { flex-direction: column; }
+      .fill-row-cell { width: 100% !important; height: 60vh !important; }
     }
 
     /* GF Model — centred at 60% width */
@@ -563,16 +593,16 @@
     .staircase-text .ds-body + .ds-body { margin-top: 14px; }
     .staircase-img {
       overflow: hidden; display: flex; flex-direction: column;
-      height: 75vh;
+      height: 97.5vh;
     }
     .staircase-img img {
       width: 100%; flex: 1; min-height: 0;
-      object-fit: contain; display: block;
+      object-fit: contain; object-position: left center; display: block;
     }
     .staircase-caption {
       font-family: var(--sans); font-size: 12px; color: var(--muted);
       letter-spacing: 0.01em; line-height: 1.6;
-      padding: 8px 0 0;
+      padding: 8px 0 0; text-align: left;
     }
     @media (max-width: 860px) {
       .staircase-split { grid-template-columns: 1fr; padding-right: 24px; }
@@ -581,26 +611,8 @@
       .staircase-text { padding: 48px 24px; }
     }
 
-    /* Meenakari grid — no crop, contain, height matched */
-    .meenakari-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
-      background: var(--warm);
-    }
-    .meenakari-grid video, .meenakari-grid img {
-      width: 100%; height: 70vh; object-fit: contain; display: block;
-    }
-    /* Packaging grid — full viewport height, cover */
-    .packaging-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
-    }
-    .packaging-grid img {
-      width: 100%; height: 100vh; object-fit: cover; display: block;
-    }
-    @media (max-width: 860px) {
-      .meenakari-grid, .packaging-grid { grid-template-columns: 1fr; }
-      .meenakari-grid video, .meenakari-grid img { height: 50vh; }
-      .packaging-grid img { height: 60vh; }
-    }
+    /* Meenakari grid — uses fill-row */
+    .meenakari-grid { background: var(--warm); }
 
     /* BTS horizontal auto-scroll */
     .bts-scroll-outer {
@@ -783,8 +795,8 @@
        NAV
   ══════════════════════ -->
   <nav id="navbar">
-    <a href="index.html" class="nav-side">Work</a>
-    <a href="index.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
+    <a href="homepage.html" class="nav-side">Work</a>
+    <a href="homepage.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
     <a href="#cta" class="nav-side">Contact</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Work</a></li>
@@ -802,8 +814,7 @@
       id="heroVideo"
       class="hero-video"
       src="Rivaah%20Images/Rivaah%20Video.mp4"
-      poster="Rivaah%20Images/web/Foyer.jpg"
-      autoplay muted loop playsinline
+      autoplay muted loop playsinline preload="auto"
     ></video>
     <div class="hero-scrim"></div>
 
@@ -1009,10 +1020,15 @@
 
     <!-- Motif + product lighting — 2-col viewport height -->
     <div class="motif-row mt-3 reveal">
-      <img src="Rivaah%20Images/web/Motif.jpg" alt="Rivaah motif — craft and heritage detail" />
-      <img src="Rivaah%20Images/web/product%20lighting.jpg" alt="Product lighting — jewellery rendered in its best light" />
+      <div class="motif-cell">
+        <img src="Rivaah%20Images/web/Motif.jpg" alt="Rivaah motif — craft and heritage detail" />
+        <p class="motif-cell-caption">The motif that celebrates Indian weddings</p>
+      </div>
+      <div class="motif-cell">
+        <img src="Rivaah%20Images/web/product%20lighting.jpg" alt="Product lighting — jewellery rendered in its best light" />
+        <p class="motif-cell-caption">Jewellery rendered in its best light</p>
+      </div>
     </div>
-    <div class="img-caption">The motif that carries heritage forward; jewellery rendered in its best light</div>
 
   </section>
 
@@ -1155,19 +1171,28 @@
       </div>
     </div>
 
-    <!-- Meenakari Process video (left) + meenakari photo (right) -->
-    <div class="meenakari-grid mt-3 reveal-scale">
-      <video src="Rivaah%20Images/Meenakari%20Process.mp4" autoplay muted loop playsinline aria-label="Meenakari craft process"></video>
-      <img src="Rivaah%20Images/web/meenakari.jpg" alt="Meenakari — traditional jewellery craft" />
+    <!-- Meenakari Process video (left) + meenakari photo (right) — fill-row -->
+    <div class="meenakari-grid fill-row mt-3 reveal-scale" id="meenakariRow">
+      <div class="fill-row-cell">
+        <video src="Rivaah%20Images/Meenakari%20Process.mp4" autoplay muted loop playsinline aria-label="Meenakari craft process"></video>
+      </div>
+      <div class="fill-row-cell">
+        <img src="Rivaah%20Images/web/meenakari.jpg" alt="Meenakari — traditional jewellery craft" />
+      </div>
     </div>
 
-    <!-- Packaging + Bag motif grid -->
+    <!-- Packaging + Bag motif grid — fill-row -->
     <div style="height: 56px;"></div>
-    <div class="packaging-grid reveal-scale">
-      <img src="Rivaah%20Images/web/Packaging.jpg" alt="Rivaah packaging — brand touchpoint design" />
-      <img src="Rivaah%20Images/web/Bag%20motif.jpg" alt="Bag motif — the last detail the bride touches" />
+    <div class="fill-row reveal-scale" id="packagingRow">
+      <div class="fill-row-cell">
+        <img src="Rivaah%20Images/web/Packaging.jpg" alt="Rivaah packaging — brand touchpoint design" />
+        <p class="fill-row-caption">The bag you carry home</p>
+      </div>
+      <div class="fill-row-cell">
+        <img src="Rivaah%20Images/web/Bag%20motif.jpg" alt="Bag motif — the last detail the bride touches" />
+        <p class="fill-row-caption">The last detail the bride touches before she steps back into the world</p>
+      </div>
     </div>
-    <div class="img-caption">The bag you carry home — the last detail the bride touches before she steps back into the world</div>
 
   </section>
 
@@ -1351,11 +1376,11 @@
     const audioBtn = document.getElementById('audioBtn');
     const heroSection = document.getElementById('hero');
 
-    // Attempt to play with audio as soon as the video is ready
-    videoEl.addEventListener('canplay', () => {
-      videoEl.muted = false;
-      audioBtn.classList.remove('muted');
-    }, { once: true });
+    // Ensure video plays (some browsers need an explicit play call)
+    videoEl.play().catch(() => {
+      videoEl.muted = true;
+      videoEl.play();
+    });
 
     // Mute when user scrolls past the hero; unmute if they scroll back
     let heroMuted = false;
@@ -1388,7 +1413,7 @@
       origChildren.forEach(child => btsTrack.appendChild(child.cloneNode(true)));
 
       let pos = 0;
-      const speed = 1.8; // px per frame
+      const speed = 0.9; // px per frame
 
       function animateBTS() {
         pos += speed;
@@ -1454,6 +1479,67 @@
     const hamburger = document.getElementById('hamburger');
     const navLinks  = document.getElementById('navLinks');
     if (hamburger) hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  </script>
+
+  <!-- fill-row: same height, combined width = 100%, no crop. Reuse by adding class="fill-row" with .fill-row-cell children. -->
+  <script>
+    function applyFillRow(row) {
+      const cells = Array.from(row.querySelectorAll(':scope > .fill-row-cell'));
+      const gap = 3;
+      const items = cells.map(c => c.querySelector('video, img'));
+      const getRatio = el => {
+        if (!el) return 1;
+        if (el.tagName === 'VIDEO') return el.videoWidth > 0 ? el.videoWidth / el.videoHeight : 16 / 9;
+        return el.naturalWidth > 0 ? el.naturalWidth / el.naturalHeight : 1;
+      };
+      const ready = items.every(el => {
+        if (!el) return false;
+        if (el.tagName === 'VIDEO') return el.readyState >= 1;
+        return el.complete && el.naturalWidth > 0;
+      });
+      if (!ready) return false;
+      const containerW = row.offsetWidth;
+      const ratios = items.map(getRatio);
+      const h = (containerW - gap * (cells.length - 1)) / ratios.reduce((s, r) => s + r, 0);
+      cells.forEach((cell, i) => {
+        cell.style.width = (h * ratios[i]) + 'px';
+        cell.style.height = h + 'px';
+      });
+      return true;
+    }
+
+    function applyFillRowAll() {
+      document.querySelectorAll('.fill-row').forEach(row => applyFillRow(row));
+    }
+
+    /* Also apply fill-row to motif-row cells (same logic, different class) */
+    function applyMotifRow() {
+      document.querySelectorAll('.motif-row').forEach(row => {
+        const cells = Array.from(row.querySelectorAll(':scope > .motif-cell'));
+        const gap = 3;
+        const items = cells.map(c => c.querySelector('img'));
+        const ready = items.every(el => el && el.complete && el.naturalWidth > 0);
+        if (!ready) return;
+        const containerW = row.offsetWidth;
+        const ratios = items.map(el => el.naturalWidth / el.naturalHeight);
+        const h = (containerW - gap * (cells.length - 1)) / ratios.reduce((s, r) => s + r, 0);
+        cells.forEach((cell, i) => {
+          cell.style.width = (h * ratios[i]) + 'px';
+          cell.style.height = h + 'px';
+        });
+      });
+    }
+
+    /* Try immediately, on load, on resize, and after video metadata loads */
+    applyFillRowAll(); applyMotifRow();
+    window.addEventListener('load', () => { applyFillRowAll(); applyMotifRow(); });
+    window.addEventListener('resize', () => { applyFillRowAll(); applyMotifRow(); });
+    setTimeout(() => { applyFillRowAll(); applyMotifRow(); }, 500);
+    setTimeout(() => { applyFillRowAll(); applyMotifRow(); }, 1500);
+
+    document.querySelectorAll('.fill-row video').forEach(v => {
+      v.addEventListener('loadedmetadata', () => { applyFillRowAll(); });
+    });
   </script>
 
 </body>

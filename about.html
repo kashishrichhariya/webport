@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Kashish Richhariya</title>
+  <meta name="description" content="About Kashish Richhariya — Interior Designer at Tanishq, Titan Company Ltd." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Tokens (same as homepage) ── */
+    :root {
+      --gold:     #a78154;
+      --cream:    #fcfcfc;
+      --warm:     #f7f6f0;
+      --heading:  #4a4540;
+      --charcoal: #343230;
+      --mid:      #4c4a46;
+      --muted:    #9b957d;
+      --stone:    #9c948a;
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'Manrope', system-ui, sans-serif;
+      --nav-h:    88px;
+      --pad:      64px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #fff;
+      color: var(--heading);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(74,69,64,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--pad); z-index: 200;
+    }
+    .nav-logo {
+      position: absolute; left: 50%; transform: translateX(-50%);
+    }
+    .nav-logo img {
+      height: 52px; width: auto; display: block;
+      filter: brightness(0) invert(0) opacity(0.35);
+    }
+    .nav-side {
+      font-size: 13px; font-weight: 600;
+      color: var(--heading);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    .nav-side:hover { color: var(--gold); }
+
+    /* ─── INTRO SPLIT ─── */
+    .intro-wrap {
+      margin-top: var(--nav-h);
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      min-height: calc(100vh - var(--nav-h));
+    }
+
+    /* RIGHT: sticky panel */
+    .intro-left {
+      position: sticky;
+      top: var(--nav-h);
+      height: calc(100vh - var(--nav-h));
+      background: #fff;
+      padding: 44px var(--pad) 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+      order: 2;
+    }
+    /* hide scrollbar on sticky panel */
+    .intro-left::-webkit-scrollbar { display: none; }
+    .intro-left { scrollbar-width: none; }
+
+    .intro-tag {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .intro-name {
+      font-family: var(--serif);
+      font-size: clamp(44px, 5vw, 64px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.04em; line-height: 1.05;
+    }
+    .intro-name em { font-style: italic; }
+
+    /* Photo — 3:4 */
+    .photo-frame {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      background: rgba(74,69,64,0.05);
+      overflow: hidden;
+      position: relative;
+    }
+    .photo-frame img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .photo-ph {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(74,69,64,0.28);
+    }
+
+    .intro-bio {
+      font-size: 13px; line-height: 1.88;
+      color: var(--mid);
+    }
+
+    .btn-resume {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 32px;
+      border: 1px solid var(--heading);
+      font-family: var(--sans);
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--heading); background: transparent;
+      cursor: pointer; transition: all 0.28s ease;
+      align-self: flex-start;
+    }
+    .btn-resume:hover { background: var(--heading); color: var(--cream); }
+    .btn-resume svg { flex-shrink: 0; }
+
+    /* LEFT: scrollable timeline */
+    .intro-right {
+      background: #fff;
+      padding: 72px var(--pad) 120px;
+      order: 1;
+    }
+
+    .gold-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold); display: block;
+    }
+
+    /* ─── TIMELINE ─── */
+    .tl-heading {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.2vw, 34px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.03em; line-height: 1.2;
+      margin: 12px 0 56px;
+    }
+    .tl-heading em { font-style: italic; }
+
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 14px; bottom: 0;
+      width: 1px;
+      background: rgba(167,129,84,0.28);
+    }
+
+    .tl-entry {
+      position: relative;
+      padding-bottom: 64px;
+    }
+    .tl-entry:last-child { padding-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -32px; top: 11px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px rgba(167,129,84,0.5);
+    }
+
+    .tl-period {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; color: var(--muted);
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .tl-role {
+      font-family: var(--serif);
+      font-size: clamp(22px, 1.9vw, 30px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.025em; line-height: 1.2;
+      margin-bottom: 5px;
+    }
+    .tl-company {
+      font-size: 12px; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.07em;
+      margin-bottom: 20px;
+    }
+    .tl-desc {
+      font-size: 14px; line-height: 1.88;
+      color: var(--mid); margin-bottom: 28px;
+      max-width: 520px;
+    }
+    .tl-work-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--heading); margin-bottom: 0;
+    }
+    .tl-work-list {
+      list-style: none;
+      border-bottom: 1px solid rgba(74,69,64,0.1);
+    }
+    .tl-work-item {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 0 40px;
+      border-top: 1px solid rgba(74,69,64,0.1);
+      padding: 18px 0;
+      align-items: start;
+    }
+    .tl-work-name {
+      font-family: var(--sans);
+      font-size: 16px; font-weight: 600;
+      color: var(--heading); line-height: 1.35;
+    }
+    .tl-work-year {
+      display: block;
+      font-family: var(--sans);
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--muted); margin-top: 5px;
+    }
+    .tl-work-desc {
+      font-size: 13px; line-height: 1.78;
+      color: var(--mid); padding-top: 4px;
+    }
+
+    .tl-divider {
+      border: none;
+      border-top: 1px solid rgba(74,69,64,0.08);
+      margin: 0 0 60px;
+    }
+
+    /* ─── LOWER SECTIONS (strengths + skills) ─── */
+    .lower-wrap {
+      background: #fff;
+    }
+
+    .strengths-section {
+      max-width: 1440px; margin: 0 auto;
+      padding: 100px var(--pad) 80px;
+    }
+    .skills-section {
+      max-width: 1440px; margin: 0 auto;
+      padding: 60px var(--pad) 100px;
+      border-top: 1px solid rgba(74,69,64,0.1);
+    }
+
+    .two-col-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 0 80px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.4vw, 36px);
+      font-weight: 400; color: var(--heading);
+      letter-spacing: -0.035em; line-height: 1.18;
+      margin-top: 12px;
+    }
+    .section-title em { font-style: italic; }
+
+    /* Strengths list */
+    .strengths-list {
+      list-style: none;
+    }
+    .strength-item {
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(74,69,64,0.1);
+    }
+    .strength-item:first-child { border-top: 1px solid rgba(74,69,64,0.1); }
+    .strength-num {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.2em; color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .strength-name {
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.4vw, 36px); font-weight: 400;
+      color: var(--heading); margin-bottom: 10px;
+      letter-spacing: -0.02em; line-height: 1.1;
+    }
+    .strength-desc {
+      font-size: 13px; line-height: 1.78;
+      color: var(--mid);
+    }
+
+    /* Skills tags */
+    .skills-tags {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      align-content: flex-start;
+      padding-top: 36px;
+    }
+    .skill-tag {
+      padding: 9px 22px;
+      border: 1px solid rgba(74,69,64,0.2);
+      font-family: var(--sans);
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--heading);
+      transition: background 0.22s, color 0.22s;
+    }
+    .skill-tag:hover { background: var(--heading); color: var(--cream); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--charcoal);
+      padding: 80px var(--pad) 48px;
+    }
+    .footer-inner {
+      max-width: 1440px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 48px;
+    }
+    .footer-logo img {
+      height: 48px; width: auto;
+      filter: brightness(0) invert(1) opacity(0.7);
+    }
+    .footer-links { display: flex; gap: 32px; align-items: center; }
+    .footer-links a, .footer-links button {
+      background: none; border: none; cursor: pointer; padding: 0;
+      color: rgba(252,252,252,0.55); transition: color .22s;
+      display: flex; align-items: center;
+    }
+    .footer-links a:hover, .footer-links button:hover { color: #fff; }
+    .footer-links svg {
+      width: 18px; height: 18px; fill: none; stroke: currentColor;
+      stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+    }
+    #copy-toast-about {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: var(--charcoal); color: #fff;
+      font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em;
+      padding: 10px 24px; pointer-events: none;
+      opacity: 0; transition: opacity 0.25s, transform 0.25s;
+    }
+    #copy-toast-about.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .footer-copy {
+      font-size: 11px; letter-spacing: 0.1em;
+      color: rgba(252,252,252,0.3);
+      max-width: 1440px; margin: 0 auto;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      :root { --pad: 32px; }
+      .intro-wrap { grid-template-columns: 1fr; }
+      .intro-left {
+        position: relative; top: auto; order: 1;
+        height: auto; min-height: 0;
+        padding: 48px var(--pad);
+      }
+      .photo-frame { flex: none; width: 52%; aspect-ratio: 3/4; }
+      .intro-right { padding: 56px var(--pad) 80px; order: 2; }
+      .two-col-layout { grid-template-columns: 1fr; gap: 32px; }
+      .skills-tags { padding-top: 0; }
+    }
+    @media (max-width: 600px) {
+      :root { --pad: 20px; --nav-h: 72px; }
+      .photo-frame { width: 72%; }
+      nav { padding: 0 var(--pad); }
+      footer { padding: 56px var(--pad) 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     NAV
+═══════════════════════════════ -->
+<nav>
+  <a href="homepage.html" class="nav-side">Work</a>
+  <a class="nav-logo" href="homepage.html">
+    <img src="Logo-web.png" alt="Kashish Richhariya" />
+  </a>
+  <a href="#footer-about" class="nav-side">About</a>
+</nav>
+
+<!-- ═══════════════════════════════
+     INTRO — sticky left / scroll right
+═══════════════════════════════ -->
+<div class="intro-wrap">
+
+  <!-- LEFT: sticky -->
+  <div class="intro-left">
+    <span class="intro-tag">Retail Experience Designer</span>
+
+    <h1 class="intro-name">Kashish <em>Richhariya</em></h1>
+
+    <!-- 3:4 photo placeholder — replace src when ready -->
+    <div class="photo-frame">
+      <!-- <img src="your-photo.jpg" alt="Kashish Richhariya" /> -->
+      <div class="photo-ph">Photo</div>
+    </div>
+
+    <p class="intro-bio">
+      I design retail environments that turn store space into a system —
+      scaling across dozens of stores while staying rooted in local craft
+      and customer experience.
+    </p>
+
+    <a href="Kashish_Richhariya_Resume.pdf" download class="btn-resume">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Download Resume
+    </a>
+  </div>
+
+  <!-- RIGHT: scrollable timeline -->
+  <div class="intro-right">
+    <span class="gold-label">Experience &amp; Notable Work</span>
+    <h2 class="tl-heading">
+      Five years of turning<br><em>store space into system</em>
+    </h2>
+
+    <div class="timeline">
+
+      <!-- ── Entry 1: Deputy Manager ── -->
+      <div class="tl-entry">
+        <div class="tl-dot"></div>
+        <p class="tl-period">Apr 2024 &mdash; Present</p>
+        <h3 class="tl-role">Deputy Manager</h3>
+        <p class="tl-company">Tanishq &mdash; Titan Company Ltd &nbsp;·&nbsp; Bengaluru</p>
+        <p class="tl-desc">
+          Expanded into end-to-end ownership of flagship identities and large-scale
+          design systems — taking projects from spatial concept through to material
+          specification, fixture design, and national rollout. Directed high-visibility
+          work including board-level presentations and heritage cultural experiences.
+        </p>
+        <p class="tl-work-label">Notable Work</p>
+        <ul class="tl-work-list">
+          <li class="tl-work-item">
+            <div class="tl-work-name">Rivaah Store Identity — Flagship<span class="tl-work-year">2024–2025</span></div>
+            <div class="tl-work-desc">Owned the complete identity system end to end — colour palette, material palette, and the full spatial journey design for the Rivaah flagship.</div>
+          </li>
+          <li class="tl-work-item">
+            <div class="tl-work-name">Back-of-House Standardization &amp; Cost Optimization<span class="tl-work-year">2025</span></div>
+            <div class="tl-work-desc">Standardized non-customer-facing spaces across the store network, reducing build cost while holding operational and service standards.</div>
+          </li>
+          <li class="tl-work-item">
+            <div class="tl-work-name">Board Meeting Exhibition Design<span class="tl-work-year">Mar 2025</span></div>
+            <div class="tl-work-desc">Directed layout strategy and oversaw on-ground execution for an exhibition hosted for the Tata Group board.</div>
+          </li>
+        </ul>
+      </div>
+
+      <hr class="tl-divider" />
+
+      <!-- ── Entry 2: Senior Executive ── -->
+      <div class="tl-entry">
+        <div class="tl-dot"></div>
+        <p class="tl-period">2021 &mdash; Apr 2024</p>
+        <h3 class="tl-role">Senior Executive</h3>
+        <p class="tl-company">Tanishq &mdash; Titan Company Ltd &nbsp;·&nbsp; Bengaluru</p>
+        <p class="tl-desc">
+          Led interior design and spatial strategy for key customer interaction zones
+          across 30+ store rollouts nationally — from concept through execution.
+          Moved between the spatial designer's eye for material and atmosphere and
+          the product designer's discipline of building standardized, replicable
+          systems across facades, layouts, and identities.
+        </p>
+        <p class="tl-work-label">Notable Work</p>
+        <ul class="tl-work-list">
+          <li class="tl-work-item">
+            <div class="tl-work-name">Facade Standardization<span class="tl-work-year">2023</span></div>
+            <div class="tl-work-desc">Designed a modular facade system replicated across 10 stores in South India, unifying street-level brand presence and cutting design-to-execution time.</div>
+          </li>
+          <li class="tl-work-item">
+            <div class="tl-work-name">Micro-Identity Design — Exotic India<span class="tl-work-year">2023</span></div>
+            <div class="tl-work-desc">Developed a localized micro-identity concept, layering regional character into a national store format without disrupting its scalability.</div>
+          </li>
+          <li class="tl-work-item">
+            <div class="tl-work-name">Rivaah Floor Identity Standardization<span class="tl-work-year">2023</span></div>
+            <div class="tl-work-desc">Standardized the Rivaah bridal floor identity across the national store format — walls, partitions, and zoning systems for consistent, repeatable rollout.</div>
+          </li>
+          <li class="tl-work-item">
+            <div class="tl-work-name">Layout Design &amp; Stakeholder Alignment<span class="tl-work-year">2023–Present</span></div>
+            <div class="tl-work-desc">Delivered store layouts for 30–40 stores, working directly with business stakeholders and franchise partners to align design intent with commercial and operational realities.</div>
+          </li>
+        </ul>
+      </div>
+
+      <hr class="tl-divider" />
+
+      <!-- ── Entry 3: Education ── -->
+      <div class="tl-entry">
+        <div class="tl-dot"></div>
+        <p class="tl-period">2017 &mdash; 2021</p>
+        <h3 class="tl-role">Bachelor of Design</h3>
+        <p class="tl-company">Fashion &amp; Lifestyle Accessory &nbsp;·&nbsp; NIFT Bengaluru</p>
+      </div>
+
+    </div><!-- /timeline -->
+  </div><!-- /intro-right -->
+
+</div><!-- /intro-wrap -->
+
+
+<!-- ═══════════════════════════════
+     CORE STRENGTHS + SKILLS
+═══════════════════════════════ -->
+<div class="lower-wrap">
+
+  <!-- Core Strengths -->
+  <section class="strengths-section">
+    <div class="two-col-layout">
+      <div>
+        <span class="gold-label" style="margin-bottom: 12px;">Core Strengths</span>
+        <h2 class="section-title">
+          What I bring<br>
+          <em>to every project</em>
+        </h2>
+      </div>
+      <ul class="strengths-list">
+        <li class="strength-item">
+          <p class="strength-num">01</p>
+          <h3 class="strength-name">Spatial Design</h3>
+          <p class="strength-desc">
+            Designing for constrained and unconventional store footprints · facade design ·
+            weaving regional craft into spatial narrative while holding brand aesthetics consistent.
+          </p>
+        </li>
+        <li class="strength-item">
+          <p class="strength-num">02</p>
+          <h3 class="strength-name">Retail Strategy</h3>
+          <p class="strength-desc">
+            Store layout strategy · customer journey design · rollout and
+            standardization across large store networks.
+          </p>
+        </li>
+        <li class="strength-item">
+          <p class="strength-num">03</p>
+          <h3 class="strength-name">Brand Identity</h3>
+          <p class="strength-desc">
+            End-to-end identity systems for retail categories — colour palette,
+            material palette, and spatial expression of brand.
+          </p>
+        </li>
+        <li class="strength-item">
+          <p class="strength-num">04</p>
+          <h3 class="strength-name">Fixture &amp; Furniture Design (FF&amp;E)</h3>
+          <p class="strength-desc">
+            Scalable fixture and furniture systems — mirrors, chandeliers,
+            mannequin cases — designed for consistent replication across the store network.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="skills-section">
+    <div class="two-col-layout">
+      <div>
+        <span class="gold-label" style="margin-bottom: 12px;">Tools &amp; Software</span>
+        <h2 class="section-title">Skills</h2>
+      </div>
+      <div class="skills-tags">
+        <span class="skill-tag">Adobe Illustrator</span>
+        <span class="skill-tag">Adobe Photoshop</span>
+        <span class="skill-tag">Adobe InDesign</span>
+        <span class="skill-tag">Adobe Suite</span>
+        <span class="skill-tag">MS Office</span>
+        <span class="skill-tag">SketchUp</span>
+        <span class="skill-tag">AutoCAD</span>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /lower-wrap -->
+
+
+<!-- ═══════════════════════════════
+     FOOTER
+═══════════════════════════════ -->
+<footer id="footer-about">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="Logo-web.png" alt="Kashish Richhariya" />
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/kashish-richhariya" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="3" ry="3"/>
+          <path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>
+        </svg>
+      </a>
+      <button id="copy-email-btn-about" aria-label="Copy email address">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <p class="footer-copy">© 2025 Kashish Richhariya. All rights reserved.</p>
+</footer>
+
+<div id="copy-toast-about">Copied E-mail ID</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  if (history.scrollRestoration) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* Scroll reveals */
+  gsap.utils.toArray('.tl-entry').forEach((el, i) => {
+    gsap.from(el, {
+      opacity: 0, y: 32,
+      duration: 0.85, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 80%' }
+    });
+  });
+
+  gsap.utils.toArray('.strength-item').forEach((el, i) => {
+    gsap.from(el, {
+      opacity: 0, y: 20,
+      duration: 0.7, ease: 'power2.out',
+      delay: i * 0.07,
+      scrollTrigger: { trigger: el, start: 'top 86%' }
+    });
+  });
+
+  gsap.utils.toArray('.skill-tag').forEach((el, i) => {
+    gsap.from(el, {
+      opacity: 0, y: 14,
+      duration: 0.5, ease: 'power2.out',
+      delay: i * 0.05,
+      scrollTrigger: { trigger: el, start: 'top 90%' }
+    });
+  });
+
+  /* Email copy */
+  const toastAbout = document.getElementById('copy-toast-about');
+  document.getElementById('copy-email-btn-about').addEventListener('click', () => {
+    navigator.clipboard.writeText('kashishrichhariya@gmail.com').then(() => {
+      toastAbout.classList.add('show');
+      setTimeout(() => toastAbout.classList.remove('show'), 2200);
+    });
+  });
+</script>
+
+</body>
+</html>

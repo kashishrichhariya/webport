@@ -51,14 +51,14 @@
       background: linear-gradient(to bottom, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.18) 60%, transparent 100%);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
-      display: flex; align-items: center; justify-content: center;
-      padding: 0 48px; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 64px; z-index: 100;
     }
-    .nav-logo { margin: 0 56px; }
-    .nav-logo img { height: 64px; width: auto; display: block; }
+    .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    .nav-logo img { height: 62px; width: auto; display: block; filter: brightness(0) invert(1); }
     .nav-side {
-      font-size: 12px; font-weight: 400; color: rgba(252,252,252,0.7);
-      letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 13px; font-weight: 600; color: rgba(252,252,252,0.88);
+      letter-spacing: 0.18em; text-transform: uppercase;
       transition: color .25s;
     }
     .nav-side:hover { color: var(--cream); }
@@ -604,8 +604,8 @@
        NAV
   ══════════════════════ -->
   <nav id="navbar">
-    <a href="index.html" class="nav-side">Work</a>
-    <a href="index.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
+    <a href="homepage.html" class="nav-side">Work</a>
+    <a href="homepage.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
     <a href="#cta" class="nav-side">Contact</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Work</a></li>
@@ -1110,7 +1110,7 @@
       const origChildren = Array.from(btsTrack.children);
       origChildren.forEach(child => btsTrack.appendChild(child.cloneNode(true)));
       let pos = 0;
-      const speed = 1.8;
+      const speed = 0.9;
       function animateBTS() {
         pos += speed;
         const half = btsTrack.scrollWidth / 2;
