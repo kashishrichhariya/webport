@@ -46,7 +46,7 @@
 
     /* ── NAV ── */
     nav {
-      position: absolute; top: 0; left: 0; right: 0;
+      position: fixed; top: 0; left: 0; right: 0;
       height: var(--nav-h);
       background: linear-gradient(to bottom, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.18) 60%, transparent 100%);
       backdrop-filter: none;
@@ -376,18 +376,6 @@
     .bleed-overlay-header .label { color: rgba(252,252,252,0.55); }
     .bleed-overlay-header .s-h2 { color: #fff; }
 
-    /* Partition split — proportional height matching, 80% screen width */
-    .partition-split {
-      max-width: 80vw; margin: 0 auto; padding: 0;
-      display: flex; gap: 4px; align-items: stretch;
-    }
-    .partition-static { overflow: hidden; display: flex; align-items: center; }
-    .partition-static img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .partition-carousel { position: relative; overflow: hidden; display: flex; flex-direction: column; }
-    .partition-slides-wrap { flex: 1; position: relative; overflow: hidden; }
-    .partition-slide { display: none; position: absolute; inset: 0; }
-    .partition-slide.active { display: flex; align-items: center; animation: spFade 0.5s ease; }
-    .partition-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .ds-body-block p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; max-width: 680px; }
 
     /* Sub-section label */
@@ -401,6 +389,10 @@
     /* Full-bleed image */
     .bleed { width: 100%; overflow: hidden; }
     .bleed img { width: 100%; height: auto; display: block; transition: transform 0.1s; }
+
+    /* Full-bleed justified row — same-height, full-width, no crop (matches Jaipur page) */
+    .fill-row { display: flex; gap: 3px; width: 100%; overflow: hidden; }
+    .fill-row img { height: 60vh; width: auto; display: block; flex-shrink: 0; }
 
     /* Full-bleed 2-col grid — equal height */
     .bleed-row2 {
@@ -423,18 +415,6 @@
       object-fit: cover;
       display: block;
     }
-
-    /* Photo rows — viewport height, proportionally matched, no cropping */
-    .ds-row2 {
-      display: flex; gap: 4px; align-items: stretch;
-      margin: 0 auto;
-    }
-    .ds-row2 .img-wrap {
-      flex: 1; overflow: hidden;
-      display: flex; align-items: center;
-      background: var(--warm-lt);
-    }
-    .ds-row2 .img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
     /* Contained image */
     .ds-img { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
@@ -479,20 +459,59 @@
     }
     .sadeli-grid .img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-    /* Other Spaces — captioned gallery */
-    .other-carousel { position: relative; overflow: hidden; }
-    .other-slide { display: none; }
-    .other-slide.active { display: block; animation: spFade 0.5s ease; }
-    .other-slide img { width: 100%; height: auto; display: block; }
-    .other-nav {
-      display: flex; gap: 8px; justify-content: center; padding: 14px 0;
+    /* ══════════════════════════════
+       BEFORE / AFTER SLIDER — drag to compare, both panes same height
+    ══════════════════════════════ */
+    .ba-slider {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      cursor: col-resize;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
     }
-    .other-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(155,149,125,0.35); cursor: pointer;
-      transition: all 0.25s;
+    .ba-slider img { display: block; pointer-events: none; border: none; }
+    /* "After" pane — in normal flow, sets the slider height at its natural ratio */
+    .ba-after { position: relative; width: 100%; height: auto; }
+    /* "Before" pane clips on the left — wrapper shrinks, image stays full-size */
+    .ba-before-wrap {
+      position: absolute; top: 0; left: 0; bottom: 0;
+      z-index: 2; overflow: hidden; width: 50%; /* JS overrides this */
     }
-    .other-dot.active { background: var(--accent); transform: scale(1.3); }
+    .ba-before-wrap img {
+      position: absolute; top: 0; left: 0;
+      width: var(--ba-full-w, 100%); height: 100%;
+      object-fit: cover; object-position: left top;
+    }
+    .ba-handle {
+      position: absolute; top: 0; bottom: 0; left: 50%;
+      z-index: 3; width: 2px;
+      background: rgba(255,255,255,0.7);
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .ba-knob {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(252,252,252,0.95);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.22);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--mid); font-size: 18px; letter-spacing: -2px;
+    }
+    .ba-label {
+      position: absolute; bottom: 20px; z-index: 4;
+      font-family: var(--sans);
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(252,252,252,0.85);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      pointer-events: none;
+    }
+    .ba-label-render { left: 24px; }
+    .ba-label-result { right: 24px; }
+    .ba-wrap { width: 100%; }
 
     /* BTS scroll strip */
     .bts-scroll-outer { overflow: hidden; margin-top: 48px; cursor: grab; }
@@ -550,7 +569,6 @@
     @media (max-width: 1040px) {
       .sp-layout { grid-template-columns: 1fr; gap: 36px; }
       .sp-left { padding: 0; }
-      .partition-split { flex-direction: column; }
       .sadeli-grid { flex-direction: column; }
       .mb-split { grid-template-columns: 1fr; }
       .mb-text-side { padding: 56px 48px; }
@@ -562,8 +580,9 @@
       .meta-grid { grid-template-columns: 1fr; gap: 28px; }
       .meta-divider { display: none; }
       .meta-item { padding: 0; }
-      .ds-row2, .ds-img, .ds-header, .ds-body-block,
+      .ds-img, .ds-header, .ds-body-block,
       .img-caption, .sadeli-grid { padding-left: 24px; padding-right: 24px; }
+      .fill-row img { height: 42vh; }
       .divider-editorial { padding: 0 24px; }
       .hero-content { padding: 0 32px; }
       .hero-audio-btn { left: 32px; }
@@ -576,8 +595,9 @@
       .nav-hamburger { display: flex; }
       .hero-content { padding: 0 24px; }
       .hero-scroll { display: none; }
-      .ds-row2 { flex-direction: column; padding: 0 20px; }
       .bleed-row2 { flex-direction: column; }
+      .fill-row { flex-direction: column; }
+      .fill-row img { height: auto; width: 100%; }
       .mb-text-side { padding: 40px 20px; }
       .kutch-split { padding: 0 20px; gap: 20px; }
       .bleed-overlay-header { padding: 32px 24px; }
@@ -591,7 +611,6 @@
       #cta { padding: 80px 20px 64px; }
       .ds-split-text { padding: 32px 20px; }
       .sadeli-grid { padding: 0 20px; flex-direction: column; }
-      .partition-split { padding: 0; }
       .hero-audio-btn { left: 24px; bottom: 24px; }
       .hero-scroll { display: none; }
     }
@@ -606,10 +625,10 @@
   <nav id="navbar">
     <a href="homepage.html" class="nav-side">Work</a>
     <a href="homepage.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
-    <a href="#cta" class="nav-side">Contact</a>
+    <a href="about.html" class="nav-side">About</a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Work</a></li>
-      <li><a href="#cta">Contact</a></li>
+      <li><a href="homepage.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
   </nav>
@@ -627,7 +646,6 @@
     <div class="hero-scrim"></div>
 
     <div class="hero-content reveal">
-      <p class="hero-eyebrow">CG Road &mdash; Tanishq Ahmedabad &mdash; 2023</p>
       <h1 class="hero-title">
         <em>Celebrating Gujarat</em>:<br>
         From Kutch to Ahmedabad
@@ -803,9 +821,9 @@
     </div>
 
     <!-- Before images -->
-    <div class="ds-row2 reveal">
-      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-side-before.jpg" alt="Staircase — side view before" /></div>
-      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-front-before.jpg" alt="Staircase — front view before" /></div>
+    <div class="fill-row reveal">
+      <img src="CG%20Road%20Images/staircase-side-before.jpg" alt="Staircase — side view before" />
+      <img src="CG%20Road%20Images/staircase-front-before.jpg" alt="Staircase — front view before" />
     </div>
     <div class="img-caption">The staircase before intervention — exposed and interfering with display</div>
 
@@ -814,33 +832,18 @@
       <p>Jaali partitions were utilised to divide the space while maintaining visual openness. Multiple options were explored taking inspiration from different cultures across the city.</p>
     </div>
 
-    <div class="partition-split mt-40 reveal">
-      <div class="partition-static">
+    <div class="mt-40 reveal">
+      <div class="fill-row" id="partitionFillRow">
         <img src="CG%20Road%20Images/partition-render.jpg" alt="Partition — 3D render overview" />
+        <img id="partitionActiveImg" src="CG%20Road%20Images/partition-1.png" alt="Partition option 1" />
       </div>
-      <div class="partition-carousel" id="partitionCarousel">
-        <div class="partition-slides-wrap">
-          <div class="partition-slide active">
-            <img src="CG%20Road%20Images/partition-1.png" alt="Partition option 1" />
-          </div>
-          <div class="partition-slide">
-            <img src="CG%20Road%20Images/partition-2.png" alt="Partition option 2" />
-          </div>
-          <div class="partition-slide">
-            <img src="CG%20Road%20Images/partition-3.png" alt="Partition option 3" />
-          </div>
-          <div class="partition-slide">
-            <img src="CG%20Road%20Images/final-partition.png" alt="Final partition design" />
-          </div>
-        </div>
-        <div class="partition-nav" id="partitionDots">
-          <button class="partition-btn" id="partPrev">&#8249;</button>
-          <span class="partition-dot active" data-i="0"></span>
-          <span class="partition-dot" data-i="1"></span>
-          <span class="partition-dot" data-i="2"></span>
-          <span class="partition-dot" data-i="3"></span>
-          <button class="partition-btn" id="partNext">&#8250;</button>
-        </div>
+      <div class="partition-nav" id="partitionDots">
+        <button class="partition-btn" id="partPrev">&#8249;</button>
+        <span class="partition-dot active" data-i="0"></span>
+        <span class="partition-dot" data-i="1"></span>
+        <span class="partition-dot" data-i="2"></span>
+        <span class="partition-dot" data-i="3"></span>
+        <button class="partition-btn" id="partNext">&#8250;</button>
       </div>
     </div>
     <div class="img-caption">Left: 3D render of the staircase zone. Right: design explorations inspired by Ahmedabad's cultural diversity</div>
@@ -961,22 +964,22 @@
       <h2 class="s-h2">Where craft meets everyday moments</h2>
     </div>
 
-    <!-- Slideshow: sf-partition + sf-cove-rivaah -->
-    <div class="ds-img reveal" style="position: relative;">
-      <div class="other-carousel" id="otherCarousel">
-        <div class="other-slide active">
-          <img src="CG%20Road%20Images/sf-partition.png" alt="Second floor centrewell partition" />
-          <div class="img-caption" style="padding: 14px 0 0;">Centrewell partition — intricate jaali work dividing the wedding floor</div>
-        </div>
-        <div class="other-slide">
-          <img src="CG%20Road%20Images/sf-cove-rivaah.png" alt="Second floor cove — Rivaah space" />
-          <div class="img-caption" style="padding: 14px 0 0;">The Rivaah cove — an intimate bridal jewellery niche</div>
+    <!-- Drag-to-compare: sf-partition + sf-cove-rivaah, both panes same height -->
+    <div class="ds-img reveal">
+      <div class="ba-wrap">
+        <div class="ba-slider reveal-scale" id="otherBaSlider" data-pos="50">
+          <img class="ba-after" src="CG%20Road%20Images/sf-cove-rivaah.png" alt="Second floor cove — Rivaah space" />
+          <div class="ba-before-wrap" id="otherBaWrap">
+            <img src="CG%20Road%20Images/sf-partition.png" alt="Second floor centrewell partition" />
+          </div>
+          <div class="ba-handle" id="otherBaHandle">
+            <div class="ba-knob">&#8596;</div>
+          </div>
+          <span class="ba-label ba-label-render">Partition</span>
+          <span class="ba-label ba-label-result">Rivaah Cove</span>
         </div>
       </div>
-      <div class="other-nav" id="otherDots">
-        <span class="other-dot active" data-i="0"></span>
-        <span class="other-dot" data-i="1"></span>
-      </div>
+      <div class="img-caption">Left: the centrewell jaali partition. Right: the intimate Rivaah cove niche</div>
     </div>
 
     <!-- Column -->
@@ -1076,7 +1079,7 @@
     });
 
     /* ── Image pair/row stagger ── */
-    gsap.utils.toArray('.ds-row2, .ds-pair, .sadeli-grid').forEach(el => {
+    gsap.utils.toArray('.fill-row, .ds-pair, .sadeli-grid').forEach(el => {
       const imgs = el.querySelectorAll('img');
       if (!imgs.length) return;
       gsap.fromTo(imgs,
@@ -1163,6 +1166,7 @@
       heroMuted = heroVideoEl.muted;
     });
 
+    function matchImageHeights() {
       document.querySelectorAll('.sadeli-grid, .bleed-row2').forEach(row => {
         const wraps = row.querySelectorAll('.img-wrap');
         if (wraps.length < 2) return;
@@ -1173,48 +1177,32 @@
         const ratios = imgs.map(img => img.naturalWidth / img.naturalHeight);
         wraps.forEach((w, i) => { w.style.flex = ratios[i].toString(); });
       });
-
-      // ds-row2: size for viewport height without cropping (object-fit: contain)
-      document.querySelectorAll('.ds-row2').forEach(row => {
-        const wraps = Array.from(row.querySelectorAll('.img-wrap'));
-        const imgs = wraps.map(w => w.querySelector('img'));
-        if (imgs.length < 2) return;
-        const GAP = 4;
-        function vhLayout() {
-          if (!imgs.every(img => img.complete && img.naturalWidth > 0)) return;
-          const targetH = window.innerHeight;
-          const totalW = imgs.reduce((s, img) => s + targetH * (img.naturalWidth / img.naturalHeight), 0) + GAP * (imgs.length - 1);
-          row.style.maxWidth = totalW + 'px';
-          row.style.height = targetH + 'px';
-          const ratios = imgs.map(img => img.naturalWidth / img.naturalHeight);
-          wraps.forEach((w, i) => { w.style.flex = ratios[i].toString(); });
-        }
-        imgs.forEach(img => {
-          if (img.complete && img.naturalWidth > 0) vhLayout();
-          else img.addEventListener('load', vhLayout, { once: true });
-        });
-        window.addEventListener('resize', () => requestAnimationFrame(vhLayout));
-      });
-
-      // Partition split: match render + carousel heights proportionally
-      document.querySelectorAll('.partition-split').forEach(row => {
-        const staticEl = row.querySelector('.partition-static');
-        const carouselEl = row.querySelector('.partition-carousel');
-        if (!staticEl || !carouselEl) return;
-        const staticImg = staticEl.querySelector('img');
-        const activeSlideImg = carouselEl.querySelector('.partition-slide.active img');
-        if (!staticImg || !activeSlideImg) return;
-        if (staticImg.naturalWidth <= 0 || activeSlideImg.naturalWidth <= 0) return;
-        const r1 = staticImg.naturalWidth / staticImg.naturalHeight;
-        const r2 = activeSlideImg.naturalWidth / activeSlideImg.naturalHeight;
-        staticEl.style.flex = r1.toString();
-        carouselEl.style.flex = r2.toString();
-      });
     }
     window.addEventListener('load', matchImageHeights);
     window.addEventListener('resize', matchImageHeights);
     setTimeout(matchImageHeights, 1000);
     setTimeout(matchImageHeights, 3000);
+
+    /* ── Justified image rows — same height, full width, no crop (matches Jaipur page) ── */
+    function justifyRow(grid) {
+      const imgs = Array.from(grid.querySelectorAll('img'));
+      if (!imgs.length) return;
+      const GAP = 3;
+      function layout() {
+        if (!imgs.every(img => img.complete && img.naturalWidth > 0)) return;
+        const totalAR = imgs.reduce((s, img) => s + img.naturalWidth / img.naturalHeight, 0);
+        const availW = grid.offsetWidth - GAP * (imgs.length - 1);
+        const h = availW / totalAR;
+        imgs.forEach(img => { img.style.height = h + 'px'; img.style.width = 'auto'; });
+      }
+      imgs.forEach(img => {
+        if (img.complete && img.naturalWidth > 0) layout();
+        else img.addEventListener('load', layout, { once: true });
+      });
+      window.addEventListener('resize', () => requestAnimationFrame(layout));
+      return layout;
+    }
+    document.querySelectorAll('.fill-row').forEach(justifyRow);
   </script>
 
   <!-- ── Spatial Journey Carousel ── -->
@@ -1254,22 +1242,32 @@
     })();
   </script>
 
-  <!-- ── Partition Carousel ── -->
+  <!-- ── Partition Carousel (drives the second image in the fill-row) ── -->
   <script>
     (function () {
-      const slides = Array.from(document.querySelectorAll('#partitionCarousel .partition-slide'));
-      const dots   = Array.from(document.querySelectorAll('#partitionDots .partition-dot'));
-      const prevBtn = document.getElementById('partPrev');
-      const nextBtn = document.getElementById('partNext');
+      const options = [
+        { src: 'CG%20Road%20Images/partition-1.png', alt: 'Partition option 1' },
+        { src: 'CG%20Road%20Images/partition-2.png', alt: 'Partition option 2' },
+        { src: 'CG%20Road%20Images/partition-3.png', alt: 'Partition option 3' },
+        { src: 'CG%20Road%20Images/final-partition.png', alt: 'Final partition design' }
+      ];
+      const activeImg = document.getElementById('partitionActiveImg');
+      const fillRow   = document.getElementById('partitionFillRow');
+      const dots      = Array.from(document.querySelectorAll('#partitionDots .partition-dot'));
+      const prevBtn   = document.getElementById('partPrev');
+      const nextBtn   = document.getElementById('partNext');
+      if (!activeImg || !fillRow) return;
       let current = 0;
       let timer;
 
       function goTo(n) {
-        slides[current].classList.remove('active');
         dots[current].classList.remove('active');
-        current = (n + slides.length) % slides.length;
-        slides[current].classList.add('active');
+        current = (n + options.length) % options.length;
+        activeImg.src = options[current].src;
+        activeImg.alt = options[current].alt;
         dots[current].classList.add('active');
+        const layout = justifyRow(fillRow);
+        if (layout) activeImg.addEventListener('load', layout, { once: true });
       }
 
       function startAuto() { timer = setInterval(() => goTo(current + 1), 3500); }
@@ -1282,28 +1280,52 @@
     })();
   </script>
 
-  <!-- ── Other Spaces Carousel ── -->
+  <!-- ── Before / After Slider (Other Spaces) ── -->
   <script>
-    (function () {
-      const slides = Array.from(document.querySelectorAll('#otherCarousel .other-slide'));
-      const dots   = Array.from(document.querySelectorAll('#otherDots .other-dot'));
-      let current = 0;
-      let timer;
+    document.querySelectorAll('.ba-slider').forEach(slider => {
+      const wrap   = slider.querySelector('.ba-before-wrap');
+      const handle = slider.querySelector('.ba-handle');
+      let dragging = false;
 
-      function goTo(n) {
-        slides[current].classList.remove('active');
-        dots[current].classList.remove('active');
-        current = (n + slides.length) % slides.length;
-        slides[current].classList.add('active');
-        dots[current].classList.add('active');
+      function syncWidth() {
+        slider.style.setProperty('--ba-full-w', slider.offsetWidth + 'px');
+      }
+      syncWidth();
+      window.addEventListener('resize', syncWidth, { passive: true });
+
+      function setPos(pct) {
+        pct = Math.max(2, Math.min(98, pct));
+        wrap.style.width  = pct + '%';
+        handle.style.left = pct + '%';
+        slider.dataset.pos = pct;
       }
 
-      function startAuto() { timer = setInterval(() => goTo(current + 1), 4500); }
-      function stopAuto()  { clearInterval(timer); }
+      function getPercent(clientX) {
+        const rect = slider.getBoundingClientRect();
+        return ((clientX - rect.left) / rect.width) * 100;
+      }
 
-      dots.forEach(dot => dot.addEventListener('click', () => { stopAuto(); goTo(+dot.dataset.i); startAuto(); }));
-      startAuto();
-    })();
+      slider.addEventListener('mousedown', e => {
+        dragging = true;
+        setPos(getPercent(e.clientX));
+        e.preventDefault();
+      });
+      window.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        setPos(getPercent(e.clientX));
+      });
+      window.addEventListener('mouseup', () => { dragging = false; });
+
+      slider.addEventListener('touchstart', e => {
+        dragging = true;
+        setPos(getPercent(e.touches[0].clientX));
+      }, { passive: true });
+      window.addEventListener('touchmove', e => {
+        if (!dragging) return;
+        setPos(getPercent(e.touches[0].clientX));
+      }, { passive: true });
+      window.addEventListener('touchend', () => { dragging = false; });
+    });
   </script>
 
 </body>

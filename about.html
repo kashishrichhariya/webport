@@ -51,8 +51,8 @@
       position: absolute; left: 50%; transform: translateX(-50%);
     }
     .nav-logo img {
-      height: 52px; width: auto; display: block;
-      filter: brightness(0) invert(0) opacity(0.35);
+      height: 62px; width: auto; display: block;
+      filter: brightness(0) invert(0);
     }
     .nav-side {
       font-size: 13px; font-weight: 600;
@@ -66,11 +66,11 @@
     .intro-wrap {
       margin-top: var(--nav-h);
       display: grid;
-      grid-template-columns: 7fr 5fr;
+      grid-template-columns: 5fr 7fr;
       min-height: calc(100vh - var(--nav-h));
     }
 
-    /* RIGHT: sticky panel */
+    /* LEFT: sticky panel */
     .intro-left {
       position: sticky;
       top: var(--nav-h);
@@ -81,7 +81,7 @@
       flex-direction: column;
       gap: 14px;
       overflow-y: auto;
-      order: 2;
+      order: 1;
     }
     /* hide scrollbar on sticky panel */
     .intro-left::-webkit-scrollbar { display: none; }
@@ -94,17 +94,17 @@
     }
     .intro-name {
       font-family: var(--serif);
-      font-size: clamp(44px, 5vw, 64px);
+      font-size: clamp(32px, 3.4vw, 44px);
       font-weight: 400; color: var(--heading);
       letter-spacing: -0.04em; line-height: 1.05;
     }
     .intro-name em { font-style: italic; }
 
-    /* Photo — 3:4 */
+    /* Photo — 3:4, sized 10% smaller than a full-width frame */
     .photo-frame {
-      flex: 1;
-      min-height: 0;
-      width: 100%;
+      flex: none;
+      width: 90%;
+      aspect-ratio: 3 / 4;
       background: rgba(74,69,64,0.05);
       overflow: hidden;
       position: relative;
@@ -138,11 +138,11 @@
     .btn-resume:hover { background: var(--heading); color: var(--cream); }
     .btn-resume svg { flex-shrink: 0; }
 
-    /* LEFT: scrollable timeline */
+    /* RIGHT: scrollable timeline */
     .intro-right {
       background: #fff;
       padding: 72px var(--pad) 120px;
-      order: 1;
+      order: 2;
     }
 
     .gold-label {
@@ -257,8 +257,12 @@
     }
 
     .strengths-section {
+      background: var(--warm);
+      padding: 100px 0 80px;
+    }
+    .strengths-inner {
       max-width: 1440px; margin: 0 auto;
-      padding: 100px var(--pad) 80px;
+      padding: 0 var(--pad);
     }
     .skills-section {
       max-width: 1440px; margin: 0 auto;
@@ -529,7 +533,7 @@
 
   <!-- Core Strengths -->
   <section class="strengths-section">
-    <div class="two-col-layout">
+    <div class="strengths-inner two-col-layout">
       <div>
         <span class="gold-label" style="margin-bottom: 12px;">Core Strengths</span>
         <h2 class="section-title">

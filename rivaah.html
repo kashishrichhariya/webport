@@ -24,7 +24,7 @@
       --accent:       #b8907c;
       --accent-d:     #9a735f;
       --cream:        #fcfcfc;
-      --warm:         #f7f6f2;
+      --warm:         #f7f6f0;
       --rose-pale:    #f5ede9;
       --dark:         #0c0c0b;
       --heading:      #4a4540;
@@ -63,7 +63,7 @@
 
     /* ── NAV ── */
     nav {
-      position: absolute; top: 0; left: 0; right: 0;
+      position: fixed; top: 0; left: 0; right: 0;
       height: var(--nav-h);
       background: linear-gradient(to bottom, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.18) 60%, transparent 100%);
       backdrop-filter: none;
@@ -797,10 +797,10 @@
   <nav id="navbar">
     <a href="homepage.html" class="nav-side">Work</a>
     <a href="homepage.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
-    <a href="#cta" class="nav-side">Contact</a>
+    <a href="about.html" class="nav-side">About</a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Work</a></li>
-      <li><a href="#cta">Contact</a></li>
+      <li><a href="homepage.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
   </nav>
@@ -819,7 +819,6 @@
     <div class="hero-scrim"></div>
 
     <div class="hero-content reveal">
-      <p class="hero-eyebrow">Tanishq &mdash; South Ex, Delhi &mdash; 2025</p>
       <h1 class="hero-title">
         Rivaah<br>
         <em>A space that invites stillness</em>
@@ -1381,6 +1380,12 @@
       videoEl.muted = true;
       videoEl.play();
     });
+
+    // Unmute as soon as the video is ready so it plays with audio on load
+    videoEl.addEventListener('canplay', () => {
+      videoEl.muted = false;
+      audioBtn.classList.remove('muted');
+    }, { once: true });
 
     // Mute when user scrolls past the hero; unmute if they scroll back
     let heroMuted = false;
