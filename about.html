@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — Kashish Richhariya</title>
-  <meta name="description" content="About Kashish Richhariya — Interior Designer at Tanishq, Titan Company Ltd." />
+  <meta name="description" content="About Kashish Richhariya — Retail Experience Designer at Tanishq, Titan Company Ltd." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -26,7 +26,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
     body {
       background: #fff;
       color: var(--heading);
@@ -384,7 +384,15 @@
     @media (max-width: 600px) {
       :root { --pad: 20px; --nav-h: 72px; }
       .photo-frame { width: 72%; }
-      nav { padding: 0 var(--pad); }
+      nav { padding: 0 var(--pad); gap: 16px; }
+      .nav-logo {
+        position: static; left: auto; transform: none;
+        order: -1; margin-right: auto;
+      }
+      .nav-logo img { width: min(46vw, 180px); height: auto; }
+      .nav-side { font-size: 10px; letter-spacing: 0.12em; }
+      .tl-work-item { grid-template-columns: 1fr; gap: 10px; }
+      .tl-work-desc { padding-top: 0; }
       footer { padding: 56px var(--pad) 36px; }
     }
   </style>
@@ -394,12 +402,12 @@
 <!-- ═══════════════════════════════
      NAV
 ═══════════════════════════════ -->
-<nav>
+<nav aria-label="Primary navigation">
   <a href="index.html" class="nav-side">Work</a>
   <a class="nav-logo" href="index.html">
     <img src="Logo-web.png" alt="Kashish Richhariya" />
   </a>
-  <a href="#footer-about" class="nav-side">About</a>
+  <a href="#footer-about" class="nav-side">Contact</a>
 </nav>
 
 <!-- ═══════════════════════════════
@@ -460,7 +468,7 @@
         <p class="tl-work-label">Notable Work</p>
         <ul class="tl-work-list">
           <li class="tl-work-item">
-            <div class="tl-work-name">Rivaah Store Identity — Flagship<span class="tl-work-year">2024–2025</span></div>
+            <div class="tl-work-name">Rivaah Store Identity — Flagship<span class="tl-work-year">2024–25</span></div>
             <div class="tl-work-desc">Owned the complete identity system end to end — colour palette, material palette, and the full spatial journey design for the Rivaah flagship.</div>
           </li>
           <li class="tl-work-item">
@@ -470,6 +478,14 @@
           <li class="tl-work-item">
             <div class="tl-work-name">Board Meeting Exhibition Design<span class="tl-work-year">Mar 2025</span></div>
             <div class="tl-work-desc">Directed layout strategy and oversaw on-ground execution for an exhibition hosted for the Tata Group board.</div>
+          </li>
+          <li class="tl-work-item">
+            <div class="tl-work-name">RK Studio — Case Studio Design<span class="tl-work-year">2026–Present</span></div>
+            <div class="tl-work-desc">Conceiving a museum-grade retail experience within Raj Kapoor's studio, translating cinematic heritage into an immersive spatial narrative.</div>
+          </li>
+          <li class="tl-work-item">
+            <div class="tl-work-name">Mia Brand Identity Design<span class="tl-work-year">2026–Present</span></div>
+            <div class="tl-work-desc">Developing the spatial identity system for the Mia brand.</div>
           </li>
         </ul>
       </div>
@@ -623,7 +639,7 @@
       </button>
     </div>
   </div>
-  <p class="footer-copy">© 2025 Kashish Richhariya. All rights reserved.</p>
+  <p class="footer-copy">© 2026 Kashish Richhariya. All rights reserved.</p>
 </footer>
 
 <div id="copy-toast-about">Copied E-mail ID</div>
@@ -631,44 +647,49 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-  if (history.scrollRestoration) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-  gsap.registerPlugin(ScrollTrigger);
+  const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
   /* Scroll reveals */
-  gsap.utils.toArray('.tl-entry').forEach((el, i) => {
-    gsap.from(el, {
-      opacity: 0, y: 32,
-      duration: 0.85, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 80%' }
+  if (hasGsap && !prefersReducedMotion) {
+    gsap.utils.toArray('.tl-entry').forEach(el => {
+      gsap.from(el, {
+        opacity: 0, y: 32,
+        duration: 0.85, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 80%' }
+      });
     });
-  });
 
-  gsap.utils.toArray('.strength-item').forEach((el, i) => {
-    gsap.from(el, {
-      opacity: 0, y: 20,
-      duration: 0.7, ease: 'power2.out',
-      delay: i * 0.07,
-      scrollTrigger: { trigger: el, start: 'top 86%' }
+    gsap.utils.toArray('.strength-item').forEach((el, i) => {
+      gsap.from(el, {
+        opacity: 0, y: 20,
+        duration: 0.7, ease: 'power2.out',
+        delay: i * 0.07,
+        scrollTrigger: { trigger: el, start: 'top 86%' }
+      });
     });
-  });
 
-  gsap.utils.toArray('.skill-tag').forEach((el, i) => {
-    gsap.from(el, {
-      opacity: 0, y: 14,
-      duration: 0.5, ease: 'power2.out',
-      delay: i * 0.05,
-      scrollTrigger: { trigger: el, start: 'top 90%' }
+    gsap.utils.toArray('.skill-tag').forEach((el, i) => {
+      gsap.from(el, {
+        opacity: 0, y: 14,
+        duration: 0.5, ease: 'power2.out',
+        delay: i * 0.05,
+        scrollTrigger: { trigger: el, start: 'top 90%' }
+      });
     });
-  });
+  }
 
   /* Email copy */
   const toastAbout = document.getElementById('copy-toast-about');
-  document.getElementById('copy-email-btn-about').addEventListener('click', () => {
-    navigator.clipboard.writeText('kashishrichhariya@gmail.com').then(() => {
+  document.getElementById('copy-email-btn-about').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText('kashishrichhariya0204@gmail.com');
       toastAbout.classList.add('show');
       setTimeout(() => toastAbout.classList.remove('show'), 2200);
-    });
+    } catch {
+      window.location.href = 'mailto:kashishrichhariya0204@gmail.com';
+    }
   });
 </script>
 

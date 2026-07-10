@@ -53,6 +53,14 @@
       -webkit-backdrop-filter: none;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 64px; z-index: 100;
+      transition: background .3s ease, box-shadow .3s ease, backdrop-filter .3s ease;
+    }
+    nav.scrolled,
+    nav.menu-open {
+      background: rgba(12,11,10,0.94);
+      box-shadow: 0 8px 24px rgba(12,11,10,0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
     .nav-logo img { height: 62px; width: auto; display: block; filter: brightness(0) invert(1); }
@@ -65,8 +73,22 @@
     .nav-links { display: none; list-style: none; }
     .nav-links a { font-size: 12px; font-weight: 400; color: rgba(252,252,252,0.7); letter-spacing: 0.1em; text-transform: uppercase; transition: color .25s; }
     .nav-links a:hover { color: var(--cream); }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; position: absolute; right: 20px; }
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 8px 4px; position: absolute; right: 20px;
+      border: 0; background: transparent; color: inherit;
+    }
     .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
+    .nav-hamburger:focus-visible,
+    .nav-logo:focus-visible,
+    .nav-side:focus-visible,
+    .nav-links a:focus-visible,
+    .hero-audio-btn:focus-visible,
+    .sp-btn:focus-visible,
+    .sp-dot:focus-visible,
+    .partition-btn:focus-visible,
+    .partition-dot:focus-visible,
+    .ba-slider:focus-visible { outline: 2px solid var(--cream); outline-offset: 4px; }
 
     /* ── LABEL ── */
     .label {
@@ -312,9 +334,20 @@
     .sp-btn-prev { left: 16px; }
     .sp-btn-next { right: 16px; }
     .sp-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--cream); }
-    .sp-dots { display: flex; gap: 8px; justify-content: center; padding: 18px 0; }
-    .sp-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(155,149,125,0.35); cursor: pointer; transition: all 0.25s; }
-    .sp-dot.active { background: var(--accent); transform: scale(1.3); }
+    .sp-dots { display: flex; gap: 0; justify-content: center; padding: 18px 0; }
+    .sp-dot {
+      position: relative; width: 24px; height: 24px; padding: 0;
+      border: 0; background: transparent; cursor: pointer;
+    }
+    .sp-dot::before {
+      content: ''; position: absolute; width: 6px; height: 6px;
+      top: 50%; left: 50%; border-radius: 50%;
+      background: rgba(155,149,125,0.35);
+      transform: translate(-50%, -50%);
+      transition: background .25s, transform .25s;
+    }
+    .sp-dot.active::before { background: var(--accent); transform: translate(-50%, -50%) scale(1.3); }
+    .sp-btn:focus-visible, .sp-dot:focus-visible { outline-color: var(--accent); }
 
     /* Spatial text slides */
     .sp-text-slide { display: none; }
@@ -430,14 +463,21 @@
 
     /* Partition navigation */
     .partition-nav {
-      display: flex; gap: 6px; justify-content: center; align-items: center; padding: 8px 0;
+      display: flex; gap: 0; justify-content: center; align-items: center; padding: 8px 0;
     }
     .partition-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: rgba(155,149,125,0.3); cursor: pointer;
-      transition: all 0.25s;
+      position: relative; width: 24px; height: 24px; padding: 0;
+      border: 0; background: transparent; cursor: pointer;
     }
-    .partition-dot.active { background: var(--accent); transform: scale(1.2); }
+    .partition-dot::before {
+      content: ''; position: absolute; width: 5px; height: 5px;
+      top: 50%; left: 50%; border-radius: 50%;
+      background: rgba(155,149,125,0.3);
+      transform: translate(-50%, -50%);
+      transition: background .25s, transform .25s;
+    }
+    .partition-dot.active::before { background: var(--accent); transform: translate(-50%, -50%) scale(1.2); }
+    .partition-btn:focus-visible, .partition-dot:focus-visible { outline-color: var(--accent); }
     .partition-btn {
       background: none; border: 1px solid rgba(181,132,90,0.3);
       color: var(--mid); font-size: 16px; font-weight: 300;
@@ -590,6 +630,8 @@
     @media (max-width: 600px) {
       nav { padding: 0 20px; }
       .nav-side { display: none; }
+      .nav-logo { left: 20px; transform: none; }
+      .nav-logo img { width: min(62vw, 220px); height: auto; }
       .nav-links { display: none; }
       .nav-links.open { display: flex; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: rgba(12,11,10,0.97); padding: 24px 20px; gap: 20px; }
       .nav-hamburger { display: flex; }
@@ -614,6 +656,14 @@
       .hero-audio-btn { left: 24px; bottom: 24px; }
       .hero-scroll { display: none; }
     }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 
@@ -622,15 +672,17 @@
   <!-- ══════════════════════
        NAV
   ══════════════════════ -->
-  <nav id="navbar">
+  <nav id="navbar" aria-label="Primary navigation">
     <a href="index.html" class="nav-side">Work</a>
-    <a href="index.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
+    <a href="index.html" class="nav-logo" aria-label="Kashish Richhariya — home"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
     <a href="about.html" class="nav-side">About</a>
-    <ul class="nav-links" id="navLinks">
+    <ul class="nav-links" id="navLinks" aria-label="Mobile navigation">
       <li><a href="index.html">Work</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
-    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <button class="nav-hamburger" id="hamburger" type="button" aria-controls="navLinks" aria-expanded="false" aria-label="Open navigation">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
   </nav>
 
   <!-- ══════════════════════
@@ -640,8 +692,8 @@
     <video
       id="heroVideo"
       class="hero-video"
-      src="CG%20Road%20Images/cg-road-video.mp4"
-      autoplay loop playsinline
+      src="CG%20Road%20Images/cg-road-hero.mp4"
+      autoplay loop playsinline muted preload="metadata"
     ></video>
     <div class="hero-scrim"></div>
 
@@ -654,7 +706,7 @@
     </div>
 
     <!-- Audio toggle -->
-    <button class="hero-audio-btn muted" id="heroAudioBtn" title="Toggle audio" aria-label="Toggle audio">
+    <button class="hero-audio-btn muted" id="heroAudioBtn" type="button" title="Unmute hero video" aria-label="Unmute hero video">
       <svg class="icon-sound" viewBox="0 0 24 24" aria-hidden="true">
         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
@@ -716,8 +768,8 @@
     <div class="mb-split reveal">
       <!-- Video left -->
       <div class="mb-video-side">
-        <video id="mbVideo" autoplay loop playsinline muted>
-          <source src="CG%20Road%20Images/Moodboard-01.mp4" type="video/mp4" />
+        <video id="mbVideo" data-autoplay loop playsinline muted preload="none">
+          <source src="CG%20Road%20Images/moodboard.mp4" type="video/mp4" />
         </video>
       </div>
       <!-- Text right -->
@@ -772,30 +824,30 @@
         </div>
 
         <!-- RIGHT: floor plan carousel -->
-        <div class="sp-carousel-wrap reveal-right">
-          <div class="sp-carousel" id="spCarousel">
+        <div class="sp-carousel-wrap reveal-right" role="region" aria-roledescription="carousel" aria-label="Store floor plans" tabindex="0">
+          <div class="sp-carousel" id="spCarousel" aria-live="off">
 
             <div class="sp-slide active">
-              <img class="sp-plan-img" src="CG%20Road%20Images/ground-floor-layout.png" alt="Ground floor layout" />
+              <img class="sp-plan-img" src="CG%20Road%20Images/ground-floor-layout.jpg" alt="Ground floor layout" loading="lazy" decoding="async" />
             </div>
 
             <div class="sp-slide">
-              <img class="sp-plan-img" src="CG%20Road%20Images/first-floor-layout.png" alt="First floor layout" />
+              <img class="sp-plan-img" src="CG%20Road%20Images/first-floor-layout.jpg" alt="First floor layout" loading="lazy" decoding="async" />
             </div>
 
             <div class="sp-slide">
-              <img class="sp-plan-img" src="CG%20Road%20Images/second-floor-layout.png" alt="Second floor layout" />
+              <img class="sp-plan-img" src="CG%20Road%20Images/second-floor-layout.jpg" alt="Second floor layout" loading="lazy" decoding="async" />
             </div>
 
           </div>
 
-          <button class="sp-btn sp-btn-prev" id="spPrev">&#8249;</button>
-          <button class="sp-btn sp-btn-next" id="spNext">&#8250;</button>
+          <button class="sp-btn sp-btn-prev" id="spPrev" type="button" aria-label="Previous floor plan" aria-controls="spCarousel">&#8249;</button>
+          <button class="sp-btn sp-btn-next" id="spNext" type="button" aria-label="Next floor plan" aria-controls="spCarousel">&#8250;</button>
 
-          <div class="sp-dots" id="spDots">
-            <span class="sp-dot active" data-i="0"></span>
-            <span class="sp-dot" data-i="1"></span>
-            <span class="sp-dot" data-i="2"></span>
+          <div class="sp-dots" id="spDots" role="group" aria-label="Choose a floor plan">
+            <button class="sp-dot active" type="button" data-i="0" aria-label="Show ground floor plan" aria-current="true"></button>
+            <button class="sp-dot" type="button" data-i="1" aria-label="Show first floor plan"></button>
+            <button class="sp-dot" type="button" data-i="2" aria-label="Show second floor plan"></button>
           </div>
         </div>
 
@@ -822,8 +874,8 @@
 
     <!-- Before images -->
     <div class="fill-row reveal">
-      <img src="CG%20Road%20Images/staircase-side-before.jpg" alt="Staircase — side view before" />
-      <img src="CG%20Road%20Images/staircase-front-before.jpg" alt="Staircase — front view before" />
+      <img src="CG%20Road%20Images/staircase-side-before.jpg" alt="Staircase — side view before" loading="lazy" decoding="async" />
+      <img src="CG%20Road%20Images/staircase-front-before.jpg" alt="Staircase — front view before" loading="lazy" decoding="async" />
     </div>
     <div class="img-caption">The staircase before intervention — exposed and interfering with display</div>
 
@@ -832,18 +884,18 @@
       <p>Jaali partitions were utilised to divide the space while maintaining visual openness. Multiple options were explored taking inspiration from different cultures across the city.</p>
     </div>
 
-    <div class="mt-40 reveal">
+    <div class="mt-40 reveal" role="region" aria-roledescription="carousel" aria-label="Partition design options" aria-live="off">
       <div class="fill-row" id="partitionFillRow">
-        <img src="CG%20Road%20Images/partition-render.jpg" alt="Partition — 3D render overview" />
-        <img id="partitionActiveImg" src="CG%20Road%20Images/partition-1.png" alt="Partition option 1" />
+        <img src="CG%20Road%20Images/partition-render.jpg" alt="Partition — 3D render overview" loading="lazy" decoding="async" />
+        <img id="partitionActiveImg" src="CG%20Road%20Images/partition-1.jpg" alt="Partition option 1" loading="lazy" decoding="async" />
       </div>
-      <div class="partition-nav" id="partitionDots">
-        <button class="partition-btn" id="partPrev">&#8249;</button>
-        <span class="partition-dot active" data-i="0"></span>
-        <span class="partition-dot" data-i="1"></span>
-        <span class="partition-dot" data-i="2"></span>
-        <span class="partition-dot" data-i="3"></span>
-        <button class="partition-btn" id="partNext">&#8250;</button>
+      <div class="partition-nav" id="partitionDots" role="group" aria-label="Choose a partition design">
+        <button class="partition-btn" id="partPrev" type="button" aria-label="Previous partition design">&#8249;</button>
+        <button class="partition-dot active" type="button" data-i="0" aria-label="Show partition option 1" aria-current="true"></button>
+        <button class="partition-dot" type="button" data-i="1" aria-label="Show partition option 2"></button>
+        <button class="partition-dot" type="button" data-i="2" aria-label="Show partition option 3"></button>
+        <button class="partition-dot" type="button" data-i="3" aria-label="Show final partition design"></button>
+        <button class="partition-btn" id="partNext" type="button" aria-label="Next partition design">&#8250;</button>
       </div>
     </div>
     <div class="img-caption">Left: 3D render of the staircase zone. Right: design explorations inspired by Ahmedabad's cultural diversity</div>
@@ -854,8 +906,8 @@
     </div>
 
     <div class="bleed-row2 mt-40 reveal">
-      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-jaali-side.jpg" alt="Staircase jaali partition — side view" /></div>
-      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-jaali.png" alt="Staircase jaali partition — front view" /></div>
+      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-jaali-side.jpg" alt="Staircase jaali partition — side view" loading="lazy" decoding="async" /></div>
+      <div class="img-wrap"><img src="CG%20Road%20Images/staircase-jaali.jpg" alt="Staircase jaali partition — front view" loading="lazy" decoding="async" /></div>
     </div>
     <div class="img-caption">The final jaali partition — Sankheda spindles meet Ahmedabad's pol facades</div>
 
@@ -875,12 +927,12 @@
     </div>
 
     <div class="bleed mt-48 reveal-scale">
-      <img src="CG%20Road%20Images/gf-cash-counter.png" alt="Ground floor cash counter — stepwell-inspired backdrop" />
+      <img src="CG%20Road%20Images/gf-cash-counter.jpg" alt="Ground floor cash counter — stepwell-inspired backdrop" loading="lazy" decoding="async" />
     </div>
 
     <div class="kutch-split mt-56 reveal">
       <div class="kutch-split-img">
-        <img src="CG%20Road%20Images/kutch-branding.png" alt="Kutch wood carving branding — geometric relief work by Jamal ji" />
+        <img src="CG%20Road%20Images/kutch-branding.jpg" alt="Kutch wood carving branding — geometric relief work by Jamal ji" loading="lazy" decoding="async" />
         <div class="img-caption" style="padding: 16px 0 0; max-width: none;">Shallow relief branding in the geometric motifs of Kutch wood carving</div>
       </div>
       <div class="kutch-split-text">
@@ -904,7 +956,7 @@
     </div>
 
     <div class="bleed mt-48 reveal-scale">
-      <img src="CG%20Road%20Images/ff-cc-straight.png" alt="First floor cash counter — Sidi Saiyyed Jaali inspired, hand-carved by Abdul ji" />
+      <img src="CG%20Road%20Images/ff-cc-straight.jpg" alt="First floor cash counter — Sidi Saiyyed Jaali inspired, hand-carved by Abdul ji" loading="lazy" decoding="async" />
     </div>
     <div class="img-caption">The brand logo woven into the tree of life — hand-carved by artisan Abdul ji</div>
 
@@ -917,7 +969,7 @@
 
     <!-- Image with overlaid title -->
     <div class="bleed-overlay reveal-scale">
-      <img src="CG%20Road%20Images/sf-cash-counter-01.jpg" alt="Second floor cash counter — overview" />
+      <img src="CG%20Road%20Images/sf-cash-counter-01.jpg" alt="Second floor cash counter — overview" loading="lazy" decoding="async" />
       <div class="bleed-overlay-header">
         <p class="label">Second Floor Cash Counter</p>
         <h2 class="s-h2">Celebrating Ahmedabad's pol architecture</h2>
@@ -929,7 +981,7 @@
     </div>
 
     <div class="bleed reveal-scale">
-      <img src="CG%20Road%20Images/sf-cash-counter-02.jpg" alt="Second floor cash counter — floral wood carvings and pink limewash" />
+      <img src="CG%20Road%20Images/sf-cash-counter-02.jpg" alt="Second floor cash counter — floral wood carvings and pink limewash" loading="lazy" decoding="async" />
     </div>
 
     <div class="ds-body-block breather reveal">
@@ -937,7 +989,7 @@
     </div>
 
     <div class="bleed reveal-scale">
-      <img src="CG%20Road%20Images/sf-cash-counter-03.jpg" alt="Second floor — lippan work and brass lamps" />
+      <img src="CG%20Road%20Images/sf-cash-counter-03.jpg" alt="Second floor — lippan work and brass lamps" loading="lazy" decoding="async" />
     </div>
     <div class="img-caption" style="padding-bottom: 24px;">Lippan craft by Vishal ji of Lippan Kutir — mud and mirror work adapted for contemporary retail</div>
 
@@ -947,8 +999,8 @@
     </div>
 
     <div class="sadeli-grid mt-40 reveal">
-      <div class="img-wrap"><img src="CG%20Road%20Images/sadeli-branding.jpg" alt="Sadeli wood inlay branding" /></div>
-      <div class="img-wrap"><img src="CG%20Road%20Images/sadeli-process.JPG" alt="Sadeli craft process — Rakesh Petigara ji" /></div>
+      <div class="img-wrap"><img src="CG%20Road%20Images/sadeli-branding.jpg" alt="Sadeli wood inlay branding" loading="lazy" decoding="async" /></div>
+      <div class="img-wrap"><img src="CG%20Road%20Images/sadeli-process.JPG" alt="Sadeli craft process — Rakesh Petigara ji" loading="lazy" decoding="async" /></div>
     </div>
     <div class="img-caption">Sadeli wood inlay by National Awardee Rakesh Petigara ji — one of only two practicing artisans in India</div>
 
@@ -967,10 +1019,10 @@
     <!-- Drag-to-compare: sf-partition + sf-cove-rivaah, both panes same height -->
     <div class="ds-img reveal">
       <div class="ba-wrap">
-        <div class="ba-slider reveal-scale" id="otherBaSlider" data-pos="50">
-          <img class="ba-after" src="CG%20Road%20Images/sf-cove-rivaah.png" alt="Second floor cove — Rivaah space" />
+        <div class="ba-slider reveal-scale" id="otherBaSlider" data-pos="50" role="slider" tabindex="0" aria-label="Compare the partition and Rivaah cove" aria-valuemin="2" aria-valuemax="98" aria-valuenow="50" aria-valuetext="50% partition, 50% Rivaah cove">
+          <img class="ba-after" src="CG%20Road%20Images/sf-cove-rivaah.jpg" alt="Second floor cove — Rivaah space" loading="lazy" decoding="async" />
           <div class="ba-before-wrap" id="otherBaWrap">
-            <img src="CG%20Road%20Images/sf-partition.png" alt="Second floor centrewell partition" />
+            <img src="CG%20Road%20Images/sf-partition.jpg" alt="Second floor centrewell partition" loading="lazy" decoding="async" />
           </div>
           <div class="ba-handle" id="otherBaHandle">
             <div class="ba-knob">&#8596;</div>
@@ -984,19 +1036,19 @@
 
     <!-- Column -->
     <div class="bleed mt-56 reveal-scale">
-      <img src="CG%20Road%20Images/column.png" alt="Column design — crafted structural detail" />
+      <img src="CG%20Road%20Images/column.jpg" alt="Column design — crafted structural detail" loading="lazy" decoding="async" />
     </div>
     <div class="img-caption">Column design — structural elements transformed into cultural statements</div>
 
     <!-- Chandelier -->
     <div class="bleed mt-56 reveal-scale">
-      <img src="CG%20Road%20Images/chandelier.png" alt="Chandelier — bespoke lighting centrepiece" />
+      <img src="CG%20Road%20Images/chandelier.jpg" alt="Chandelier — bespoke lighting centrepiece" loading="lazy" decoding="async" />
     </div>
     <div class="img-caption">Chandelier — a bespoke centrepiece celebrating Gujarat's craft traditions</div>
 
     <!-- Thread craft -->
     <div class="bleed mt-56 reveal-scale">
-      <img src="CG%20Road%20Images/thread-craft.png" alt="Thread craft installation" />
+      <img src="CG%20Road%20Images/thread-craft.jpg" alt="Thread craft installation" loading="lazy" decoding="async" />
     </div>
     <div class="img-caption">Thread craft installation — weaving community narratives into the spatial experience</div>
 
@@ -1014,14 +1066,14 @@
 
     <div class="bts-scroll-outer">
       <div class="bts-scroll-track" id="btsTrack">
-        <img src="CG%20Road%20Images/BTS/IMG_20231030_111422.jpg" alt="Behind the scenes — site work" />
-        <img src="CG%20Road%20Images/BTS/IMG_0323.jpeg" alt="Behind the scenes — craft process" />
-        <img src="CG%20Road%20Images/BTS/IMG_20231030_120451.jpg" alt="Behind the scenes — installation" />
-        <img src="CG%20Road%20Images/BTS/IMG_20231030_152647.jpg" alt="Behind the scenes — detailing" />
-        <img src="CG%20Road%20Images/BTS/IMG_20231030_152723.jpg" alt="Behind the scenes — on site" />
-        <img src="CG%20Road%20Images/BTS/IMG_20231030_170339.jpg" alt="Behind the scenes — finishing" />
-        <img src="CG%20Road%20Images/BTS/lippan-process.JPG" alt="Behind the scenes — lippan craft process" />
-        <img src="CG%20Road%20Images/BTS/70DFF431-CF12-4A3E-8A48-1D2CF15433E0.JPG" alt="Behind the scenes — artisan work" />
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_111422.jpg" alt="Behind the scenes — site work" loading="lazy" decoding="async" />
+        <img src="CG%20Road%20Images/BTS/IMG_0323.jpeg" alt="Behind the scenes — craft process" loading="lazy" decoding="async" />
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_120451.jpg" alt="Behind the scenes — installation" loading="lazy" decoding="async" />
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_152647.jpg" alt="Behind the scenes — detailing" loading="lazy" decoding="async" />
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_152723.jpg" alt="Behind the scenes — on site" loading="lazy" decoding="async" />
+        <img src="CG%20Road%20Images/BTS/IMG_20231030_170339.jpg" alt="Behind the scenes — finishing" loading="lazy" decoding="async" />
+        <img src="CG%20Road%20Images/BTS/lippan-process.JPG" alt="Behind the scenes — lippan craft process" loading="lazy" decoding="async" />
+        <img src="CG%20Road%20Images/BTS/70DFF431-CF12-4A3E-8A48-1D2CF15433E0.JPG" alt="Behind the scenes — artisan work" loading="lazy" decoding="async" />
       </div>
     </div>
 
@@ -1036,16 +1088,55 @@
       Rivaah <em>South Ex</em><br>Next Case Study
     </h2>
     <a href="rivaah.html" class="cta-btn reveal">View Project</a>
-    <p class="cta-credit">&copy; 2025 Kashish Richhariya. All rights reserved.</p>
+    <p class="cta-credit">&copy; 2026 Kashish Richhariya. All rights reserved.</p>
   </section>
 
   <!-- GSAP -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script>
-    gsap.registerPlugin(ScrollTrigger);
+    const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+    if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    function setMenuOpen(open) {
+      navLinks.classList.toggle('open', open);
+      navbar.classList.toggle('menu-open', open);
+      hamburger.setAttribute('aria-expanded', String(open));
+      hamburger.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    }
+
+    hamburger.addEventListener('click', () => {
+      setMenuOpen(hamburger.getAttribute('aria-expanded') !== 'true');
+    });
+    navLinks.addEventListener('click', event => {
+      if (event.target.closest('a')) setMenuOpen(false);
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && hamburger.getAttribute('aria-expanded') === 'true') {
+        setMenuOpen(false);
+        hamburger.focus();
+      }
+    });
+
+    function updateNavContrast() {
+      navbar.classList.toggle('scrolled', window.scrollY > 24);
+    }
+    updateNavContrast();
+    window.addEventListener('scroll', updateNavContrast, { passive: true });
+    const mobileNavQuery = window.matchMedia('(max-width: 600px)');
+    const handleMobileNavChange = event => {
+      if (!event.matches) setMenuOpen(false);
+    };
+    if (mobileNavQuery.addEventListener) mobileNavQuery.addEventListener('change', handleMobileNavChange);
+    else mobileNavQuery.addListener(handleMobileNavChange);
 
     /* ── Hero reveal on load ── */
+    if (hasGsap && !prefersReducedMotion) {
     gsap.fromTo('.hero-content', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.3 });
 
     /* ── Scroll reveals ── */
@@ -1106,12 +1197,17 @@
         }
       );
     });
+    }
 
     /* ── BTS auto-scroll strip ── */
     const btsTrack = document.getElementById('btsTrack');
-    if (btsTrack) {
+    if (btsTrack && !prefersReducedMotion) {
       const origChildren = Array.from(btsTrack.children);
-      origChildren.forEach(child => btsTrack.appendChild(child.cloneNode(true)));
+      origChildren.forEach(child => {
+        const clone = child.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        btsTrack.appendChild(clone);
+      });
       let pos = 0;
       const speed = 0.9;
       function animateBTS() {
@@ -1124,46 +1220,29 @@
       setTimeout(animateBTS, 400);
     }
 
-    /* ── Nav hamburger ── */
-    const hamburger = document.getElementById('hamburger');
-    const navLinks  = document.getElementById('navLinks');
-    if (hamburger) hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
-
-    /* ── Hero audio management (Rivaah-style) ── */
+    /* ── Hero audio management ── */
     const heroVideoEl = document.getElementById('heroVideo');
     const heroAudioBtn = document.getElementById('heroAudioBtn');
-    const heroSection = document.getElementById('hero');
 
-    heroVideoEl.addEventListener('canplay', () => {
-      heroVideoEl.muted = false;
-      heroAudioBtn.classList.remove('muted');
-    }, { once: true });
+    function setHeroMuted(muted) {
+      heroVideoEl.muted = muted;
+      heroAudioBtn.classList.toggle('muted', muted);
+      const action = muted ? 'Unmute hero video' : 'Mute hero video';
+      heroAudioBtn.setAttribute('aria-label', action);
+      heroAudioBtn.title = action;
+    }
 
-    let heroMuted = false;
-    window.addEventListener('scroll', () => {
-      const heroPast = heroSection.getBoundingClientRect().bottom <= 0;
-      if (heroPast && !heroMuted) {
-        heroMuted = true;
-        heroVideoEl.muted = true;
-        heroAudioBtn.classList.add('muted');
-      } else if (!heroPast && heroMuted) {
-        heroMuted = false;
-        heroVideoEl.muted = false;
-        heroAudioBtn.classList.remove('muted');
-      }
-    }, { passive: true });
+    setHeroMuted(true);
+    if (prefersReducedMotion) {
+      heroVideoEl.pause();
+      document.getElementById('mbVideo')?.pause();
+    }
 
     heroAudioBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      heroVideoEl.muted = !heroVideoEl.muted;
-      heroAudioBtn.classList.toggle('muted', heroVideoEl.muted);
-      heroMuted = heroVideoEl.muted;
-    });
-
-    heroVideoEl.addEventListener('click', () => {
-      heroVideoEl.muted = !heroVideoEl.muted;
-      heroAudioBtn.classList.toggle('muted', heroVideoEl.muted);
-      heroMuted = heroVideoEl.muted;
+      const shouldUnmute = heroVideoEl.muted;
+      setHeroMuted(!shouldUnmute);
+      if (shouldUnmute && heroVideoEl.paused) heroVideoEl.play().catch(() => {});
     });
 
     function matchImageHeights() {
@@ -1184,11 +1263,21 @@
     setTimeout(matchImageHeights, 3000);
 
     /* ── Justified image rows — same height, full width, no crop (matches Jaipur page) ── */
+    const justifiedRowLayouts = new WeakMap();
     function justifyRow(grid) {
+      const existingLayout = justifiedRowLayouts.get(grid);
+      if (existingLayout) {
+        requestAnimationFrame(existingLayout);
+        return existingLayout;
+      }
       const imgs = Array.from(grid.querySelectorAll('img'));
       if (!imgs.length) return;
       const GAP = 3;
       function layout() {
+        if (window.matchMedia('(max-width: 600px)').matches) {
+          imgs.forEach(img => { img.style.height = ''; img.style.width = ''; });
+          return;
+        }
         if (!imgs.every(img => img.complete && img.naturalWidth > 0)) return;
         const totalAR = imgs.reduce((s, img) => s + img.naturalWidth / img.naturalHeight, 0);
         const availW = grid.offsetWidth - GAP * (imgs.length - 1);
@@ -1200,6 +1289,7 @@
         else img.addEventListener('load', layout, { once: true });
       });
       window.addEventListener('resize', () => requestAnimationFrame(layout));
+      justifiedRowLayouts.set(grid, layout);
       return layout;
     }
     document.querySelectorAll('.fill-row').forEach(justifyRow);
@@ -1213,8 +1303,17 @@
       const dots       = Array.from(document.querySelectorAll('#spDots .sp-dot'));
       const prevBtn    = document.getElementById('spPrev');
       const nextBtn    = document.getElementById('spNext');
+      const carousel   = document.querySelector('.sp-carousel-wrap');
       let current = 0;
       let timer;
+
+      slides.forEach((slide, index) => {
+        slide.setAttribute('role', 'group');
+        slide.setAttribute('aria-roledescription', 'slide');
+        slide.setAttribute('aria-label', `${index + 1} of ${slides.length}`);
+        slide.setAttribute('aria-hidden', String(index !== current));
+      });
+      textSlides.forEach((slide, index) => slide.setAttribute('aria-hidden', String(index !== current)));
 
       function goTo(n) {
         slides[current].classList.remove('active');
@@ -1224,19 +1323,34 @@
         slides[current].classList.add('active');
         textSlides[current].classList.add('active');
         dots[current].classList.add('active');
+        slides.forEach((slide, index) => slide.setAttribute('aria-hidden', String(index !== current)));
+        textSlides.forEach((slide, index) => slide.setAttribute('aria-hidden', String(index !== current)));
+        dots.forEach((dot, index) => {
+          if (index === current) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+        });
       }
 
-      function startAuto() { timer = setInterval(() => goTo(current + 1), 5000); }
-      function stopAuto()  { clearInterval(timer); }
+      function startAuto() {
+        if (prefersReducedMotion || document.hidden || carousel.matches(':hover') || carousel.contains(document.activeElement)) return;
+        stopAuto();
+        timer = setInterval(() => goTo(current + 1), 5000);
+      }
+      function stopAuto()  { clearInterval(timer); timer = undefined; }
 
       prevBtn.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
       nextBtn.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
       dots.forEach(dot => dot.addEventListener('click', () => { stopAuto(); goTo(+dot.dataset.i); startAuto(); }));
 
-      document.addEventListener('keydown', e => {
+      carousel.addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft')  { stopAuto(); goTo(current - 1); startAuto(); }
         if (e.key === 'ArrowRight') { stopAuto(); goTo(current + 1); startAuto(); }
       });
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+      carousel.addEventListener('focusin', stopAuto);
+      carousel.addEventListener('focusout', () => setTimeout(startAuto, 0));
+      document.addEventListener('visibilitychange', () => document.hidden ? stopAuto() : startAuto());
 
       startAuto();
     })();
@@ -1246,10 +1360,10 @@
   <script>
     (function () {
       const options = [
-        { src: 'CG%20Road%20Images/partition-1.png', alt: 'Partition option 1' },
-        { src: 'CG%20Road%20Images/partition-2.png', alt: 'Partition option 2' },
-        { src: 'CG%20Road%20Images/partition-3.png', alt: 'Partition option 3' },
-        { src: 'CG%20Road%20Images/final-partition.png', alt: 'Final partition design' }
+        { src: 'CG%20Road%20Images/partition-1.jpg', alt: 'Partition option 1' },
+        { src: 'CG%20Road%20Images/partition-2.jpg', alt: 'Partition option 2' },
+        { src: 'CG%20Road%20Images/partition-3.jpg', alt: 'Partition option 3' },
+        { src: 'CG%20Road%20Images/final-partition.jpg', alt: 'Final partition design' }
       ];
       const activeImg = document.getElementById('partitionActiveImg');
       const fillRow   = document.getElementById('partitionFillRow');
@@ -1257,25 +1371,40 @@
       const prevBtn   = document.getElementById('partPrev');
       const nextBtn   = document.getElementById('partNext');
       if (!activeImg || !fillRow) return;
+      const carousel = fillRow.closest('[role="region"]');
       let current = 0;
       let timer;
+      const layout = justifyRow(fillRow);
 
       function goTo(n) {
         dots[current].classList.remove('active');
         current = (n + options.length) % options.length;
+        if (layout) activeImg.addEventListener('load', layout, { once: true });
         activeImg.src = options[current].src;
         activeImg.alt = options[current].alt;
         dots[current].classList.add('active');
-        const layout = justifyRow(fillRow);
-        if (layout) activeImg.addEventListener('load', layout, { once: true });
+        dots.forEach((dot, index) => {
+          if (index === current) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+        });
+        if (layout && activeImg.complete) requestAnimationFrame(layout);
       }
 
-      function startAuto() { timer = setInterval(() => goTo(current + 1), 3500); }
-      function stopAuto()  { clearInterval(timer); }
+      function startAuto() {
+        if (prefersReducedMotion || document.hidden || carousel.matches(':hover') || carousel.contains(document.activeElement)) return;
+        stopAuto();
+        timer = setInterval(() => goTo(current + 1), 3500);
+      }
+      function stopAuto()  { clearInterval(timer); timer = undefined; }
 
       prevBtn.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
       nextBtn.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
       dots.forEach(dot => dot.addEventListener('click', () => { stopAuto(); goTo(+dot.dataset.i); startAuto(); }));
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+      carousel.addEventListener('focusin', stopAuto);
+      carousel.addEventListener('focusout', () => setTimeout(startAuto, 0));
+      document.addEventListener('visibilitychange', () => document.hidden ? stopAuto() : startAuto());
       startAuto();
     })();
   </script>
@@ -1298,6 +1427,8 @@
         wrap.style.width  = pct + '%';
         handle.style.left = pct + '%';
         slider.dataset.pos = pct;
+        slider.setAttribute('aria-valuenow', String(Math.round(pct)));
+        slider.setAttribute('aria-valuetext', `${Math.round(pct)}% partition, ${100 - Math.round(pct)}% Rivaah cove`);
       }
 
       function getPercent(clientX) {
@@ -1325,8 +1456,37 @@
         setPos(getPercent(e.touches[0].clientX));
       }, { passive: true });
       window.addEventListener('touchend', () => { dragging = false; });
+
+      slider.addEventListener('keydown', e => {
+        const current = Number(slider.dataset.pos) || 50;
+        let next = current;
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') next = current - 2;
+        else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') next = current + 2;
+        else if (e.key === 'Home') next = 2;
+        else if (e.key === 'End') next = 98;
+        else return;
+        e.preventDefault();
+        setPos(next);
+      });
     });
   </script>
 
+  <script>
+    (() => {
+      const videos = document.querySelectorAll('video[data-autoplay]');
+      if (!videos.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!('IntersectionObserver' in window)) {
+        videos.forEach(video => video.play().catch(() => {}));
+        return;
+      }
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(({ isIntersecting, target }) => {
+          if (isIntersecting) target.play().catch(() => {});
+          else target.pause();
+        });
+      }, { rootMargin: '120px 0px', threshold: 0.05 });
+      videos.forEach(video => observer.observe(video));
+    })();
+  </script>
 </body>
 </html>

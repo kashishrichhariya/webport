@@ -2,11 +2,20 @@
 **/.DS_Store
 Thumbs.db
 *.log
-
-# Large media files - host these externally
-Rivaah Images/
-CG Road Images/
-Jaipur Images/
 framer resources/
-Logo.png
-Logo-web.png
+
+# Machine-local tooling and private source/reference files
+**/.claude/
+Rivaah Images/Furniture/
+Rivaah Images/Facade 3D.mov
+Rivaah Images/FF 2.jpg
+
+# Superseded source media retained locally; optimized web versions are tracked
+CG Road Images/Moodboard-01.mp4
+CG Road Images/cg-road-video.mp4
+Jaipur Images/7-the customer section.gif
+Jaipur Images/Site.gif
+Rivaah Images/Facade 3D.mp4
+Rivaah Images/Meenakari Process.mp4
+Rivaah Images/Rivaah Video.mp4
+gif-to-mp4.swift

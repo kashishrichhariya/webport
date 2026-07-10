@@ -51,6 +51,14 @@
       -webkit-backdrop-filter: none;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 64px; z-index: 100;
+      transition: background .3s ease, box-shadow .3s ease, backdrop-filter .3s ease;
+    }
+    nav.scrolled,
+    nav.menu-open {
+      background: rgba(12,11,10,0.94);
+      box-shadow: 0 8px 24px rgba(12,11,10,0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
     .nav-logo img { height: 62px; width: auto; display: block; filter: brightness(0) invert(1); }
@@ -63,8 +71,18 @@
     .nav-links { display: none; list-style: none; }
     .nav-links a { font-size: 13px; font-weight: 600; color: rgba(252,252,252,0.88); letter-spacing: 0.18em; text-transform: uppercase; transition: color .25s; }
     .nav-links a:hover { color: var(--cream); }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; position: absolute; right: 20px; }
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 8px 4px; position: absolute; right: 20px;
+      border: 0; background: transparent; color: inherit;
+    }
     .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
+    .nav-hamburger:focus-visible,
+    .nav-logo:focus-visible,
+    .nav-side:focus-visible,
+    .nav-links a:focus-visible,
+    .sp-btn:focus-visible,
+    .sp-dot:focus-visible { outline: 2px solid var(--cream); outline-offset: 4px; }
 
     /* ── LABEL — one rule, gold accent, identical everywhere ── */
     .label {
@@ -197,7 +215,7 @@
     #mi-road { padding: 88px 0; background: #fff; }
     .mi-split { max-width: 1440px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 68fr 32fr; gap: 80px; align-items: center; }
     .mi-text p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 20px; }
-    .mi-image img { width: 100%; height: auto; display: block; }
+    .mi-image img, .mi-image video { width: 100%; height: auto; display: block; }
     .mi-section-label { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
 
     /* ═══════════════════════════════
@@ -208,7 +226,7 @@
     .customer-text { text-align: center; }
     .customer-text p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 20px; }
     .customer-image { display: flex; justify-content: center; }
-    .customer-image img { width: 85%; height: auto; display: block; }
+    .customer-image img, .customer-image video { width: 85%; height: auto; display: block; }
 
     /* ═══════════════════════════════
        GUIDING PRINCIPLES
@@ -271,9 +289,20 @@
     .sp-btn-prev { left: 16px; }
     .sp-btn-next { right: 16px; }
     .sp-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--cream); }
-    .sp-dots { display: flex; gap: 8px; justify-content: center; padding: 16px 0; background: #fff; }
-    .sp-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(155,149,125,0.35); cursor: pointer; transition: all 0.25s; }
-    .sp-dot.active { background: var(--gold); transform: scale(1.3); }
+    .sp-dots { display: flex; gap: 0; justify-content: center; padding: 16px 0; background: #fff; }
+    .sp-dot {
+      position: relative; width: 24px; height: 24px; padding: 0;
+      border: 0; background: transparent; cursor: pointer;
+    }
+    .sp-dot::before {
+      content: ''; position: absolute; width: 6px; height: 6px;
+      top: 50%; left: 50%; border-radius: 50%;
+      background: rgba(155,149,125,0.35);
+      transform: translate(-50%, -50%);
+      transition: background .25s, transform .25s;
+    }
+    .sp-dot.active::before { background: var(--gold); transform: translate(-50%, -50%) scale(1.3); }
+    .sp-dot:focus-visible { outline-color: var(--gold); }
 
     /* ═══════════════════════════════
        QUOTE
@@ -448,6 +477,8 @@
     @media (max-width: 600px) {
       nav { padding: 0 20px; }
       .nav-side { display: none; }
+      .nav-logo { left: 20px; transform: none; }
+      .nav-logo img { width: min(62vw, 220px); height: auto; }
       .nav-links { display: none; }
       .nav-links.open { display: flex; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: rgba(12,11,10,0.97); padding: 24px 20px; gap: 20px; }
       .gf-cc-frame { width: 100%; padding: 20px; }
@@ -473,6 +504,14 @@
       #cta { padding: 80px 20px 60px; }
       .wrap-80 { width: 100%; padding: 0 20px; }
     }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 
@@ -481,22 +520,24 @@
   <!-- ══════════════════════
        NAV
   ══════════════════════ -->
-  <nav id="navbar">
+  <nav id="navbar" aria-label="Primary navigation">
     <a href="index.html" class="nav-side">Work</a>
-    <a href="index.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
+    <a href="index.html" class="nav-logo" aria-label="Kashish Richhariya — home"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
     <a href="about.html" class="nav-side">About</a>
-    <ul class="nav-links" id="navLinks">
+    <ul class="nav-links" id="navLinks" aria-label="Mobile navigation">
       <li><a href="index.html">Work</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
-    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <button class="nav-hamburger" id="hamburger" type="button" aria-controls="navLinks" aria-expanded="false" aria-label="Open navigation">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
   </nav>
 
   <!-- ══════════════════════
        HERO  — taller, bigger motif
   ══════════════════════ -->
   <section id="hero">
-    <img class="hero-bg" src="Jaipur%20Images/Foyer.png" alt="" aria-hidden="true" />
+    <img class="hero-bg" src="Jaipur%20Images/Foyer.jpg" alt="" aria-hidden="true" />
     <div class="hero-scrim"></div>
     <div class="hero-content">
       <h1 class="hero-heading">
@@ -550,10 +591,10 @@
        Asymmetric, playful, no heading
   ══════════════════════ -->
   <div class="preview-grid">
-    <img src="Jaipur%20Images/02-Preview.png" alt="Store interior" />
-    <img src="Jaipur%20Images/03-Preview.png" alt="Store interior" />
-    <img src="Jaipur%20Images/04-Preview.png" alt="Store interior" />
-    <img src="Jaipur%20Images/05-Preview.png" alt="Store interior" />
+    <img src="Jaipur%20Images/02-Preview.jpg" alt="Store interior" loading="lazy" decoding="async" />
+    <img src="Jaipur%20Images/03-Preview.jpg" alt="Store interior" loading="lazy" decoding="async" />
+    <img src="Jaipur%20Images/04-Preview.jpg" alt="Store interior" loading="lazy" decoding="async" />
+    <img src="Jaipur%20Images/05-Preview.jpg" alt="Store interior" loading="lazy" decoding="async" />
   </div>
 
   <!-- ══════════════════════
@@ -567,27 +608,27 @@
       </div>
       <div class="process-grid">
         <div class="process-step">
-          <img class="step-icon" src="Jaipur%20Images/Icons-03.png" alt="" />
+          <img class="step-icon" src="Jaipur%20Images/Icons-03.png" alt="" loading="lazy" decoding="async" />
           <div class="step-title">Catching the city's drift</div>
           <div class="step-desc">Understanding how contemporary experiences are shaped by the city's heritage backdrop</div>
         </div>
         <div class="process-step">
-          <img class="step-icon" src="Jaipur%20Images/Icons-04.png" alt="" />
+          <img class="step-icon" src="Jaipur%20Images/Icons-04.png" alt="" loading="lazy" decoding="async" />
           <div class="step-title">Understanding the customer</div>
           <div class="step-desc">What are her preferences and the choices she makes that define her</div>
         </div>
         <div class="process-step">
-          <img class="step-icon" src="Jaipur%20Images/Icons-05.png" alt="" />
+          <img class="step-icon" src="Jaipur%20Images/Icons-05.png" alt="" loading="lazy" decoding="async" />
           <div class="step-title">How Tanishq belongs</div>
           <div class="step-desc">Understanding how Tanishq creates a space for its customers by defining guiding principles for the design</div>
         </div>
         <div class="process-step">
-          <img class="step-icon" src="Jaipur%20Images/Icons-06.png" alt="" />
+          <img class="step-icon" src="Jaipur%20Images/Icons-06.png" alt="" loading="lazy" decoding="async" />
           <div class="step-title">Spatial Planning &amp; Journey</div>
           <div class="step-desc">Identifying key spaces of intervention and conceptualising designs</div>
         </div>
         <div class="process-step">
-          <img class="step-icon" src="Jaipur%20Images/Icons-07.png" alt="" />
+          <img class="step-icon" src="Jaipur%20Images/Icons-07.png" alt="" loading="lazy" decoding="async" />
           <div class="step-title">Design &amp; execution</div>
           <div class="step-desc">Concept and material finalisation, production &amp; installation</div>
         </div>
@@ -601,7 +642,7 @@
   <section id="mi-road">
     <div class="mi-split">
       <div class="mi-image reveal-left">
-        <img src="Jaipur%20Images/Site.gif" alt="MI Road, Jaipur — annotated context" />
+        <video src="Jaipur%20Images/site-context.mp4" data-autoplay muted loop playsinline preload="none" aria-label="MI Road, Jaipur — annotated context"></video>
       </div>
       <div class="mi-text reveal-right">
         <span class="mi-section-label">About the Site</span>
@@ -624,7 +665,7 @@
           <p>She believes heritage is the true luxury, authenticity is non-negotiable, culture and traditions are living principles — not just preserved artifacts. She is a blend of her grandma's heirlooms and her Pinterest boards.</p>
         </div>
         <div class="customer-image reveal-right">
-          <img src="Jaipur%20Images/7-the%20customer%20section.gif" alt="The Tanishq customer" />
+          <video src="Jaipur%20Images/customer-profile.mp4" data-autoplay muted loop playsinline preload="none" aria-label="The Tanishq customer"></video>
         </div>
       </div>
     </div>
@@ -639,21 +680,21 @@
       <h2 class="s-h2 reveal">Guiding Principles of Design</h2>
       <div class="principles-grid">
         <div class="principle-card reveal">
-          <img src="Jaipur%20Images/Guiding%20principles-01.png" alt="A space that belongs timelessly" />
+          <img src="Jaipur%20Images/Guiding%20principles-01.jpg" alt="A space that belongs timelessly" loading="lazy" decoding="async" />
           <div class="principle-body">
             <div class="principle-title">A space that belongs timelessly</div>
             <div class="principle-desc">Root the design in the city's visual language which whispers continuity, not newness.</div>
           </div>
         </div>
         <div class="principle-card reveal">
-          <img src="Jaipur%20Images/Guiding%20principles-03.png" alt="A city where culture is lived" />
+          <img src="Jaipur%20Images/Guiding%20principles-03.jpg" alt="A city where culture is lived" loading="lazy" decoding="async" />
           <div class="principle-body">
             <div class="principle-title">Where culture is lived, not just preserved</div>
             <div class="principle-desc">Honor traditions through craft, where artisan hands keep centuries alive.</div>
           </div>
         </div>
         <div class="principle-card reveal">
-          <img src="Jaipur%20Images/Guiding%20principles-04.png" alt="A monochrome canvas" />
+          <img src="Jaipur%20Images/Guiding%20principles-04.jpg" alt="A monochrome canvas" loading="lazy" decoding="async" />
           <div class="principle-body">
             <div class="principle-title">A monochrome canvas where jewellery shines</div>
             <div class="principle-desc">Where pristine whites celebrate cultural intricacies, allowing jewellery to perform.</div>
@@ -679,40 +720,40 @@
         </div>
 
         <!-- RIGHT: auto-carousel, arrows always visible on sides -->
-        <div class="sp-carousel-wrap reveal-right">
-          <div class="sp-carousel" id="spCarousel">
+        <div class="sp-carousel-wrap reveal-right" role="region" aria-roledescription="carousel" aria-label="Spatial planning" tabindex="0">
+          <div class="sp-carousel" id="spCarousel" aria-live="off">
 
             <div class="sp-slide active">
-              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-01.png" alt="Site plan" />
+              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-01.jpg" alt="Site plan" loading="lazy" decoding="async" />
               <p class="sp-floor-label">Site &amp; Location</p>
             </div>
 
             <div class="sp-slide">
-              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-02.png" alt="Ground floor plan" />
+              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-02.jpg" alt="Ground floor plan" loading="lazy" decoding="async" />
               <p class="sp-floor-label">Ground Floor Plan</p>
             </div>
 
             <div class="sp-slide">
-              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-03.png" alt="Mezzanine plan" />
+              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-03.jpg" alt="Mezzanine plan" loading="lazy" decoding="async" />
               <p class="sp-floor-label">Mezzanine Plan</p>
             </div>
 
             <div class="sp-slide">
-              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-04.png" alt="First floor plan" />
+              <img class="sp-plan-img" src="Jaipur%20Images/Spatial%20Planning-04.jpg" alt="First floor plan" loading="lazy" decoding="async" />
               <p class="sp-floor-label">First Floor Plan</p>
             </div>
 
           </div><!-- .sp-carousel -->
 
           <!-- Arrows: absolutely positioned on sides, always visible -->
-          <button class="sp-btn sp-btn-prev" id="spPrev">&#8249;</button>
-          <button class="sp-btn sp-btn-next" id="spNext">&#8250;</button>
+          <button class="sp-btn sp-btn-prev" id="spPrev" type="button" aria-label="Previous spatial plan" aria-controls="spCarousel">&#8249;</button>
+          <button class="sp-btn sp-btn-next" id="spNext" type="button" aria-label="Next spatial plan" aria-controls="spCarousel">&#8250;</button>
 
-          <div class="sp-dots" id="spDots">
-            <span class="sp-dot active" data-i="0"></span>
-            <span class="sp-dot" data-i="1"></span>
-            <span class="sp-dot" data-i="2"></span>
-            <span class="sp-dot" data-i="3"></span>
+          <div class="sp-dots" id="spDots" role="group" aria-label="Choose a spatial plan">
+            <button class="sp-dot active" type="button" data-i="0" aria-label="Show site and location plan" aria-current="true"></button>
+            <button class="sp-dot" type="button" data-i="1" aria-label="Show ground floor plan"></button>
+            <button class="sp-dot" type="button" data-i="2" aria-label="Show mezzanine plan"></button>
+            <button class="sp-dot" type="button" data-i="3" aria-label="Show first floor plan"></button>
           </div>
         </div><!-- .sp-carousel-wrap -->
 
@@ -740,7 +781,7 @@
 
     <div class="ds-split reveal">
       <div class="ds-split-img">
-        <img src="Jaipur%20Images/jaipur-facade.png" alt="Facade — reference and design" />
+        <img src="Jaipur%20Images/jaipur-facade.jpg" alt="Facade — reference and design" loading="lazy" decoding="async" />
       </div>
       <div class="ds-split-text">
         <p class="label">The Facade</p>
@@ -750,7 +791,7 @@
     </div>
 
     <div class="reveal-scale" style="max-width:1440px; margin:80px auto 0; padding:0 48px;">
-      <img src="Jaipur%20Images/Facade.png" alt="Tanishq Jaipur — facade exterior" style="width:100%; height:auto; display:block;" />
+      <img src="Jaipur%20Images/Facade.jpg" alt="Tanishq Jaipur — facade exterior" style="width:100%; height:auto; display:block;" loading="lazy" decoding="async" />
     </div>
 
     <div class="ds-body-block mt-48 reveal">
@@ -766,7 +807,7 @@
 
     <div class="ds-split reveal">
       <div class="ds-split-img">
-        <img src="Jaipur%20Images/jaipur-foyer.png" alt="Foyer — reference and design" />
+        <img src="Jaipur%20Images/jaipur-foyer.jpg" alt="Foyer — reference and design" loading="lazy" decoding="async" />
       </div>
       <div class="ds-split-text">
         <p class="label">The Foyer</p>
@@ -782,8 +823,8 @@
     <!-- chabutra pair — contained, no crop, same height — text centred alongside -->
     <div class="chabutra-row mt-48 reveal">
       <div class="chabutra-pair-contained">
-        <img src="Jaipur%20Images/chabutra-02.png" alt="Foyer — chabutra full view" />
-        <img src="Jaipur%20Images/chabutra-01.png" alt="Foyer — chabutra with mannequin and thikri backdrop" />
+        <img src="Jaipur%20Images/chabutra-02.jpg" alt="Foyer — chabutra full view" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/chabutra-01.jpg" alt="Foyer — chabutra with mannequin and thikri backdrop" loading="lazy" decoding="async" />
       </div>
       <div class="chabutra-text">
         <p>At the foyer's centre stands the focal display- inspired by the elevated <em>chabutras</em> in fort gardens, where royal women would gather with their <em>sahelis</em>, spending evenings in intimate circles. The <em>thikri</em> backdrop, handcrafted by artists from Udaipur, glistens in the sunlight, reminiscing the grandeur of Sheesh Mahal in a modern setting.</p>
@@ -792,8 +833,8 @@
 
     <!-- double height space pair -->
     <div class="bleed-pair-equal mt-48 reveal-scale">
-      <img src="Jaipur%20Images/double%20height.png" alt="Double height foyer — view 1" />
-      <img src="Jaipur%20Images/double%20height%2002.png" alt="Double height foyer — view 2" />
+      <img src="Jaipur%20Images/double%20height.jpg" alt="Double height foyer — view 1" loading="lazy" decoding="async" />
+      <img src="Jaipur%20Images/double%20height%2002.jpg" alt="Double height foyer — view 2" loading="lazy" decoding="async" />
     </div>
 
     <div class="ds-body-block mt-48 reveal">
@@ -814,29 +855,29 @@
     </div>
 
     <div class="mt-48 reveal" style="display:flex; justify-content:center; width:100%;">
-      <img src="Jaipur%20Images/jaipur-gf-cc.png" alt="Ground floor cash counter — reference" style="width:75vw; height:auto; display:block;" />
+      <img src="Jaipur%20Images/jaipur-gf-cc.jpg" alt="Ground floor cash counter — reference" style="width:75vw; height:auto; display:block;" loading="lazy" decoding="async" />
     </div>
 
   </section>
 
   <!-- store images — warm bg discontinues here -->
   <div class="reveal-scale" style="display:grid; grid-template-columns:6fr 4fr; gap:64px; align-items:center; padding:64px 48px;">
-    <img src="Jaipur%20Images/15-cash%20counter.png" alt="Cash counter — interior" style="max-height:80vh; width:100%; height:auto; display:block; object-fit:contain;" />
+    <img src="Jaipur%20Images/15-cash%20counter.jpg" alt="Cash counter — interior" style="max-height:80vh; width:100%; height:auto; display:block; object-fit:contain;" loading="lazy" decoding="async" />
     <div style="padding:0 24px;">
       <p style="font-size:clamp(14px,1.2vw,17px); font-weight:400; color:var(--mid); line-height:1.9;">The double-height cashdesk speaks in the vocabulary of Rajasthani carving. Jaalis and arched openings catch a quiet wash of mood light- and the everyday act of a transaction borrows a little grandeur.</p>
     </div>
   </div>
 
   <div class="bleed reveal-scale">
-    <img src="Jaipur%20Images/Cash%20counter.png" alt="Cash counter — detail view" />
+    <img src="Jaipur%20Images/Cash%20counter.jpg" alt="Cash counter — detail view" loading="lazy" decoding="async" />
   </div>
   <!-- tarkashi craft -->
   <section class="ds" style="padding-top:48px;">
 
     <!-- tarkashi craft pair — full width, equal height -->
     <div class="bleed-pair-equal reveal-scale">
-      <img src="Jaipur%20Images/tarkashi-01.png" alt="Tarkashi inlay — craft detail" />
-      <img src="Jaipur%20Images/tarkashi-02.png" alt="Tarkashi inlay — finished work" />
+      <img src="Jaipur%20Images/tarkashi-01.jpg" alt="Tarkashi inlay — craft detail" loading="lazy" decoding="async" />
+      <img src="Jaipur%20Images/tarkashi-02.jpg" alt="Tarkashi inlay — finished work" loading="lazy" decoding="async" />
     </div>
 
     <div class="ds-body-block mt-48 reveal">
@@ -859,7 +900,7 @@
     </div>
 
     <div class="bleed reveal-scale">
-      <img src="Jaipur%20Images/jaipur-ff-cc-2.png" alt="First floor — panoramic reference" />
+      <img src="Jaipur%20Images/jaipur-ff-cc-2.jpg" alt="First floor — panoramic reference" loading="lazy" decoding="async" />
     </div>
 
     <div class="ds-body-block mt-48 reveal">
@@ -868,8 +909,8 @@
 
     <!-- mannequin pair — full width, equal height -->
     <div class="bleed-pair-equal mt-48 reveal-scale">
-      <img src="Jaipur%20Images/mannequin-1.png" alt="Wedding floor — bridal mannequin display" />
-      <img src="Jaipur%20Images/mannequin-2.jpg" alt="Wedding floor — jewellery and bridal detail" />
+      <img src="Jaipur%20Images/mannequin-1.jpg" alt="Wedding floor — bridal mannequin display" loading="lazy" decoding="async" />
+      <img src="Jaipur%20Images/mannequin-2.jpg" alt="Wedding floor — jewellery and bridal detail" loading="lazy" decoding="async" />
     </div>
 
     <div class="ds-body-block mt-48 reveal">
@@ -878,7 +919,7 @@
 
     <!-- store view — full width -->
     <div class="bleed mt-48 reveal-scale">
-      <img src="Jaipur%20Images/20.png" alt="Wedding floor — store with mannequin display" />
+      <img src="Jaipur%20Images/20.jpg" alt="Wedding floor — store with mannequin display" loading="lazy" decoding="async" />
     </div>
 
     <div class="ds-body-block mt-48 reveal">
@@ -904,20 +945,20 @@
 
     <div class="bts-scroll-outer">
       <div class="bts-scroll-track" id="btsTrack">
-        <img src="Jaipur%20Images/BTS/IMG_20220407_142239_Original.jpg" alt="Construction — early site" />
-        <img src="Jaipur%20Images/BTS/IMG_20220623_145016_Original.jpg" alt="Construction — site visit" />
-        <img src="Jaipur%20Images/BTS/IMG_20220623_173810_Original.jpg" alt="Construction — progress" />
-        <img src="Jaipur%20Images/BTS/IMG_20220623_215155_Original.jpg" alt="Construction — evening" />
-        <img src="Jaipur%20Images/BTS/IMG_20220623_222229.jpg" alt="Construction — night work" />
-        <img src="Jaipur%20Images/BTS/IMG_20220706_150445.jpg" alt="Installation — day 1" />
-        <img src="Jaipur%20Images/BTS/IMG_20220706_152042.jpg" alt="Installation — progress" />
-        <img src="Jaipur%20Images/BTS/IMG_20220706_152459.jpg" alt="Installation — finishing" />
-        <img src="Jaipur%20Images/BTS/IMG_20220708_113235_Original.jpg" alt="Installation — detail" />
-        <img src="Jaipur%20Images/BTS/IMG_20220922_221015_Original.jpg" alt="Final installation" />
-        <img src="Jaipur%20Images/BTS/IMG_20220923_172748_Original.jpg" alt="Completion — site" />
-        <img src="Jaipur%20Images/BTS/IMG_4668.jpg" alt="Craft detail" />
-        <img src="Jaipur%20Images/BTS/IMG_4670.JPG" alt="Craft finishing" />
-        <img src="Jaipur%20Images/BTS/thikri-1.png" alt="Thikri mirror work" />
+        <img src="Jaipur%20Images/BTS/IMG_20220407_142239_Original.jpg" alt="Construction — early site" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220623_145016_Original.jpg" alt="Construction — site visit" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220623_173810_Original.jpg" alt="Construction — progress" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220623_215155_Original.jpg" alt="Construction — evening" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220623_222229.jpg" alt="Construction — night work" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220706_150445.jpg" alt="Installation — day 1" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220706_152042.jpg" alt="Installation — progress" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220706_152459.jpg" alt="Installation — finishing" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220708_113235_Original.jpg" alt="Installation — detail" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220922_221015_Original.jpg" alt="Final installation" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_20220923_172748_Original.jpg" alt="Completion — site" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_4668.jpg" alt="Craft detail" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/IMG_4670.JPG" alt="Craft finishing" loading="lazy" decoding="async" />
+        <img src="Jaipur%20Images/BTS/thikri-1.jpg" alt="Thikri mirror work" loading="lazy" decoding="async" />
       </div>
     </div>
 
@@ -929,21 +970,56 @@
   <section id="cta">
     <p class="cta-eyebrow reveal">Powered by pixels and way too many desserts!</p>
     <h2 class="cta-heading reveal">Let's work<br><em>together!</em></h2>
-    <a href="mailto:kashish@example.com" class="cta-btn reveal">Get in touch</a>
-    <p class="cta-credit">© 2024 Kashish Richhariya. All rights reserved.</p>
+    <a href="mailto:kashishrichhariya0204@gmail.com" class="cta-btn reveal">Get in touch</a>
+    <p class="cta-credit">© 2026 Kashish Richhariya. All rights reserved.</p>
   </section>
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
-    gsap.registerPlugin(ScrollTrigger);
+    const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+    if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
-    document.getElementById('hamburger').addEventListener('click', () => {
-      document.getElementById('navLinks').classList.toggle('open');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    function setMenuOpen(open) {
+      navLinks.classList.toggle('open', open);
+      navbar.classList.toggle('menu-open', open);
+      hamburger.setAttribute('aria-expanded', String(open));
+      hamburger.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    }
+
+    hamburger.addEventListener('click', () => {
+      setMenuOpen(hamburger.getAttribute('aria-expanded') !== 'true');
+    });
+    navLinks.addEventListener('click', event => {
+      if (event.target.closest('a')) setMenuOpen(false);
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && hamburger.getAttribute('aria-expanded') === 'true') {
+        setMenuOpen(false);
+        hamburger.focus();
+      }
     });
 
+    function updateNavContrast() {
+      navbar.classList.toggle('scrolled', window.scrollY > 24);
+    }
+    updateNavContrast();
+    window.addEventListener('scroll', updateNavContrast, { passive: true });
+    const mobileNavQuery = window.matchMedia('(max-width: 600px)');
+    const handleMobileNavChange = event => {
+      if (!event.matches) setMenuOpen(false);
+    };
+    if (mobileNavQuery.addEventListener) mobileNavQuery.addEventListener('change', handleMobileNavChange);
+    else mobileNavQuery.addListener(handleMobileNavChange);
+
     /* Hero entrance — single block, Rivaah style */
+    if (hasGsap && !prefersReducedMotion) {
     gsap.fromTo('.hero-content',
       { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.3 }
@@ -1002,12 +1078,17 @@
       opacity:1, duration:1, delay:0.4, ease:'power2.out',
       scrollTrigger:{ trigger:'#quote', start:'top 80%' }
     });
+    }
 
     /* BTS auto-scroll strip */
     const btsTrack = document.getElementById('btsTrack');
-    if (btsTrack) {
+    if (btsTrack && !prefersReducedMotion) {
       const origChildren = Array.from(btsTrack.children);
-      origChildren.forEach(child => btsTrack.appendChild(child.cloneNode(true)));
+      origChildren.forEach(child => {
+        const clone = child.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        btsTrack.appendChild(clone);
+      });
       let pos = 0;
       const speed = 0.9;
       function animateBTS() {
@@ -1026,6 +1107,10 @@
       if (!imgs.length) return;
       const GAP = 3;
       function layout() {
+        if (window.matchMedia('(max-width: 600px)').matches) {
+          imgs.forEach(img => { img.style.height = ''; img.style.width = ''; });
+          return;
+        }
         if (!imgs.every(img => img.complete && img.naturalWidth > 0)) return;
         const totalAR = imgs.reduce((s, img) => s + img.naturalWidth / img.naturalHeight, 0);
         const availW = grid.offsetWidth - GAP * (imgs.length - 1);
@@ -1045,7 +1130,7 @@
       const img = card.querySelector('img');
       if (!img) return;
       function sync() {
-        card.style.width = img.offsetWidth + 'px';
+        card.style.width = window.matchMedia('(max-width: 600px)').matches ? '' : img.offsetWidth + 'px';
       }
       if (img.complete && img.naturalWidth > 0) sync();
       else img.addEventListener('load', sync, { once: true });
@@ -1060,8 +1145,16 @@
       const dots    = Array.from(document.querySelectorAll('#spDots .sp-dot'));
       const prevBtn = document.getElementById('spPrev');
       const nextBtn = document.getElementById('spNext');
+      const carousel = document.querySelector('.sp-carousel-wrap');
       let current = 0;
       let timer;
+
+      slides.forEach((slide, index) => {
+        slide.setAttribute('role', 'group');
+        slide.setAttribute('aria-roledescription', 'slide');
+        slide.setAttribute('aria-label', `${index + 1} of ${slides.length}`);
+        slide.setAttribute('aria-hidden', String(index !== current));
+      });
 
       function goTo(n) {
         slides[current].classList.remove('active');
@@ -1069,23 +1162,54 @@
         current = (n + slides.length) % slides.length;
         slides[current].classList.add('active');
         dots[current].classList.add('active');
+        slides.forEach((slide, index) => slide.setAttribute('aria-hidden', String(index !== current)));
+        dots.forEach((dot, index) => {
+          if (index === current) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+        });
       }
 
-      function startAuto() { timer = setInterval(() => goTo(current + 1), 4200); }
-      function stopAuto()  { clearInterval(timer); }
+      function startAuto() {
+        if (prefersReducedMotion || document.hidden || carousel.matches(':hover') || carousel.contains(document.activeElement)) return;
+        stopAuto();
+        timer = setInterval(() => goTo(current + 1), 4200);
+      }
+      function stopAuto()  { clearInterval(timer); timer = undefined; }
 
       prevBtn.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
       nextBtn.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
       dots.forEach(dot => dot.addEventListener('click', () => { stopAuto(); goTo(+dot.dataset.i); startAuto(); }));
 
-      document.addEventListener('keydown', e => {
+      carousel.addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft')  { stopAuto(); goTo(current - 1); startAuto(); }
         if (e.key === 'ArrowRight') { stopAuto(); goTo(current + 1); startAuto(); }
       });
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+      carousel.addEventListener('focusin', stopAuto);
+      carousel.addEventListener('focusout', () => setTimeout(startAuto, 0));
+      document.addEventListener('visibilitychange', () => document.hidden ? stopAuto() : startAuto());
 
       startAuto();
     })();
   </script>
 
+  <script>
+    (() => {
+      const videos = document.querySelectorAll('video[data-autoplay]');
+      if (!videos.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!('IntersectionObserver' in window)) {
+        videos.forEach(video => video.play().catch(() => {}));
+        return;
+      }
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(({ isIntersecting, target }) => {
+          if (isIntersecting) target.play().catch(() => {});
+          else target.pause();
+        });
+      }, { rootMargin: '120px 0px', threshold: 0.05 });
+      videos.forEach(video => observer.observe(video));
+    })();
+  </script>
 </body>
 </html>

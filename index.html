@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kashish Richhariya — Interior Designer</title>
-  <meta name="description" content="Portfolio of Kashish Richhariya, interior designer creating spaces rooted in heritage and contemporary living." />
+  <title>Kashish Richhariya — Retail Experience Designer</title>
+  <meta name="description" content="Portfolio of Kashish Richhariya, a retail experience designer creating culturally rooted spaces and scalable design systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -27,7 +27,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
     body {
       background: #fff;
       color: var(--heading);
@@ -60,6 +60,8 @@
       -webkit-backdrop-filter: none;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 64px; z-index: 200;  /* match 64px page margin */
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
     }
     /* Logo truly centred regardless of link widths */
     .nav-logo {
@@ -68,6 +70,7 @@
     .nav-logo img {
       height: 62px; width: auto; display: block;   /* +10% of original 56px */
       filter: brightness(0) invert(1);              /* white */
+      transition: filter 0.3s ease;
     }
     .nav-side {
       font-size: 13px; font-weight: 600;            /* +20% of 11px, semi-bold */
@@ -78,8 +81,40 @@
     .nav-side:hover { color: #fff; }
     .nav-right-links { display: none; } /* not used in option 1 */
     .nav-links { display: none; list-style: none; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; position: absolute; right: 20px; }
-    .nav-hamburger span { display: block; width: 24px; height: 1.5px; background: #fff; }
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 8px 4px;
+      border: 0; background: transparent; color: inherit;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 1.5px; background: #fff;
+      transform-origin: center;
+      transition: background 0.3s ease, transform 0.25s ease, opacity 0.25s ease;
+    }
+    .nav-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    nav.scrolled,
+    nav.menu-open {
+      background: rgba(255,255,255,0.96);
+      border-bottom-color: rgba(74,69,64,0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    nav.scrolled .nav-logo img,
+    nav.menu-open .nav-logo img { filter: brightness(0); }
+    nav.scrolled .nav-side,
+    nav.menu-open .nav-side { color: var(--heading); }
+    nav.scrolled .nav-side:hover,
+    nav.menu-open .nav-side:hover { color: var(--gold); }
+    nav.scrolled .nav-hamburger span,
+    nav.menu-open .nav-hamburger span { background: var(--heading); }
+    .nav-hamburger:focus-visible,
+    .nav-links a:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 4px;
+    }
 
     /* ═══════════════════════════════
        HERO SLIDESHOW — full viewport
@@ -393,12 +428,42 @@
       .work-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
+      :root { --nav-h: 88px; }
       nav { padding: 0 20px; }
       .nav-side { display: none; }
+      .nav-logo {
+        position: static; left: auto; transform: none;
+        margin-right: auto;
+      }
+      .nav-logo img { width: min(62vw, 220px); height: auto; }
       .nav-hamburger { display: flex; }
+      .nav-links {
+        position: absolute; top: 100%; left: 0; right: 0;
+        display: flex; flex-direction: column;
+        padding: 10px 20px 22px;
+        background: rgba(255,255,255,0.96);
+        border-bottom: 1px solid rgba(74,69,64,0.1);
+        box-shadow: 0 12px 24px rgba(52,50,48,0.08);
+        opacity: 0; visibility: hidden; pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+      }
+      .nav-links.open {
+        opacity: 1; visibility: visible; pointer-events: auto;
+        transform: translateY(0);
+      }
+      .nav-links a {
+        display: block;
+        padding: 14px 4px;
+        border-bottom: 1px solid rgba(74,69,64,0.08);
+        color: var(--heading);
+        font-size: 12px; font-weight: 600;
+        letter-spacing: 0.18em; text-transform: uppercase;
+      }
+      .nav-links li:last-child a { border-bottom: 0; }
       #slideshow { height: 100vh; }
-      .hero-tagline { left: 24px; bottom: 56px; }
-      .hero-view-project { right: 24px; bottom: 56px; }
+      .hero-tagline { left: 24px; right: 24px; bottom: 116px; }
+      .hero-view-project { left: 24px; right: auto; bottom: 60px; }
       .slide-dots { left: 24px; bottom: 20px; }
       .about-inner { padding: 0 20px; }
       #work { padding: 88px 0 0; }
@@ -417,11 +482,17 @@
   <!-- ══════════════════════
        NAV — overlay style
   ══════════════════════ -->
-  <nav id="navbar">
+  <nav id="navbar" aria-label="Primary navigation">
     <a href="#work" class="nav-side">Work</a>
     <a href="index.html" class="nav-logo"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
     <a href="about.html" class="nav-side">About</a>
-    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <button class="nav-hamburger" id="hamburger" type="button" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+    <ul class="nav-links" id="navLinks" aria-hidden="true">
+      <li><a href="#work">Work</a></li>
+      <li><a href="mailto:kashishrichhariya0204@gmail.com">Contact</a></li>
+    </ul>
   </nav>
 
   <!-- ══════════════════════
@@ -431,43 +502,43 @@
 
     <!-- Slide 0: FF1 — hero entry image with zoom-out animation -->
     <div class="slide active" data-link="rivaah.html" id="slide-hero">
-      <img src="Rivaah%20Images/web/FF1.jpg" alt="Rivaah First Floor" loading="eager" id="hero-img" />
+      <img src="Rivaah%20Images/web/FF1.jpg" alt="Rivaah First Floor" loading="eager" decoding="async" fetchpriority="high" id="hero-img" />
       <div class="slide-scrim"></div>
     </div>
 
     <!-- Remaining slides (rendered in DOM; JS shuffles order at runtime) -->
     <div class="slide" data-link="rivaah.html">
-      <img src="Rivaah%20Images/web/Foyer.jpg" alt="Rivaah Foyer" loading="lazy" />
+      <img src="Rivaah%20Images/web/Foyer.jpg" alt="Rivaah Foyer" loading="lazy" decoding="async" />
       <div class="slide-scrim"></div>
     </div>
 
     <div class="slide" data-link="rivaah.html">
-      <img src="Rivaah%20Images/web/Gallery%201.jpg" alt="Rivaah Gallery" loading="lazy" />
+      <img src="Rivaah%20Images/web/Gallery%201.jpg" alt="Rivaah Gallery" loading="lazy" decoding="async" />
       <div class="slide-scrim"></div>
     </div>
 
     <div class="slide" data-link="cgroad.html">
-      <img src="CG%20Road%20Images/ff-cc-straight.png" alt="CG Road First Floor" loading="lazy" />
+      <img src="CG%20Road%20Images/ff-cc-straight.jpg" alt="CG Road First Floor" loading="lazy" decoding="async" />
       <div class="slide-scrim"></div>
     </div>
 
     <div class="slide" data-link="cgroad.html">
-      <img src="CG%20Road%20Images/gf-cash-counter.png" alt="CG Road Cash Counter" loading="lazy" />
+      <img src="CG%20Road%20Images/gf-cash-counter.jpg" alt="CG Road Cash Counter" loading="lazy" decoding="async" />
       <div class="slide-scrim"></div>
     </div>
 
     <div class="slide" data-link="miroadjaipur.html">
-      <img src="Jaipur%20Images/Foyer.png" alt="Jaipur Foyer" loading="lazy" />
+      <img src="Jaipur%20Images/Foyer.jpg" alt="Jaipur Foyer" loading="lazy" decoding="async" />
       <div class="slide-scrim"></div>
     </div>
 
     <div class="slide" data-link="miroadjaipur.html">
-      <img src="Jaipur%20Images/double%20height%2002.png" alt="Jaipur Double Height" loading="lazy" />
+      <img src="Jaipur%20Images/double%20height%2002.jpg" alt="Jaipur Double Height" loading="lazy" decoding="async" />
       <div class="slide-scrim"></div>
     </div>
 
     <div class="slide" data-link="miroadjaipur.html">
-      <img src="Jaipur%20Images/15-cash%20counter.png" alt="Jaipur Cash Counter" loading="lazy" />
+      <img src="Jaipur%20Images/15-cash%20counter.jpg" alt="Jaipur Cash Counter" loading="lazy" decoding="async" />
       <div class="slide-scrim"></div>
     </div>
 
@@ -502,7 +573,7 @@
           A brand experience and retail designer, shaping store environments into cultural narratives— through context, design, and story, where every unseen detail brings a space to life.
         </p>
         <p class="about-body">
-          Across 30+ Tanishq flagships as a part of the brand's Retail Network Development team, customer journeys are built to balance creative intent with commercial reality, alongside the standardised systems that let that intent scale nationally.
+          Across 30+ Tanishq store rollouts as part of the brand's Retail Network Development team, customer journeys are built to balance creative intent with commercial reality, alongside the standardised systems that let that intent scale nationally.
         </p>
         <a href="about.html" class="btn-outline">Know More <span class="btn-arrow">&nbsp;&#8594;</span></a>
       </div>
@@ -523,10 +594,10 @@
     <!-- Rivaah — full width, info panel below image -->
     <a class="work-full" href="rivaah.html">
       <div class="wf-img">
-        <img src="Rivaah%20Images/web/Foyer.jpg" alt="Rivaah by Tanishq" loading="lazy" />
+        <img src="Rivaah%20Images/web/Foyer.jpg" alt="Rivaah by Tanishq" loading="lazy" decoding="async" />
       </div>
       <div class="wf-info">
-        <span class="wf-year">Delhi &nbsp;/&nbsp; 2023</span>
+        <span class="wf-year">Delhi &nbsp;/&nbsp; 2024–25</span>
         <h3 class="wf-title">Rivaah by Tanishq</h3>
         <p class="wf-desc">A space designed for stillness — for the woman considering her most meaningful purchase</p>
       </div>
@@ -537,7 +608,7 @@
 
       <a class="work-half" href="miroadjaipur.html">
         <div class="wh-img">
-          <img src="Jaipur%20Images/Foyer.png" alt="Tanishq MI Road Jaipur" loading="lazy" />
+          <img src="Jaipur%20Images/Foyer.jpg" alt="Tanishq MI Road Jaipur" loading="lazy" decoding="async" />
         </div>
         <div class="wh-info">
           <span class="wh-year">Jaipur &nbsp;/&nbsp; 2024</span>
@@ -548,7 +619,7 @@
 
       <a class="work-half" href="cgroad.html">
         <div class="wh-img">
-          <img src="CG%20Road%20Images/gf-cash-counter.png" alt="Tanishq CG Road" loading="lazy" />
+          <img src="CG%20Road%20Images/gf-cash-counter.jpg" alt="Tanishq CG Road" loading="lazy" decoding="async" />
         </div>
         <div class="wh-info">
           <span class="wh-year">Ahmedabad &nbsp;/&nbsp; 2023</span>
@@ -634,7 +705,7 @@
         </button>
       </div>
     </div>
-    <p class="footer-copy">© 2025 Kashish Richhariya. All rights reserved.</p>
+    <p class="footer-copy">© 2026 Kashish Richhariya. All rights reserved.</p>
   </footer>
 
   <div id="copy-toast">Copied E-mail ID</div>
@@ -643,9 +714,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
-    if (history.scrollRestoration) history.scrollRestoration = 'manual';
-    window.scrollTo(0, 0);
-    gsap.registerPlugin(ScrollTrigger);
+    const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
     /* ══════════════════════════════════════════════
        SLIDESHOW SETUP
@@ -672,11 +743,14 @@
     const slides = [heroSlide, ...restSlides];
 
     /* Inject dots */
-    slides.forEach((_, i) => {
+    slides.forEach((slide, i) => {
+      slide.setAttribute('aria-hidden', String(i !== 0));
       const btn = document.createElement('button');
+      btn.type = 'button';
       btn.className = 's-dot' + (i === 0 ? ' active' : '');
       btn.dataset.i = i;
       btn.setAttribute('aria-label', 'Slide ' + (i + 1));
+      if (i === 0) btn.setAttribute('aria-current', 'true');
       dotsWrap.appendChild(btn);
     });
     const dots = Array.from(dotsWrap.querySelectorAll('.s-dot'));
@@ -686,49 +760,94 @@
 
     function goTo(n) {
       slides[current].classList.remove('active');
+      slides[current].setAttribute('aria-hidden', 'true');
       dots[current].classList.remove('active');
+      dots[current].removeAttribute('aria-current');
       current = (n + slides.length) % slides.length;
       slides[current].classList.add('active');
+      slides[current].setAttribute('aria-hidden', 'false');
       dots[current].classList.add('active');
+      dots[current].setAttribute('aria-current', 'true');
       if (heroViewLink && slides[current].dataset.link) {
         heroViewLink.href = slides[current].dataset.link;
       }
     }
 
     /* Speed: 5500ms / 1.5 = ~3667ms */
-    function startAuto() { timer = setInterval(() => goTo(current + 1), 3667); }
-    function stopAuto()  { clearInterval(timer); }
+    function startAuto() {
+      if (prefersReducedMotion || document.hidden || slideshowEl.matches(':hover') || slideshowEl.contains(document.activeElement)) return;
+      stopAuto();
+      timer = setInterval(() => goTo(current + 1), 3667);
+    }
+    function stopAuto()  { clearInterval(timer); timer = undefined; }
 
     dots.forEach(dot => dot.addEventListener('click', () => {
       stopAuto(); goTo(+dot.dataset.i); startAuto();
     }));
+    slideshowEl.addEventListener('mouseenter', stopAuto);
+    slideshowEl.addEventListener('mouseleave', startAuto);
+    slideshowEl.addEventListener('focusin', stopAuto);
+    slideshowEl.addEventListener('focusout', () => setTimeout(startAuto, 0));
+    document.addEventListener('visibilitychange', () => document.hidden ? stopAuto() : startAuto());
     startAuto();
 
-    /* ── Zoom-out animation on hero entry image (FF1) ── */
-    const heroImg = document.getElementById('hero-img');
-    if (heroImg) {
-      gsap.fromTo(heroImg,
-        { scale: 1.5, transformOrigin: 'center center' },
-        { scale: 1.0, duration: 2.2, ease: 'power2.out' }
+    if (hasGsap && !prefersReducedMotion) {
+      /* ── Zoom-out animation on hero entry image (FF1) ── */
+      const heroImg = document.getElementById('hero-img');
+      if (heroImg) {
+        gsap.fromTo(heroImg,
+          { scale: 1.5, transformOrigin: 'center center' },
+          { scale: 1.0, duration: 2.2, ease: 'power2.out' }
+        );
+      }
+
+      /* ── Hero tagline entrance ── */
+      gsap.fromTo('.hero-tagline h1',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out', delay: 0.5 }
+      );
+      gsap.fromTo('.hero-view-project',
+        { opacity: 0 },
+        { opacity: 1, duration: 1.0, ease: 'power2.out', delay: 1.2 }
       );
     }
 
-    /* ── Hero tagline entrance ── */
-    gsap.fromTo('.hero-tagline h1',
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out', delay: 0.5 }
-    );
-    gsap.fromTo('.hero-view-project',
-      { opacity: 0 },
-      { opacity: 1, duration: 1.0, ease: 'power2.out', delay: 1.2 }
-    );
-
-    /* ── Mobile hamburger ── */
+    /* ── Navigation contrast + mobile menu ── */
+    const navbar = document.getElementById('navbar');
     const hamburger = document.getElementById('hamburger');
-    if (hamburger) {
+    const navLinks = document.getElementById('navLinks');
+
+    function updateNavbarContrast() {
+      if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 24);
+    }
+
+    function setMenuOpen(open) {
+      if (!hamburger || !navLinks || !navbar) return;
+      hamburger.setAttribute('aria-expanded', String(open));
+      hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      navLinks.setAttribute('aria-hidden', String(!open));
+      navLinks.classList.toggle('open', open);
+      navbar.classList.toggle('menu-open', open);
+    }
+
+    updateNavbarContrast();
+    window.addEventListener('scroll', updateNavbarContrast, { passive: true });
+
+    if (hamburger && navLinks) {
       hamburger.addEventListener('click', () => {
-        const nl = document.getElementById('navLinks');
-        if (nl) nl.classList.toggle('open');
+        setMenuOpen(hamburger.getAttribute('aria-expanded') !== 'true');
+      });
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setMenuOpen(false));
+      });
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && hamburger.getAttribute('aria-expanded') === 'true') {
+          setMenuOpen(false);
+          hamburger.focus();
+        }
+      });
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 640) setMenuOpen(false);
       });
     }
 
@@ -737,34 +856,39 @@
     const toast   = document.getElementById('copy-toast');
     let toastTimer;
     if (copyBtn) {
-      copyBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText('kashishrichhariya@gmail.com').then(() => {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText('kashishrichhariya0204@gmail.com');
           toast.classList.add('show');
           clearTimeout(toastTimer);
           toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
-        });
+        } catch {
+          window.location.href = 'mailto:kashishrichhariya0204@gmail.com';
+        }
       });
     }
 
     /* ── Section scroll reveals ── */
-    [
-      '.about-img', '.about-text',
-      '.work-header', '.work-full', '.work-half',
-      '.j-left', '.j-right'
-    ].forEach(sel => {
-      document.querySelectorAll(sel).forEach((el, i) => {
-        gsap.fromTo(el,
-          { opacity: 0, y: 52 },
-          {
-            opacity: 1, y: 0,
-            duration: 0.95,
-            ease: 'power3.out',
-            delay: sel === '.work-half' ? i * 0.14 : 0,
-            scrollTrigger: { trigger: el, start: 'top 87%', once: true }
-          }
-        );
+    if (hasGsap && !prefersReducedMotion) {
+      [
+        '.about-img', '.about-text',
+        '.work-header', '.work-full', '.work-half',
+        '.j-left', '.j-right'
+      ].forEach(sel => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+          gsap.fromTo(el,
+            { opacity: 0, y: 52 },
+            {
+              opacity: 1, y: 0,
+              duration: 0.95,
+              ease: 'power3.out',
+              delay: sel === '.work-half' ? i * 0.14 : 0,
+              scrollTrigger: { trigger: el, start: 'top 87%', once: true }
+            }
+          );
+        });
       });
-    });
+    }
   </script>
 
 </body>
