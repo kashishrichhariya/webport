@@ -48,19 +48,13 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       height: var(--nav-h);
-      background: linear-gradient(to bottom, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.18) 60%, transparent 100%);
+      background: transparent;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 64px; z-index: 100;
-      transition: background .3s ease, box-shadow .3s ease, backdrop-filter .3s ease;
-    }
-    nav.scrolled,
-    nav.menu-open {
-      background: rgba(12,11,10,0.94);
-      box-shadow: 0 8px 24px rgba(12,11,10,0.12);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      box-shadow: none;
+      border-bottom: 0;
     }
     .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
     .nav-logo img { height: 62px; width: auto; display: block; filter: brightness(0) invert(1); }

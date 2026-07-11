@@ -49,7 +49,10 @@
 
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+    }
     body {
       background: var(--cream);
       color: var(--heading);
@@ -57,6 +60,8 @@
       font-size: 16px;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+      max-width: 100%;
     }
     img { display: block; width: 100%; }
     a { text-decoration: none; color: inherit; }
@@ -65,12 +70,13 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       height: var(--nav-h);
-      background: linear-gradient(to bottom, rgba(12,11,10,0.55) 0%, rgba(12,11,10,0.18) 60%, transparent 100%);
+      background: transparent;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 64px; z-index: 100;
-      transition: background .3s ease, box-shadow .3s ease;
+      box-shadow: none;
+      border-bottom: 0;
     }
     .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
     .nav-logo img { height: 62px; width: auto; display: block; filter: brightness(0) invert(1); transition: filter .3s ease; }
@@ -98,15 +104,6 @@
     .nav-hamburger:focus-visible, .nav-logo:focus-visible, .nav-side:focus-visible, .nav-links a:focus-visible {
       outline: 2px solid currentColor; outline-offset: 5px;
     }
-    nav.scrolled {
-      background: rgba(252,252,252,0.96);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 1px 0 rgba(52,50,48,0.1);
-    }
-    nav.scrolled .nav-logo img { filter: brightness(0); }
-    nav.scrolled .nav-side, nav.scrolled .nav-links a, nav.scrolled .nav-hamburger { color: var(--charcoal); }
-
     /* ── LABEL ── */
     .label {
       display: block;
@@ -255,14 +252,15 @@
     ══════════════════════════════ */
     #philosophy { padding: 0 0 24px; background: var(--cream); }
     .phil-split {
-      display: grid; grid-template-columns: 60fr 40fr;
+      display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
       max-width: 1700px; margin: 0 auto;
       padding: 0 0 0 48px;
       align-items: center; gap: 0;
     }
     /* Material board: reduced width, no crop, no colour modification */
-    .phil-image img { width: 102%; height: auto; display: block; }
-    .phil-text { padding: 64px 72px 64px 64px; }
+    .phil-image { min-width: 0; overflow: hidden; }
+    .phil-image img { width: 100%; max-width: 100%; height: auto; display: block; }
+    .phil-text { min-width: 0; padding: 64px 72px 64px 64px; }
     .phil-body { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 24px; }
     .phil-body + .phil-body { margin-top: 14px; }
     .phil-note { margin-top: 48px; font-family: var(--serif); font-style: normal; font-weight: 500; font-size: clamp(18px, 1.82vw, 22px); color: var(--heading); line-height: 1.4; letter-spacing: -0.02em; border-left: 1.5px solid var(--accent); padding-left: 28px; }
@@ -1061,11 +1059,11 @@
     <!-- Motif + product lighting — 2-col viewport height -->
     <div class="motif-row mt-3 reveal">
       <div class="motif-cell">
-        <img src="Rivaah%20Images/web/Motif.jpg" alt="Rivaah motif — craft and heritage detail" loading="lazy" decoding="async" />
+        <img src="Rivaah%20Images/web/Motif.jpg" alt="Rivaah motif — craft and heritage detail" decoding="async" />
         <p class="motif-cell-caption">The motif that celebrates Indian weddings</p>
       </div>
       <div class="motif-cell">
-        <img src="Rivaah%20Images/web/product%20lighting.jpg" alt="Product lighting — jewellery rendered in its best light" loading="lazy" decoding="async" />
+        <img src="Rivaah%20Images/web/product%20lighting.jpg" alt="Product lighting — jewellery rendered in its best light" decoding="async" />
         <p class="motif-cell-caption">Jewellery rendered in its best light</p>
       </div>
     </div>
@@ -1217,7 +1215,7 @@
         <video src="Rivaah%20Images/meenakari-process.mp4" data-autoplay muted loop playsinline preload="none" aria-label="Meenakari craft process"></video>
       </div>
       <div class="fill-row-cell">
-        <img src="Rivaah%20Images/web/meenakari.jpg" alt="Meenakari — traditional jewellery craft" loading="lazy" decoding="async" />
+        <img src="Rivaah%20Images/web/meenakari.jpg" alt="Meenakari — traditional jewellery craft" decoding="async" />
       </div>
     </div>
 
@@ -1225,11 +1223,11 @@
     <div style="height: 56px;"></div>
     <div class="fill-row reveal-scale" id="packagingRow">
       <div class="fill-row-cell">
-        <img src="Rivaah%20Images/web/Packaging.jpg" alt="Rivaah packaging — brand touchpoint design" loading="lazy" decoding="async" />
+        <img src="Rivaah%20Images/web/Packaging.jpg" alt="Rivaah packaging — brand touchpoint design" decoding="async" />
         <p class="fill-row-caption">The bag you carry home</p>
       </div>
       <div class="fill-row-cell">
-        <img src="Rivaah%20Images/web/Bag%20motif.jpg" alt="Bag motif — the last detail the bride touches" loading="lazy" decoding="async" />
+        <img src="Rivaah%20Images/web/Bag%20motif.jpg" alt="Bag motif — the last detail the bride touches" decoding="async" />
         <p class="fill-row-caption">The last detail the bride touches before she steps back into the world</p>
       </div>
     </div>
@@ -1641,6 +1639,13 @@
 
     document.querySelectorAll('.fill-row video').forEach(v => {
       v.addEventListener('loadedmetadata', () => { applyFillRowAll(); });
+    });
+
+    document.querySelectorAll('.fill-row img, .motif-row img').forEach(img => {
+      img.addEventListener('load', () => {
+        applyFillRowAll();
+        applyMotifRow();
+      });
     });
   </script>
 
