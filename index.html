@@ -111,7 +111,7 @@
     }
     .slide {
       position: absolute; inset: 0;
-      opacity: 0; transition: opacity 1.4s ease;
+      opacity: 0; transition: opacity 0.45s ease;
     }
     .slide.active { opacity: 1; }
     .slide img { width: 100%; height: 100%; object-fit: cover; }
@@ -758,19 +758,18 @@
       }
     }
 
-    /* Speed: 5500ms / 1.5 = ~3667ms */
+    const SLIDE_INTERVAL_MS = 2000;
+
     function startAuto() {
-      if (prefersReducedMotion || document.hidden || slideshowEl.matches(':hover') || slideshowEl.contains(document.activeElement)) return;
+      if (prefersReducedMotion || document.hidden || slideshowEl.contains(document.activeElement)) return;
       stopAuto();
-      timer = setInterval(() => goTo(current + 1), 3667);
+      timer = setInterval(() => goTo(current + 1), SLIDE_INTERVAL_MS);
     }
     function stopAuto()  { clearInterval(timer); timer = undefined; }
 
     dots.forEach(dot => dot.addEventListener('click', () => {
       stopAuto(); goTo(+dot.dataset.i); startAuto();
     }));
-    slideshowEl.addEventListener('mouseenter', stopAuto);
-    slideshowEl.addEventListener('mouseleave', startAuto);
     slideshowEl.addEventListener('focusin', stopAuto);
     slideshowEl.addEventListener('focusout', () => setTimeout(startAuto, 0));
     document.addEventListener('visibilitychange', () => document.hidden ? stopAuto() : startAuto());
