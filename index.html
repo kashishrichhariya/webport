@@ -289,56 +289,6 @@
     .wh-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
 
     /* ═══════════════════════════════
-       JOURNAL
-    ═══════════════════════════════ */
-    #journal { padding: 120px 0; background: #fff; }
-    .journal-inner {
-      max-width: 1440px; margin: 0 auto; padding: 0 64px;
-      display: grid; grid-template-columns: 32fr 68fr;
-      gap: 80px; align-items: start;
-    }
-    .j-left { position: sticky; top: 100px; }
-    /* Journal header — same style as Selected Work header */
-    .j-section-header {
-      margin-bottom: 52px;
-    }
-    .j-heading {
-      font-family: var(--serif);
-      font-size: clamp(22px, 2.6vw, 38px);
-      font-weight: 400; color: var(--heading);
-      letter-spacing: -0.04em; line-height: 1.22;
-      margin-bottom: 0;
-    }
-    .j-count {
-      font-family: var(--sans);
-      font-size: 0.36em; letter-spacing: 0;
-      color: var(--muted); vertical-align: super;
-    }
-    .j-item {
-      display: flex; justify-content: space-between;
-      align-items: baseline; gap: 28px;
-      padding: 30px 0;
-      border-top: 1px solid rgba(74,69,64,0.1);
-      color: inherit;
-    }
-    .j-item:last-child { border-bottom: 1px solid rgba(74,69,64,0.1); }
-    .j-title-wrap { flex: 1; }
-    .j-title-text {
-      font-family: var(--serif);
-      font-size: clamp(18px, 2vw, 26px);
-      font-weight: 400; color: var(--heading);
-      letter-spacing: -0.02em; line-height: 1.3;
-      transition: color 0.22s;
-    }
-    .j-item:hover .j-title-text { color: var(--gold); }
-    .j-meta { font-size: 12px; color: var(--muted); margin-left: 10px; }
-    .j-date {
-      font-size: 12px; color: var(--stone);
-      white-space: nowrap; letter-spacing: 0.04em;
-    }
-    .j-cta { margin-top: 0; }
-
-    /* ═══════════════════════════════
        FOOTER
     ═══════════════════════════════ */
     footer {
@@ -401,14 +351,11 @@
       .wf-info { padding: 28px 48px 36px; }
       .hero-tagline { left: 48px; }
       .hero-view-project { right: 48px; }
-      .journal-inner { padding: 0 48px; }
       footer { padding: 72px 48px 48px; }
     }
     @media (max-width: 860px) {
       .about-inner { grid-template-columns: 1fr; gap: 48px; padding: 0 32px; }
       .about-img { max-width: 280px; aspect-ratio: 3/4; }
-      .journal-inner { grid-template-columns: 1fr; gap: 56px; padding: 0 32px; }
-      .j-left { position: static; }
       .footer-inner { flex-direction: column; gap: 40px; text-align: center; }
       .work-grid { grid-template-columns: 1fr; }
     }
@@ -457,7 +404,6 @@
       .wf-info { padding: 24px 24px 32px; }
       .work-grid { grid-template-columns: 1fr; }
       .wh-img img { height: 48vh; }
-      .journal-inner { padding: 0 20px; }
       footer { padding: 56px 20px 40px; }
     }
   </style>
@@ -627,55 +573,6 @@
 
     </div>
 
-  </section>
-
-  <!-- ══════════════════════
-       JOURNAL
-  ══════════════════════ -->
-  <section id="journal">
-    <div class="journal-inner">
-
-      <div class="j-left">
-        <div class="j-section-header">
-          <p class="label">Writing</p>
-          <h2 class="j-heading">Journal</h2>
-        </div>
-        <a href="https://medium.com" target="_blank" rel="noopener" class="btn-outline j-cta">
-          Read More <span class="btn-arrow">&nbsp;&#8594;</span>
-        </a>
-      </div>
-
-      <div class="j-right">
-        <div class="j-list">
-
-          <a class="j-item" href="https://medium.com" target="_blank" rel="noopener">
-            <div class="j-title-wrap">
-              <span class="j-title-text">Designing Heritage for Today's Consumer</span>
-              <span class="j-meta">· 5 min read</span>
-            </div>
-            <span class="j-date">June 2025</span>
-          </a>
-
-          <a class="j-item" href="https://medium.com" target="_blank" rel="noopener">
-            <div class="j-title-wrap">
-              <span class="j-title-text">Craft as Currency</span>
-              <span class="j-meta">· 3 min read</span>
-            </div>
-            <span class="j-date">March 2025</span>
-          </a>
-
-          <a class="j-item" href="https://medium.com" target="_blank" rel="noopener">
-            <div class="j-title-wrap">
-              <span class="j-title-text">When Space Whispers</span>
-              <span class="j-meta">· 4 min read</span>
-            </div>
-            <span class="j-date">January 2025</span>
-          </a>
-
-        </div>
-      </div>
-
-    </div>
   </section>
 
   <!-- ══════════════════════
@@ -868,8 +765,7 @@
     if (hasGsap && !prefersReducedMotion) {
       [
         '.about-img', '.about-text',
-        '.work-header', '.work-full', '.work-half',
-        '.j-left', '.j-right'
+        '.work-header', '.work-full', '.work-half'
       ].forEach(sel => {
         document.querySelectorAll(sel).forEach((el, i) => {
           gsap.fromTo(el,

@@ -344,7 +344,13 @@
       font-size: clamp(18px, 1.82vw, 22px); color: var(--heading);
       font-weight: 500;
       margin-top: 44px; line-height: 1.4; letter-spacing: -0.02em;
+      border-left: 1.5px solid var(--accent);
+      padding-left: 28px;
     }
+    .discovery-whisper {
+      max-width: 1200px; margin: 44px auto 0; padding: 0 48px;
+    }
+    .discovery-whisper .whisper { max-width: 680px; margin-top: 0; }
 
     /* Standalone section header — equal gaps: label→h2 = h2→body = 24px */
     .ds-header { max-width: 1200px; margin: 0 auto; padding: 0 48px 24px; }
@@ -617,7 +623,7 @@
     }
     .staircase-img img {
       width: 100%; flex: 1; min-height: 0;
-      object-fit: contain; object-position: left center; display: block;
+      object-fit: contain; object-position: right center; display: block;
     }
     .staircase-caption {
       font-family: var(--sans); font-size: 12px; color: var(--muted);
@@ -774,7 +780,7 @@
       .meta-divider { display: none; }
       .meta-item { padding: 0; }
       .ds-row2, .ds-pair, .ds-asym, .ds-img, .ds-header, .ds-body-block,
-      .img-caption, .render-row, .render-row2 { padding-left: 24px; padding-right: 24px; }
+      .discovery-whisper, .img-caption, .render-row, .render-row2 { padding-left: 24px; padding-right: 24px; }
       .divider-editorial { padding: 0 24px; }
       .creative-vis-header { padding: 0 24px; }
       .pvr-render-row { grid-template-columns: 1fr; }
@@ -807,6 +813,7 @@
       .ds-img { padding: 0 20px; }
       .ds-row3 { grid-template-columns: 1fr; padding: 0 20px; }
       .ds-header, .ds-body-block { padding-left: 20px; padding-right: 20px; }
+      .discovery-whisper { padding-left: 20px; padding-right: 20px; }
       .img-caption { padding-left: 20px; padding-right: 20px; }
       .divider-editorial { padding: 0 20px; }
       .wrap, .wrap-md, .wrap-sm { padding-left: 20px; padding-right: 20px; }
@@ -848,12 +855,12 @@
        HERO — video + text
   ══════════════════════ -->
   <section id="hero">
-    <!-- starts muted for autoplay; audio btn lets user unmute -->
+    <!-- JS attempts audible playback, then falls back to muted autoplay when blocked. -->
     <video
       id="heroVideo"
       class="hero-video"
       src="Rivaah%20Images/rivaah-hero.mp4"
-      autoplay muted loop playsinline preload="metadata"
+      loop playsinline preload="metadata"
     ></video>
     <div class="hero-scrim"></div>
 
@@ -1022,7 +1029,7 @@
       <p>What draws me in? What feels like mine? Display cases curve through the space, each holding karigari from a different region of India — hands that have shaped metal for generations. Plants soften edges.</p>
       <p style="margin-top:16px;">The modern bride has travelled the world; she returns with a blend of traditions she's chosen and the ones she's inherited. Here, clarity doesn't come from seeing everything — it comes from discovering what speaks quietly to you.</p>
     </div>
-    <div class="wrap-sm reveal" style="margin-top: 44px;">
+    <div class="discovery-whisper reveal">
       <p class="whisper">Not every piece calls to every person. The gallery trusts the jewellery to do its own choosing.</p>
     </div>
 
@@ -1416,19 +1423,21 @@
 
     }
 
-    // Hero audio starts muted and only changes after an explicit button press.
+    // Try audible playback once on load. If browser policy blocks it, keep the
+    // honest muted fallback and let the visible audio control enable sound.
     const videoEl = document.getElementById('heroVideo');
     const audioBtn = document.getElementById('audioBtn');
     const heroSection = document.getElementById('hero');
-
-    videoEl.muted = true;
-    if (prefersReducedMotion) {
-      videoEl.autoplay = false;
-      videoEl.pause();
-    } else {
-      // Some browsers need an explicit play attempt even with the autoplay attribute.
-      videoEl.play().catch(() => {});
-    }
+    let heroIsVisible = (() => {
+      const rect = heroSection.getBoundingClientRect();
+      return rect.bottom > 0 && rect.top < window.innerHeight;
+    })();
+    let audiblePlaybackAllowed = false;
+    let hasUserInteracted = false;
+    let userPrefersMuted = false;
+    let playRequest = null;
+    let resumeQueued = false;
+    let queuedSoundAttempt = false;
 
     function updateAudioButton() {
       const soundIsOn = !videoEl.muted;
@@ -1438,12 +1447,132 @@
       audioBtn.title = soundIsOn ? 'Mute hero video' : 'Unmute hero video';
     }
 
-    audioBtn.addEventListener('click', () => {
-      videoEl.muted = !videoEl.muted;
-      if (videoEl.paused && !prefersReducedMotion) videoEl.play().catch(() => {});
+    function pauseHero() {
+      videoEl.muted = true;
+      videoEl.pause();
       updateAudioButton();
+    }
+
+    async function startHeroPlayback(trySound) {
+      if (prefersReducedMotion || !heroIsVisible || document.hidden) return;
+
+      videoEl.muted = !trySound;
+      updateAudioButton();
+
+      if (!videoEl.paused) {
+        if (trySound && !videoEl.muted) audiblePlaybackAllowed = true;
+        return;
+      }
+
+      try {
+        await videoEl.play();
+        if (trySound && !videoEl.muted) audiblePlaybackAllowed = true;
+      } catch (error) {
+        // Audible autoplay commonly fails. Retry once, muted, so the visual
+        // hero still starts without pretending that sound was enabled.
+        if (!trySound || !heroIsVisible || document.hidden) return;
+        videoEl.muted = true;
+        updateAudioButton();
+        try {
+          await videoEl.play();
+        } catch (mutedError) {
+          // The button remains available if loading or playback also fails.
+        }
+      }
+
+      if (!heroIsVisible || document.hidden) pauseHero();
+    }
+
+    function resumeHero(trySound) {
+      if (prefersReducedMotion || !heroIsVisible || document.hidden) return Promise.resolve();
+
+      // Serialize playback requests so observer, visibility and input events
+      // cannot spam play() while a browser decision is still pending.
+      if (playRequest) {
+        resumeQueued = true;
+        queuedSoundAttempt = queuedSoundAttempt || trySound;
+        return playRequest;
+      }
+
+      playRequest = startHeroPlayback(trySound).finally(() => {
+        playRequest = null;
+        if (!resumeQueued) return;
+
+        const retryWithSound = queuedSoundAttempt;
+        resumeQueued = false;
+        queuedSoundAttempt = false;
+        if (heroIsVisible && !document.hidden) resumeHero(retryWithSound);
+      });
+      return playRequest;
+    }
+
+    function shouldResumeWithSound() {
+      return !userPrefersMuted && (audiblePlaybackAllowed || hasUserInteracted);
+    }
+
+    audioBtn.addEventListener('click', () => {
+      hasUserInteracted = true;
+      if (!videoEl.muted) {
+        userPrefersMuted = true;
+        videoEl.muted = true;
+        updateAudioButton();
+        return;
+      }
+
+      userPrefersMuted = false;
+      resumeHero(true);
     });
+    videoEl.addEventListener('volumechange', updateAudioButton);
     updateAudioButton();
+
+    if (prefersReducedMotion) {
+      pauseHero();
+    } else if (heroIsVisible) {
+      // This is the single initial audible attempt; startHeroPlayback handles
+      // the muted fallback if the browser rejects it.
+      resumeHero(true);
+    }
+
+    function recordUserInteraction(event) {
+      hasUserInteracted = true;
+      if (audioBtn.contains(event.target) || userPrefersMuted || !heroIsVisible || !videoEl.muted) return;
+      resumeHero(true);
+    }
+    document.addEventListener('pointerdown', recordUserInteraction, { capture: true, once: true });
+    document.addEventListener('keydown', recordUserInteraction, { capture: true, once: true });
+
+    function setHeroVisibility(isVisible) {
+      if (heroIsVisible === isVisible) return;
+      heroIsVisible = isVisible;
+      if (!isVisible) {
+        pauseHero();
+      } else {
+        resumeHero(shouldResumeWithSound());
+      }
+    }
+
+    if ('IntersectionObserver' in window) {
+      const heroObserver = new IntersectionObserver(entries => {
+        setHeroVisibility(entries[0].isIntersecting);
+      }, { threshold: 0.01 });
+      heroObserver.observe(heroSection);
+    } else {
+      let heroScrollTicking = false;
+      window.addEventListener('scroll', () => {
+        if (heroScrollTicking) return;
+        heroScrollTicking = true;
+        requestAnimationFrame(() => {
+          const rect = heroSection.getBoundingClientRect();
+          setHeroVisibility(rect.bottom > 0 && rect.top < window.innerHeight);
+          heroScrollTicking = false;
+        });
+      }, { passive: true });
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) pauseHero();
+      else if (heroIsVisible) resumeHero(shouldResumeWithSound());
+    });
 
     // Start supporting ambient videos only while they are visible, avoiding
     // off-screen playback and respecting reduced-motion preferences.
