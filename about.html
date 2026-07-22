@@ -21,7 +21,7 @@
       --stone:    #9c948a;
       --serif:    'Playfair Display', Georgia, serif;
       --sans:     'Manrope', system-ui, sans-serif;
-      --nav-h:    88px;
+      --nav-h:    122px;
       --pad:      64px;
     }
 
@@ -45,7 +45,7 @@
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(74,69,64,0.08);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 var(--pad); z-index: 200;
+      padding: 0 64px; z-index: 200;
     }
     .nav-logo {
       position: absolute; left: 50%; transform: translateX(-50%);
@@ -61,6 +61,20 @@
       transition: color .25s;
     }
     .nav-side:hover { color: var(--gold); }
+    .nav-links { display: none; list-style: none; }
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 8px 4px;
+      border: 0; background: transparent;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 1.5px; background: var(--heading);
+      transform-origin: center;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .nav-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* ─── INTRO SPLIT ─── */
     .intro-wrap {
@@ -100,11 +114,14 @@
     }
     .intro-name em { font-style: italic; }
 
-    /* Photo — 3:4, sized 10% smaller than a full-width frame */
+    /* Photo — portrait frame */
     .photo-frame {
       flex: none;
-      width: 90%;
-      aspect-ratio: 3 / 4;
+      align-self: flex-start;
+      width: auto;
+      height: clamp(288px, 49.6vh, 480px);
+      max-width: 90%;
+      aspect-ratio: 4 / 5;
       background: rgba(74,69,64,0.05);
       overflow: hidden;
       position: relative;
@@ -370,44 +387,69 @@
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       :root { --pad: 32px; }
+      nav { padding: 0 48px; }
       .intro-wrap { grid-template-columns: 1fr; }
       .intro-left {
         position: relative; top: auto; order: 1;
         height: auto; min-height: 0;
         padding: 48px var(--pad);
       }
-      .photo-frame { flex: none; width: 52%; aspect-ratio: 3/4; }
+      .photo-frame { flex: none; width: 41.6%; height: auto; aspect-ratio: 4/5; }
       .intro-right { padding: 56px var(--pad) 80px; order: 2; }
       .two-col-layout { grid-template-columns: 1fr; gap: 32px; }
       .skills-tags { padding-top: 0; }
     }
     @media (max-width: 600px) {
-      :root { --pad: 20px; --nav-h: 72px; }
-      .photo-frame { width: 72%; }
-      nav { padding: 0 var(--pad); gap: 16px; }
+      :root { --pad: 20px; --nav-h: 88px; }
+      .photo-frame { width: 57.6%; }
+      nav { padding: 0 20px; }
+      .nav-side { display: none; }
       .nav-logo {
         position: static; left: auto; transform: none;
-        order: -1; margin-right: auto;
+        margin-right: auto;
       }
-      .nav-logo img { width: min(46vw, 180px); height: auto; }
-      .nav-side { font-size: 10px; letter-spacing: 0.12em; }
+      .nav-logo img { width: min(62vw, 220px); height: auto; }
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        position: absolute; top: 100%; left: 0; right: 0;
+        display: flex; flex-direction: column;
+        padding: 10px 20px 22px; gap: 0;
+        background: rgba(255,255,255,0.97);
+        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        transition: opacity .2s ease, visibility .2s ease, transform .2s ease;
+      }
+      .nav-links.open { opacity: 1; visibility: visible; transform: none; }
+      .nav-links a {
+        display: block; padding: 12px 0;
+        font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+      }
       .tl-work-item { grid-template-columns: 1fr; gap: 10px; }
       .tl-work-desc { padding-top: 0; }
       footer { padding: 56px var(--pad) 36px; }
     }
   </style>
+  <link rel="stylesheet" href="footer.css" />
+  <script src="footer.js" defer></script>
 </head>
 <body>
 
 <!-- ═══════════════════════════════
      NAV
 ═══════════════════════════════ -->
-<nav aria-label="Primary navigation">
-  <a href="index.html" class="nav-side">Work</a>
+<nav id="navbar" aria-label="Primary navigation">
+  <a href="index.html#work" class="nav-side">Work</a>
   <a class="nav-logo" href="index.html">
     <img src="Logo-web.png" alt="Kashish Richhariya" />
   </a>
-  <a href="#footer-about" class="nav-side">Contact</a>
+  <a href="about.html" class="nav-side">About</a>
+  <button class="nav-hamburger" id="hamburger" type="button" aria-label="Open menu" aria-controls="navLinks" aria-expanded="false">
+    <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+  </button>
+  <ul class="nav-links" id="navLinks" aria-hidden="true">
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="#footer-about">Contact</a></li>
+  </ul>
 </nav>
 
 <!-- ═══════════════════════════════
@@ -417,20 +459,22 @@
 
   <!-- LEFT: sticky -->
   <div class="intro-left">
-    <span class="intro-tag">Retail Experience Designer</span>
-
     <h1 class="intro-name">Kashish <em>Richhariya</em></h1>
 
-    <!-- 3:4 photo placeholder — replace src when ready -->
+    <span class="intro-tag">Brand Experience &amp; Retail Designer</span>
+
+    <!-- Photo placeholder — replace src when ready -->
     <div class="photo-frame">
       <!-- <img src="your-photo.jpg" alt="Kashish Richhariya" /> -->
       <div class="photo-ph">Photo</div>
     </div>
 
     <p class="intro-bio">
-      I design retail environments that turn store space into a system —
-      scaling across dozens of stores while staying rooted in local craft
-      and customer experience.
+      Brand Experience and Spatial Designer with 5+ years at Tanishq,
+      specializing in retail design and strategy, brand identity furniture
+      design, and immersive store experiences. Skilled in translating cultural
+      insights and craft into engaging customer journeys through experiential
+      storytelling.
     </p>
 
     <a href="Kashish_Richhariya_Resume.pdf" download class="btn-resume">
@@ -448,7 +492,7 @@
   <div class="intro-right">
     <span class="gold-label">Experience &amp; Notable Work</span>
     <h2 class="tl-heading">
-      Five years of turning<br><em>store space into system</em>
+      Five years of turning<br><em>retail strategy into spatial design</em>
     </h2>
 
     <div class="timeline">
@@ -458,34 +502,23 @@
         <div class="tl-dot"></div>
         <p class="tl-period">Apr 2024 &mdash; Present</p>
         <h3 class="tl-role">Deputy Manager</h3>
-        <p class="tl-company">Tanishq &mdash; Titan Company Ltd &nbsp;·&nbsp; Bengaluru</p>
-        <p class="tl-desc">
-          Expanded into end-to-end ownership of flagship identities and large-scale
-          design systems — taking projects from spatial concept through to material
-          specification, fixture design, and national rollout. Directed high-visibility
-          work including board-level presentations and heritage cultural experiences.
-        </p>
-        <p class="tl-work-label">Notable Work</p>
+        <p class="tl-company">Retail Network Development, Tanishq</p>
         <ul class="tl-work-list">
           <li class="tl-work-item">
-            <div class="tl-work-name">Rivaah Store Identity — Flagship<span class="tl-work-year">2024–25</span></div>
-            <div class="tl-work-desc">Owned the complete identity system end to end — colour palette, material palette, and the full spatial journey design for the Rivaah flagship.</div>
+            <div class="tl-work-name">Rivaah Spatial Identity Design</div>
+            <div class="tl-work-desc">Principal Spatial Designer: led complete spatial identity design for Rivaah—colour, material, and furniture, translating brand strategy into retail spatial experience.</div>
           </li>
           <li class="tl-work-item">
-            <div class="tl-work-name">Back-of-House Standardization &amp; Cost Optimization<span class="tl-work-year">2025</span></div>
-            <div class="tl-work-desc">Standardized non-customer-facing spaces across the store network, reducing build cost while holding operational and service standards.</div>
+            <div class="tl-work-name">Layout Journey &amp; Stakeholder Management</div>
+            <div class="tl-work-desc">Partnered across Business, Marketing, and Merchandising teams to plan customer journeys and store layouts for 40+ Tanishq stores nationally.</div>
           </li>
           <li class="tl-work-item">
-            <div class="tl-work-name">Board Meeting Exhibition Design<span class="tl-work-year">Mar 2025</span></div>
-            <div class="tl-work-desc">Directed layout strategy and oversaw on-ground execution for an exhibition hosted for the Tata Group board.</div>
+            <div class="tl-work-name">FY'26 Tata Board Meeting Exhibition Design</div>
+            <div class="tl-work-desc">Led cross-functional planning, design, and execution oversight for the FY'26 Tata Board Meeting exhibition at Taj Airport, Bengaluru.</div>
           </li>
           <li class="tl-work-item">
-            <div class="tl-work-name">RK Studio — Case Studio Design<span class="tl-work-year">2026–Present</span></div>
-            <div class="tl-work-desc">Conceiving a museum-grade retail experience within Raj Kapoor's studio, translating cinematic heritage into an immersive spatial narrative.</div>
-          </li>
-          <li class="tl-work-item">
-            <div class="tl-work-name">Mia Brand Identity Design<span class="tl-work-year">2026–Present</span></div>
-            <div class="tl-work-desc">Developing the spatial identity system for the Mia brand.</div>
+            <div class="tl-work-name">Design Optimisation &amp; Cost-Cutting</div>
+            <div class="tl-work-desc">Co-developed modular furniture and back-of-house design systems to solve retail space challenges, enabling faster execution and measurable cost savings.</div>
           </li>
         </ul>
       </div>
@@ -495,33 +528,21 @@
       <!-- ── Entry 2: Senior Executive ── -->
       <div class="tl-entry">
         <div class="tl-dot"></div>
-        <p class="tl-period">2021 &mdash; Apr 2024</p>
+        <p class="tl-period">Sept 2021 &mdash; Apr 2024</p>
         <h3 class="tl-role">Senior Executive</h3>
-        <p class="tl-company">Tanishq &mdash; Titan Company Ltd &nbsp;·&nbsp; Bengaluru</p>
-        <p class="tl-desc">
-          Led interior design and spatial strategy for key customer interaction zones
-          across 30+ store rollouts nationally — from concept through execution.
-          Moved between the spatial designer's eye for material and atmosphere and
-          the product designer's discipline of building standardized, replicable
-          systems across facades, layouts, and identities.
-        </p>
-        <p class="tl-work-label">Notable Work</p>
+        <p class="tl-company">Retail Network Development, Tanishq</p>
         <ul class="tl-work-list">
           <li class="tl-work-item">
-            <div class="tl-work-name">Facade Standardization<span class="tl-work-year">2023</span></div>
-            <div class="tl-work-desc">Designed a modular facade system replicated across 10 stores in South India, unifying street-level brand presence and cutting design-to-execution time.</div>
+            <div class="tl-work-name">Brand Experience &amp; Spatial Design</div>
+            <div class="tl-work-desc">Owned design strategy and spatial design for 30+ flagship stores nationally, shaping brand experience at scale.</div>
           </li>
           <li class="tl-work-item">
-            <div class="tl-work-name">Micro-Identity Design — Exotic India<span class="tl-work-year">2023</span></div>
-            <div class="tl-work-desc">Developed a localized micro-identity concept, layering regional character into a national store format without disrupting its scalability.</div>
+            <div class="tl-work-name">Craft Innovation</div>
+            <div class="tl-work-desc">Collaborated with multiple Indian crafts and Master Artisans, bringing regional craftsmanship into retail spaces across the country.</div>
           </li>
           <li class="tl-work-item">
-            <div class="tl-work-name">Rivaah Floor Identity Standardization<span class="tl-work-year">2023</span></div>
-            <div class="tl-work-desc">Standardized the Rivaah bridal floor identity across the national store format — walls, partitions, and zoning systems for consistent, repeatable rollout.</div>
-          </li>
-          <li class="tl-work-item">
-            <div class="tl-work-name">Layout Design &amp; Stakeholder Alignment<span class="tl-work-year">2023–Present</span></div>
-            <div class="tl-work-desc">Delivered store layouts for 30–40 stores, working directly with business stakeholders and franchise partners to align design intent with commercial and operational realities.</div>
+            <div class="tl-work-name">Micro-Identity Design</div>
+            <div class="tl-work-desc">Designed in-store micro-identities—Rivaah floor identity, Exotic India, and South India facade identity—standardized for national rollout.</div>
           </li>
         </ul>
       </div>
@@ -619,27 +640,13 @@
 <!-- ═══════════════════════════════
      FOOTER
 ═══════════════════════════════ -->
-<footer id="footer-about">
-  <div class="footer-inner">
-    <div class="footer-logo">
-      <img src="Logo-web.png" alt="Kashish Richhariya" />
-    </div>
-    <div class="footer-links">
-      <a href="https://www.linkedin.com/in/kashish-richhariya" target="_blank" rel="noopener" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="3" ry="3"/>
-          <path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>
-        </svg>
-      </a>
-      <button id="copy-email-btn-about" aria-label="Copy email address">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="2" y="4" width="20" height="16" rx="2"/>
-          <polyline points="22,6 12,13 2,6"/>
-        </svg>
-      </button>
-    </div>
+<footer class="editorial-footer" id="footer-about">
+  <img class="ef-motif" src="motif.png" alt="" aria-hidden="true" />
+  <img class="ef-note" src="thank-you-note.png" alt="Thank you. Visit again." />
+  <div class="ef-links" role="navigation" aria-label="Footer navigation">
+    <a href="index.html#work">Work</a><a href="about.html">About</a><a href="https://www.linkedin.com/in/kashish-richhariya" target="_blank" rel="noopener">LinkedIn</a><button class="ef-copy-email" data-copy-email type="button">Copy Email</button>
   </div>
-  <p class="footer-copy">© 2026 Kashish Richhariya. All rights reserved.</p>
+  <div class="ef-meta"><p class="ef-credit">© 2026 Kashish Richhariya</p><a class="ef-back-top" href="#">Back to top ↑</a></div>
 </footer>
 
 <div id="copy-toast-about">Copied E-mail ID</div>
@@ -647,6 +654,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  const setMenuOpen = open => {
+    hamburger?.setAttribute('aria-expanded', String(open));
+    hamburger?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    navLinks?.setAttribute('aria-hidden', String(!open));
+    navLinks?.classList.toggle('open', open);
+  };
+  hamburger?.addEventListener('click', () => setMenuOpen(hamburger.getAttribute('aria-expanded') !== 'true'));
+  navLinks?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenuOpen(false)));
+
   const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
@@ -682,7 +700,7 @@
 
   /* Email copy */
   const toastAbout = document.getElementById('copy-toast-about');
-  document.getElementById('copy-email-btn-about').addEventListener('click', async () => {
+  document.getElementById('copy-email-btn-about')?.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText('kashishrichhariya0204@gmail.com');
       toastAbout.classList.add('show');

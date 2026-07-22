@@ -115,6 +115,7 @@
     }
     .slide.active { opacity: 1; }
     .slide img { width: 100%; height: 100%; object-fit: cover; }
+    .slide img.crop-from-top { object-position: center bottom; }
     /* Hero scrim — mild gradient, 20% stronger than baseline */
     .slide-scrim {
       position: absolute; inset: 0;
@@ -228,6 +229,8 @@
       max-width: 1440px; margin: 0 auto;
       padding: 0 64px 64px;
     }
+    #work > .work-full,
+    #work > .work-grid { margin-top: 56px !important; }
 
     /* Full-width project */
     .work-full {
@@ -292,36 +295,99 @@
        FOOTER
     ═══════════════════════════════ */
     footer {
-      background: var(--charcoal);
-      padding: 80px 64px 56px;
+      min-height: clamp(560px, 68vh, 760px);
+      padding: 56px 64px 40px;
+      display: flex;
+      background: #8a6265;
+      color: #fff;
     }
-    .footer-inner {
-      max-width: 1440px; margin: 0 auto;
-      display: flex; justify-content: space-between;
-      align-items: center;
-      padding-bottom: 52px;
-      border-bottom: 1px solid rgba(252,252,252,0.1);
+    .footer-shell {
+      width: 100%; max-width: 1440px; margin: 0 auto;
+      display: flex; flex: 1; flex-direction: column;
     }
-    .footer-logo img {
-      height: 56px; width: auto;
-      filter: brightness(0) invert(1);
-      opacity: 0.8;
+    .footer-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(140px, 180px);
+      gap: clamp(48px, 7vw, 112px);
+      align-items: start;
     }
-    .footer-links { display: flex; gap: 32px; align-items: center; }
+    .footer-contact { min-width: 0; }
+    .footer-email {
+      display: inline-block;
+      max-width: 100%;
+      font-family: var(--serif);
+      font-size: clamp(38px, 4.4vw, 68px);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.045em;
+      color: #fff;
+      overflow-wrap: anywhere;
+      transition: opacity 0.22s ease;
+    }
+    .footer-email:hover { opacity: 0.72; }
+    .footer-note {
+      max-width: 450px;
+      margin-top: 30px;
+      font-size: clamp(16px, 1.35vw, 20px);
+      font-weight: 300;
+      line-height: 1.55;
+      color: #fff;
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      padding-top: 4px;
+    }
     .footer-links a, .footer-links button {
-      display: flex; align-items: center; justify-content: center;
-      width: 44px; height: 44px; border-radius: 50%;
-      border: 1px solid rgba(252,252,252,0.18);
-      background: transparent; cursor: pointer;
-      color: rgba(252,252,252,0.5);
-      transition: color 0.22s, border-color 0.22s, background 0.22s;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 0;
       padding: 0;
+      background: transparent;
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: opacity 0.22s ease, transform 0.22s ease;
     }
     .footer-links a:hover, .footer-links button:hover {
-      color: var(--cream); border-color: rgba(252,252,252,0.5);
-      background: rgba(252,252,252,0.07);
+      opacity: 0.7;
+      transform: translateX(4px);
     }
-    .footer-links svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-email:focus-visible,
+    .footer-links a:focus-visible,
+    .footer-links button:focus-visible,
+    .footer-top-link:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 5px;
+    }
+    .footer-bottom {
+      margin-top: auto;
+      padding-top: clamp(120px, 18vh, 220px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .footer-top-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: inherit;
+      transition: color 0.22s ease, transform 0.22s ease;
+    }
+    .footer-top-link:hover {
+      color: #fff;
+      transform: translateY(-3px);
+    }
 
     /* Copy toast */
     #copy-toast {
@@ -336,9 +402,9 @@
     }
     #copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .footer-copy {
-      max-width: 1440px; margin: 36px auto 0;
-      font-size: 10px; color: rgba(252,252,252,0.2);
-      text-align: center; letter-spacing: 0.08em;
+      margin: 0;
+      color: inherit;
+      font-size: inherit;
     }
 
     /* ═══════════════════════════════
@@ -351,12 +417,18 @@
       .wf-info { padding: 28px 48px 36px; }
       .hero-tagline { left: 48px; }
       .hero-view-project { right: 48px; }
-      footer { padding: 72px 48px 48px; }
+      footer { padding: 52px 48px 38px; }
     }
     @media (max-width: 860px) {
       .about-inner { grid-template-columns: 1fr; gap: 48px; padding: 0 32px; }
       .about-img { max-width: 280px; aspect-ratio: 3/4; }
-      .footer-inner { flex-direction: column; gap: 40px; text-align: center; }
+      .footer-main { grid-template-columns: 1fr; gap: 56px; }
+      .footer-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 32px;
+        width: min(100%, 360px);
+      }
       .work-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
@@ -400,13 +472,27 @@
       .about-inner { padding: 0 20px; }
       #work { padding: 88px 0 0; }
       .work-header { padding: 0 24px 44px; }
+      #work > .work-full,
+      #work > .work-grid { margin-top: 36px !important; }
       .wf-img img { height: 56vh; }
       .wf-info { padding: 24px 24px 32px; }
       .work-grid { grid-template-columns: 1fr; }
       .wh-img img { height: 48vh; }
-      footer { padding: 56px 20px 40px; }
+      footer { min-height: 620px; padding: 46px 20px 30px; }
+      .footer-email { font-size: clamp(34px, 10vw, 46px); }
+      .footer-note { margin-top: 24px; }
+      .footer-main { gap: 48px; }
+      .footer-bottom {
+        padding-top: 88px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+        font-size: 12px;
+      }
     }
   </style>
+  <link rel="stylesheet" href="footer.css" />
+  <script src="footer.js" defer></script>
 </head>
 <body>
 
@@ -422,6 +508,7 @@
     </button>
     <ul class="nav-links" id="navLinks" aria-hidden="true">
       <li><a href="#work">Work</a></li>
+      <li><a href="about.html">About</a></li>
       <li><a href="mailto:kashishrichhariya0204@gmail.com">Contact</a></li>
     </ul>
   </nav>
@@ -459,7 +546,7 @@
     </div>
 
     <div class="slide" data-link="miroadjaipur.html">
-      <img src="Jaipur%20Images/Foyer.jpg" alt="Jaipur Foyer" loading="lazy" decoding="async" />
+      <img class="crop-from-top" src="Jaipur%20Images/Foyer.jpg" alt="Jaipur Foyer" loading="lazy" decoding="async" />
       <div class="slide-scrim"></div>
     </div>
 
@@ -469,7 +556,7 @@
     </div>
 
     <div class="slide" data-link="miroadjaipur.html">
-      <img src="Jaipur%20Images/15-cash%20counter.jpg" alt="Jaipur Cash Counter" loading="lazy" decoding="async" />
+      <img class="crop-from-top" src="Jaipur%20Images/15-cash%20counter.jpg" alt="Jaipur Cash Counter" loading="lazy" decoding="async" />
       <div class="slide-scrim"></div>
     </div>
 
@@ -534,35 +621,23 @@
       </div>
     </a>
 
-    <!-- Rivaah Motif Identity — full width -->
-    <a class="work-full" href="rivaahmotif.html" style="margin-top:3px;">
-      <div class="wf-img">
-        <img src="Rivaah%20Motif/web/store-wall-motif.jpg" alt="Rivaah twin-lotus motif stitched into the store wall" loading="lazy" decoding="async" style="object-position:center 42%;" />
-      </div>
-      <div class="wf-info">
-        <span class="wf-year">Brand Identity &nbsp;/&nbsp; 2024–25</span>
-        <h3 class="wf-title">Rivaah Motif Identity</h3>
-        <p class="wf-desc">A twin-lotus emblem designed to carry new beginnings across space, gifting and brand touchpoints</p>
-      </div>
-    </a>
-
-    <!-- Jaipur + CG Road — 2-col grid -->
+    <!-- Rivaah Motif + CG Road — 2-col grid -->
     <div class="work-grid" style="margin-top:3px;">
 
-      <a class="work-half" href="miroadjaipur.html">
+      <a class="work-half" href="rivaahmotif.html">
         <div class="wh-img">
-          <img src="Jaipur%20Images/Foyer.jpg" alt="Tanishq MI Road Jaipur" loading="lazy" decoding="async" />
+          <img src="Rivaah%20Motif/web/DSC1141-thumbnail.jpg" alt="Rivaah twin-lotus motif identity" width="1600" height="2400" loading="lazy" decoding="async" />
         </div>
         <div class="wh-info">
-          <span class="wh-year">Jaipur &nbsp;/&nbsp; 2024</span>
-          <h3 class="wh-title">Tanishq MI Road, Jaipur</h3>
-          <p class="wh-desc">Retail flagship rooted in the heritage of Jaipur's historic streetscape</p>
+          <span class="wh-year">Brand Identity &nbsp;/&nbsp; 2024–25</span>
+          <h3 class="wh-title">Rivaah Motif Identity</h3>
+          <p class="wh-desc">A twin-lotus emblem designed to carry new beginnings across space, gifting and brand touchpoints</p>
         </div>
       </a>
 
       <a class="work-half" href="cgroad.html">
         <div class="wh-img">
-          <img src="CG%20Road%20Images/gf-cash-counter.jpg" alt="Tanishq CG Road" loading="lazy" decoding="async" />
+          <img src="CG%20Road%20Images/web/gf-cash-counter-thumbnail.jpg" alt="Tanishq CG Road" width="2000" height="1333" loading="lazy" decoding="async" />
         </div>
         <div class="wh-info">
           <span class="wh-year">Ahmedabad &nbsp;/&nbsp; 2023</span>
@@ -573,36 +648,33 @@
 
     </div>
 
+    <!-- Jaipur — full width, info panel below image -->
+    <a class="work-full" href="miroadjaipur.html" style="margin-top:3px;">
+      <div class="wf-img">
+        <img src="Jaipur%20Images/Foyer.jpg" alt="Tanishq MI Road Jaipur" loading="lazy" decoding="async" style="object-position:center bottom;" />
+      </div>
+      <div class="wf-info">
+        <span class="wf-year">Jaipur &nbsp;/&nbsp; 2024</span>
+        <h3 class="wf-title">Tanishq MI Road, Jaipur</h3>
+        <p class="wf-desc">Retail flagship rooted in the heritage of Jaipur's historic streetscape</p>
+      </div>
+    </a>
+
   </section>
 
   <!-- ══════════════════════
        FOOTER
   ══════════════════════ -->
-  <footer id="footer">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <img src="Logo-web.png" alt="Kashish Richhariya" />
-      </div>
-      <div class="footer-links">
-        <a href="https://www.linkedin.com/in/kashish-richhariya" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="3" ry="3"/>
-            <path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>
-          </svg>
-        </a>
-        <button id="copy-email-btn" aria-label="Copy email address">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 4h16v16H4z" rx="2"/>
-            <polyline points="22,6 12,13 2,6"/>
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-          </svg>
-        </button>
-      </div>
+  <footer class="editorial-footer" id="footer">
+    <img class="ef-motif" src="motif.png" alt="" aria-hidden="true" />
+    <img class="ef-note" src="thank-you-note.png" alt="Thank you. Visit again." />
+    <div class="ef-links" role="navigation" aria-label="Footer navigation">
+      <a href="#work">Work</a><a href="about.html">About</a><a href="https://www.linkedin.com/in/kashish-richhariya" target="_blank" rel="noopener">LinkedIn</a><button class="ef-copy-email" data-copy-email type="button">Copy Email</button>
     </div>
-    <p class="footer-copy">© 2026 Kashish Richhariya. All rights reserved.</p>
+    <div class="ef-meta"><p class="ef-credit">© 2026 Kashish Richhariya</p><a class="ef-back-top" href="#slideshow">Back to top ↑</a></div>
   </footer>
 
-  <div id="copy-toast">Copied E-mail ID</div>
+  <div id="copy-toast" role="status" aria-live="polite">Email address copied</div>
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

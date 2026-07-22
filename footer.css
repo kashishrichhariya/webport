@@ -1,0 +1,189 @@
+.project-related {
+  margin-top: 96px;
+  padding: 42px 24px 76px;
+  background: #fff;
+  box-shadow: 0 -96px 0 #fff;
+  color: #4a4540;
+}
+
+.related-works {
+  margin-top: 96px;
+  box-shadow: 0 -96px 0 #fff;
+}
+
+.project-related-heading {
+  margin: 0 0 32px;
+  font: 400 clamp(32px, 3.2vw, 46px)/1.1 'Playfair Display', Georgia, serif;
+  letter-spacing: -0.03em;
+  color: #6f6963;
+}
+
+.project-related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.project-related-card { display: block; min-width: 0; color: inherit; text-decoration: none; }
+.project-related-image { overflow: hidden; aspect-ratio: 1.48 / 1; background: #e7e2dc; }
+.project-related-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.project-related-card:hover .project-related-image img { transform: scale(1.025); }
+.project-related-info { padding-top: 18px; }
+.project-related-meta {
+  margin: 0 0 10px;
+  color: #a67f52;
+  font: 500 10px/1.4 'Manrope', system-ui, sans-serif;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+.project-related-title {
+  margin: 0 0 10px;
+  color: #4a4540;
+  font: 400 clamp(20px, 2.2vw, 30px)/1.2 'Playfair Display', Georgia, serif;
+  letter-spacing: -0.03em;
+}
+.project-related-description {
+  margin: 0;
+  color: #8c857c;
+  font: 400 13px/1.75 'Manrope', system-ui, sans-serif;
+}
+.project-related-card:focus-visible { outline: 2px solid #a67f52; outline-offset: 5px; }
+
+.editorial-footer,
+.editorial-footer#cta {
+  position: relative;
+  min-height: 0;
+  width: 100%;
+  margin: 96px 0 0;
+  padding: 120px 48px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #a67b72;
+  box-shadow: 0 -96px 0 #fff;
+  color: #fff8ee;
+  text-align: center;
+}
+
+.editorial-footer::before { content: none; }
+
+.ef-motif {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  width: clamp(72px, 7vw, 96px);
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+
+.ef-note {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(100%, 480px);
+  height: auto;
+  margin: 0 auto 40px;
+  filter: brightness(0.7) grayscale(1) contrast(10);
+  mix-blend-mode: screen;
+}
+
+.ef-links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(22px, 4vw, 68px);
+  width: auto;
+  height: auto;
+  padding: 0;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.ef-links a,
+.ef-copy-email {
+  display: inline-block;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  padding: 0 0 5px;
+  background: transparent;
+  color: inherit;
+  font: 500 15px/1 'Manrope', system-ui, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.25s ease, opacity 0.25s ease;
+}
+
+.ef-links a:hover,
+.ef-copy-email:hover {
+  border-bottom-color: currentColor;
+  opacity: 0.78;
+}
+
+.ef-meta {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  margin-top: 54px;
+}
+
+.ef-credit,
+.ef-back-top {
+  margin: 0;
+  color: inherit;
+  font: 400 10px/1.4 'Manrope', system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+
+.ef-credit { grid-column: 2; }
+
+.ef-back-top {
+  grid-column: 3;
+  justify-self: end;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 3px;
+  transition: border-color 0.25s ease, opacity 0.25s ease;
+}
+
+.ef-back-top:hover {
+  border-bottom-color: currentColor;
+  opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+  .project-related { padding: 36px 20px 64px; }
+  .project-related,
+  .related-works { margin-top: 64px; box-shadow: 0 -64px 0 #fff; }
+  .project-related-grid { grid-template-columns: 1fr; gap: 44px; }
+  .project-related-image { aspect-ratio: 1.3 / 1; }
+
+  .editorial-footer,
+  .editorial-footer#cta {
+    margin-top: 64px;
+    padding: 76px 20px 24px;
+    box-shadow: 0 -64px 0 #fff;
+  }
+  .ef-motif { width: 68px; }
+  .ef-note { width: min(100%, 310px); margin-bottom: 30px; }
+  .ef-links { gap: clamp(12px, 4vw, 24px); }
+  .ef-links a,
+  .ef-copy-email { font-size: 11px; letter-spacing: 0.06em; }
+  .ef-meta { margin-top: 42px; }
+  .ef-credit,
+  .ef-back-top { font-size: 8px; letter-spacing: 0.08em; }
+}

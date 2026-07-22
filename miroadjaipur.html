@@ -25,12 +25,12 @@
       --stone:    #9c948a;
       --serif:    'Playfair Display', Georgia, serif;
       --sans:     'Manrope', system-ui, sans-serif;
-      --nav-h:    96px;
+      --nav-h:    122px;
     }
 
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       background: var(--cream);
       color: var(--heading);
@@ -38,6 +38,7 @@
       font-size: 16px;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
     img { display: block; width: 100%; }
     a { text-decoration: none; color: inherit; }
@@ -219,8 +220,18 @@
     .customer-split { display: grid; grid-template-columns: 45fr 55fr; gap: 144px; align-items: center; }
     .customer-text { text-align: center; }
     .customer-text p { font-size: clamp(13px, 1.1vw, 15px); font-weight: 400; color: var(--mid); line-height: 1.8; margin-top: 20px; }
-    .customer-image { display: flex; justify-content: center; }
+    .customer-image { position: relative; display: flex; justify-content: center; isolation: isolate; }
     .customer-image img, .customer-image video { width: 85%; height: auto; display: block; }
+    /* The MP4 has a baked-in white canvas. A warm multiply layer above the
+       decoded video maps that white to the section colour in every browser. */
+    .customer-image::after {
+      content: '';
+      position: absolute;
+      inset: 0 7.5%;
+      background: var(--warm);
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
 
     /* ═══════════════════════════════
        GUIDING PRINCIPLES
@@ -246,6 +257,7 @@
     .sp-carousel-wrap {
       position: relative;
       background: #fff;
+      padding: 0 40px;
     }
     .sp-carousel { position: relative; overflow: hidden; }
     .sp-slide { display: none; }
@@ -272,17 +284,29 @@
       position: absolute;
       top: 50%; transform: translateY(-50%);
       z-index: 10;
-      background: rgba(252,252,252,0.90);
-      border: 1px solid rgba(155,149,125,0.35);
-      color: var(--mid); font-size: 24px; font-weight: 300;
-      width: 48px; height: 48px; border-radius: 50%;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--mid);
+      font-size: 0;
+      font-weight: 300;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.25s;
-      backdrop-filter: blur(4px);
+      padding: 0;
+      width: auto;
+      height: auto;
     }
-    .sp-btn-prev { left: 16px; }
-    .sp-btn-next { right: 16px; }
-    .sp-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--cream); }
+    .sp-btn::before {
+      font-size: 48px;
+      display: block;
+    }
+    .sp-btn-prev { left: 24px; }
+    .sp-btn-prev::before { content: '‹'; }
+    .sp-btn-next { right: 24px; }
+    .sp-btn-next::before { content: '›'; }
+    .sp-btn:hover { color: var(--gold); }
     .sp-dots { display: flex; gap: 0; justify-content: center; padding: 16px 0; background: #fff; }
     .sp-dot {
       position: relative; width: 24px; height: 24px; padding: 0;
@@ -362,6 +386,16 @@
     .gf-cashdesk-img img { height: 100vh; width: auto; display: block; object-fit: contain; }
     .gf-cashdesk-text { text-align: left; }
     .gf-cashdesk-text .ds-body { margin-top: 0; }
+    .gf-concept-image { width: 75%; height: auto; display: block; }
+
+    /* Cash-counter story: image and copy on desktop, stacked on mobile. */
+    .cashdesk-story {
+      display: grid; grid-template-columns: 6fr 4fr;
+      gap: 64px; align-items: center; padding: 64px 48px;
+    }
+    .cashdesk-story img { max-height: 80vh; width: 100%; height: auto; object-fit: contain; }
+    .cashdesk-story-copy { padding: 0 24px; }
+    .cashdesk-story-copy p { font-size: clamp(14px, 1.2vw, 17px); font-weight: 400; color: var(--mid); line-height: 1.9; }
 
     /* Full-bleed image */
     .bleed { width: 100%; }
@@ -415,18 +449,233 @@
     /* ═══════════════════════════════
        CTA / FOOTER
     ═══════════════════════════════ */
-    #cta { background: var(--charcoal); padding: 120px 48px 80px; text-align: center; }
-    .cta-eyebrow { font-size: 13px; font-weight: 300; color: var(--stone); margin-bottom: 24px; letter-spacing: 0.05em; }
-    .cta-heading { font-family: var(--serif); font-size: clamp(36px, 5.5vw, 76px); font-weight: 400; color: var(--cream); line-height: 1.1; margin-bottom: 48px; }
-    .cta-heading em { font-style: italic; }
-    .cta-btn { display: inline-block; padding: 16px 52px; border: 1px solid rgba(252,252,252,0.35); color: var(--cream); font-size: 12px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; transition: all .3s; }
-    .cta-btn:hover { background: var(--cream); color: var(--charcoal); border-color: var(--cream); }
-    .cta-credit { font-size: 11px; color: var(--stone); margin-top: 80px; opacity: 0.45; }
+    #cta {
+      position: relative;
+      background: #a67b72;
+      color: #fff8ee;
+      padding: 120px 48px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-motif {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: clamp(72px, 7vw, 96px);
+      height: auto;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+    .footer-note {
+      width: min(100%, 480px);
+      height: auto;
+      display: block;
+      margin: 0 auto 40px;
+      filter: brightness(0.7) grayscale(1) contrast(10);
+      mix-blend-mode: screen;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(22px, 4vw, 68px);
+      white-space: nowrap;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-links a,
+    .footer-copy {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      font: 500 15px/1 var(--sans);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 5px;
+      transition: border-color 0.25s ease, opacity 0.25s ease;
+    }
+    .footer-links a:hover,
+    .footer-copy:hover { border-bottom-color: currentColor; opacity: 0.78; }
+    .footer-meta {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      margin-top: 54px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+    .footer-credit,
+    .footer-top {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.62;
+    }
+    .footer-credit { grid-column: 2; }
+    .footer-top {
+      grid-column: 3;
+      justify-self: end;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 3px;
+      transition: border-color 0.25s ease, opacity 0.25s ease;
+    }
+    .footer-top:hover { border-bottom-color: currentColor; opacity: 0.9; }
 
     /* ── BTS scroll strip ── */
     .bts-scroll-outer { overflow: hidden; margin-top: 48px; cursor: grab; }
     .bts-scroll-track { display: flex; gap: 6px; will-change: transform; }
     .bts-scroll-track img { height: 56vh; width: auto; flex-shrink: 0; object-fit: cover; display: block; }
+
+    /* ═══════════════════════════════
+       AWARDS SECTION
+    ═══════════════════════════════ */
+    .awards-section { background: #fff; padding: 80px 0 24px; }
+    .awards-container { max-width: 100%; margin: 0 auto; padding: 0; }
+    .awards-carousel-wrap {
+      position: relative;
+      background: #fff;
+    }
+    .awards-carousel { position: relative; overflow: hidden; }
+    .award-item {
+      display: none;
+      grid-template-columns: 50fr 50fr;
+      gap: 80px;
+      align-items: center;
+      padding: 60px 48px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .award-item.active {
+      display: grid;
+      animation: awardFade 0.6s ease;
+    }
+    @keyframes awardFade { from { opacity: 0; } to { opacity: 1; } }
+    .award-content { display: flex; align-items: center; }
+    .award-text { }
+    .award-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.2vw, 42px);
+      font-weight: 400;
+      color: var(--heading);
+      line-height: 1.25;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .award-category {
+      font-size: clamp(13px, 1.1vw, 15px);
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .award-recognition {
+      font-size: clamp(14px, 1.2vw, 16px);
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+    .award-number {
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .award-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .award-image img {
+      width: 100%;
+      height: 60vh;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    /* Award carousel buttons */
+    .award-btn {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      z-index: 10;
+      background: transparent;
+      border: none;
+      color: #9b957d;
+      font-size: 0;
+      font-weight: 300;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+      padding: 0;
+      width: auto;
+      height: auto;
+      line-height: 1;
+    }
+    .award-btn::before {
+      font-size: 64px;
+      display: block;
+    }
+    .award-btn-prev { left: 48px; }
+    .award-btn-prev::before { content: '‹'; }
+    .award-btn-next { right: 48px; }
+    .award-btn-next::before { content: '›'; }
+    .award-btn:hover { color: var(--gold); }
+
+    /* Award dots */
+    .award-dots { display: none; }
+    .award-dot {
+      position: relative; width: 24px; height: 24px; padding: 0;
+      border: 0; background: transparent; cursor: pointer;
+    }
+    .award-dot::before {
+      content: ''; position: absolute; width: 6px; height: 6px;
+      top: 50%; left: 50%; border-radius: 50%;
+      background: rgba(155,149,125,0.35);
+      transform: translate(-50%, -50%);
+      transition: background .25s, transform .25s;
+    }
+    .award-dot.active::before { background: var(--gold); transform: translate(-50%, -50%) scale(1.3); }
+    .award-dot:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+
+    /* Related works */
+    .related-works { padding: 42px 24px 76px; background: #fff; }
+    .related-header {
+      display: flex; align-items: baseline; gap: 32px;
+      margin-bottom: 32px;
+    }
+    .related-heading {
+      font-family: var(--serif); font-size: clamp(32px, 3.2vw, 46px); font-weight: 400;
+      line-height: 1.1; letter-spacing: -.03em; color: var(--mid);
+    }
+    .related-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+    .related-card { display: block; min-width: 0; }
+    .related-image { aspect-ratio: 1.48 / 1; overflow: hidden; background: #e7e2dc; }
+    .related-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .8s cubic-bezier(.2,.7,.2,1);
+    }
+    .related-card:hover .related-image img { transform: scale(1.025); }
+    .related-info { padding-top: 18px; }
+    .related-meta {
+      margin-bottom: 10px; color: var(--gold); font-size: 10px;
+      line-height: 1.4; letter-spacing: .26em; text-transform: uppercase;
+    }
+    .related-title {
+      margin-bottom: 10px; color: var(--heading); font-family: var(--serif);
+      font-size: clamp(20px, 2.2vw, 30px); font-weight: 400;
+      line-height: 1.2; letter-spacing: -.03em;
+    }
+    .related-description { color: var(--muted); font-size: 13px; line-height: 1.75; }
+    .related-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
 
     /* GSAP sets initial states — no CSS opacity:0 so fallback is always visible */
 
@@ -434,6 +683,7 @@
        RESPONSIVE
     ═══════════════════════════════ */
     @media (max-width: 1040px) {
+      nav { padding: 0 48px; }
       .process-grid { grid-template-columns: repeat(3, 1fr); }
       .sp-layout { grid-template-columns: 1fr; gap: 48px; }
       .ds-split { grid-template-columns: 1fr; padding: 0; }
@@ -443,9 +693,10 @@
       .chabutra-pair-contained img { height: 50vh; }
       .gf-cashdesk-split { grid-template-columns: 1fr; gap: 36px; }
       .gf-cashdesk-img img { height: 60vh; width: 100%; object-fit: contain; }
+      .award-item { grid-template-columns: 1fr; gap: 48px; padding: 60px 24px; }
     }
     @media (max-width: 860px) {
-      nav { padding: 0 24px; }
+      nav { padding: 0 48px; }
       .wrap, .wrap-md, .wrap-sm, .wrap-80 { padding-left: 24px; padding-right: 24px; }
       #project-meta, #quote, #cta { padding-left: 24px; padding-right: 24px; }
       #hero { padding-left: 24px; padding-right: 24px; }
@@ -455,7 +706,19 @@
       .principle-card img { height: 30vh; }
       .customer-split { grid-template-columns: 1fr; gap: 36px; }
       .mi-split { grid-template-columns: 1fr; }
-      .preview-grid img { height: 36vh; }
+      .preview-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3px;
+        padding: 0 24px;
+      }
+      .preview-grid img,
+      .preview-grid img:nth-child(odd),
+      .preview-grid img:nth-child(even) {
+        width: 100%;
+        height: min(56vw, 420px);
+        object-fit: cover;
+      }
       .process-grid { grid-template-columns: 1fr 1fr; }
       .ds-row2 { padding: 0 24px; }
       .ds-grid4 { padding: 0 24px; }
@@ -467,8 +730,12 @@
       .ds-split-text { padding: 36px 24px; }
       .wrap-80 { width: 100%; padding: 0 24px; }
       .gf-cashdesk-split { padding: 0 24px; gap: 24px; }
+      .award-item { padding: 60px 24px; }
+      .awards-container { padding: 0; }
+      .related-works { padding-left: 20px; padding-right: 20px; }
     }
     @media (max-width: 600px) {
+      :root { --nav-h: 88px; }
       nav { padding: 0 20px; }
       .nav-side { display: none; }
       .nav-logo { left: 20px; transform: none; }
@@ -485,8 +752,31 @@
       .principle-card { width: 100%; }
       .principle-card img { height: auto; width: 100%; }
       .process-grid { grid-template-columns: 1fr; }
-      .preview-grid img { height: 26vh; }
+      .preview-grid { padding: 0 20px; }
       .bleed-row2 { grid-template-columns: 1fr; }
+      /* Fixed desktop heights made these rows wider than the viewport. On
+         phones, stack every image at its natural ratio so nothing is cropped. */
+      .bleed-pair-equal,
+      .chabutra-pair-contained {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+        gap: 3px;
+        overflow: visible;
+      }
+      .bleed-pair-equal img,
+      .chabutra-pair-contained img {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100%;
+      }
+      .chabutra-row { padding: 0 20px; }
+      .cashdesk-story {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 48px 20px;
+      }
+      .cashdesk-story-copy { padding: 0; }
       .ds-row2 { grid-template-columns: 1fr; padding: 0 20px; }
       .ds-grid4 { grid-template-columns: 1fr; padding: 0 20px; }
       .ds-pair { grid-template-columns: 1fr; padding: 0 20px; }
@@ -495,8 +785,22 @@
       .ds-header { padding: 0 20px 28px; }
       .ds-body-block { padding: 0 20px 28px; }
       #quote { padding: 80px 20px; }
-      #cta { padding: 80px 20px 60px; }
+      #cta { padding: 76px 20px 24px; }
+      .footer-motif { width: 68px; }
+      .footer-note { width: min(100%, 310px); margin-bottom: 30px; }
+      .footer-links { gap: clamp(12px, 4vw, 24px); }
+      .footer-links a,
+      .footer-copy { font-size: 11px; letter-spacing: 0.06em; }
+      .footer-meta { margin-top: 42px; }
+      .footer-credit,
+      .footer-top { font-size: 8px; letter-spacing: 0.08em; }
       .wrap-80 { width: 100%; padding: 0 20px; }
+      .award-item { grid-template-columns: 1fr; gap: 48px; padding: 60px 20px; }
+      .awards-container { padding: 0; }
+      .related-works { padding-top: 36px; padding-bottom: 64px; }
+      .related-grid { grid-template-columns: 1fr; gap: 44px; }
+      .related-image { aspect-ratio: 1.3 / 1; }
+      .related-info { padding-top: 18px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -507,6 +811,8 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="footer.css" />
+  <script src="footer.js" defer></script>
 </head>
 
 <body>
@@ -515,12 +821,13 @@
        NAV
   ══════════════════════ -->
   <nav id="navbar" aria-label="Primary navigation">
-    <a href="index.html" class="nav-side">Work</a>
+    <a href="index.html#work" class="nav-side">Work</a>
     <a href="index.html" class="nav-logo" aria-label="Kashish Richhariya — home"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
     <a href="about.html" class="nav-side">About</a>
     <ul class="nav-links" id="navLinks" aria-label="Mobile navigation">
-      <li><a href="index.html">Work</a></li>
+      <li><a href="index.html#work">Work</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="#cta">Contact</a></li>
     </ul>
     <button class="nav-hamburger" id="hamburger" type="button" aria-controls="navLinks" aria-expanded="false" aria-label="Open navigation">
       <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
@@ -539,7 +846,7 @@
         <em>Reimagined</em> for today
       </h1>
       <p class="hero-subtitle">
-        Designing spaces for Tanishq's flagship at Jaipur MI Road<br>where heritage speaks in a contemporary voice
+        Designing spaces for Tanishq's flagship at Jaipur MI Road where heritage speaks in a contemporary voice
       </p>
     </div>
   </section>
@@ -740,8 +1047,8 @@
           </div><!-- .sp-carousel -->
 
           <!-- Arrows: absolutely positioned on sides, always visible -->
-          <button class="sp-btn sp-btn-prev" id="spPrev" type="button" aria-label="Previous spatial plan" aria-controls="spCarousel">&#8249;</button>
-          <button class="sp-btn sp-btn-next" id="spNext" type="button" aria-label="Next spatial plan" aria-controls="spCarousel">&#8250;</button>
+          <button class="sp-btn sp-btn-prev" id="spPrev" type="button" aria-label="Previous spatial plan" aria-controls="spCarousel"></button>
+          <button class="sp-btn sp-btn-next" id="spNext" type="button" aria-label="Next spatial plan" aria-controls="spCarousel"></button>
 
           <div class="sp-dots" id="spDots" role="group" aria-label="Choose a spatial plan">
             <button class="sp-dot active" type="button" data-i="0" aria-label="Show site and location plan" aria-current="true"></button>
@@ -849,16 +1156,16 @@
     </div>
 
     <div class="mt-48 reveal" style="display:flex; justify-content:center; width:100%;">
-      <img src="Jaipur%20Images/jaipur-gf-cc.jpg" alt="Ground floor cash counter — reference" style="width:75vw; height:auto; display:block;" loading="lazy" decoding="async" />
+      <img class="gf-concept-image" src="Jaipur%20Images/jaipur-gf-cc.jpg" alt="Ground floor cash counter — reference" loading="lazy" decoding="async" />
     </div>
 
   </section>
 
   <!-- store images — warm bg discontinues here -->
-  <div class="reveal-scale" style="display:grid; grid-template-columns:6fr 4fr; gap:64px; align-items:center; padding:64px 48px;">
-    <img src="Jaipur%20Images/15-cash%20counter.jpg" alt="Cash counter — interior" style="max-height:80vh; width:100%; height:auto; display:block; object-fit:contain;" loading="lazy" decoding="async" />
-    <div style="padding:0 24px;">
-      <p style="font-size:clamp(14px,1.2vw,17px); font-weight:400; color:var(--mid); line-height:1.9;">The double-height cashdesk speaks in the vocabulary of Rajasthani carving. Jaalis and arched openings catch a quiet wash of mood light- and the everyday act of a transaction borrows a little grandeur.</p>
+  <div class="cashdesk-story reveal-scale">
+    <img src="Jaipur%20Images/15-cash%20counter.jpg" alt="Cash counter — interior" loading="lazy" decoding="async" />
+    <div class="cashdesk-story-copy">
+      <p>The double-height cashdesk speaks in the vocabulary of Rajasthani carving. Jaalis and arched openings catch a quiet wash of mood light- and the everyday act of a transaction borrows a little grandeur.</p>
     </div>
   </div>
 
@@ -958,14 +1265,104 @@
 
   </section>
 
+  <!-- ══════════════════════════════════════════════
+       AWARDS
+  ══════════════════════════════════════════════ -->
+  <section class="awards-section">
+
+    <div class="awards-container">
+      <div class="awards-carousel-wrap" id="awardCarouselWrap">
+        <div class="awards-carousel" id="awardsCarousel">
+          <div class="award-item active">
+            <div class="award-content">
+              <div class="award-text">
+                <p class="label">Accolades</p>
+                <h3 class="award-title">In-store Asia VM&RD Retail Design Awards 2023</h3>
+                <p class="award-category">Lifestyle & Personal Accessories Specialty Store</p>
+                <p class="award-recognition">Merit <span class="award-number">2</span></p>
+              </div>
+            </div>
+            <div class="award-image">
+              <img src="Awards/jaipur-vmrd.JPEG" alt="VM&RD Retail Design Awards 2023" loading="lazy" decoding="async" />
+            </div>
+          </div>
+
+          <div class="award-item">
+            <div class="award-content">
+              <div class="award-text">
+                <p class="label">Accolades</p>
+                <h3 class="award-title">ICSA 2024</h3>
+                <p class="award-category">Indian Jeweller in Association with Couture India</p>
+                <p class="award-recognition">India's Coolest National Chain Award</p>
+              </div>
+            </div>
+            <div class="award-image">
+              <img src="Awards/ICSA%202024.JPG" alt="ICSA 2024 Award" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Carousel buttons -->
+        <button class="award-btn award-btn-prev" id="awardPrev" aria-label="Previous award"></button>
+        <button class="award-btn award-btn-next" id="awardNext" aria-label="Next award"></button>
+      </div>
+
+      <!-- Carousel dots -->
+      <div class="award-dots" id="awardDots">
+        <button class="award-dot active" data-i="0" aria-label="Award 1" aria-current="true"></button>
+        <button class="award-dot" data-i="1" aria-label="Award 2"></button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════
+       RELATED WORKS
+  ══════════════════════ -->
+  <section class="related-works" aria-labelledby="related-heading">
+    <div class="related-header">
+      <h2 class="related-heading" id="related-heading">Related works</h2>
+    </div>
+    <div class="related-grid">
+      <a class="related-card" href="cgroad.html">
+        <div class="related-image">
+          <img src="CG%20Road%20Images/web/gf-cash-counter-thumbnail.jpg" alt="Tanishq CG Road, Ahmedabad interior" width="2000" height="1333" loading="lazy" decoding="async" />
+        </div>
+        <div class="related-info">
+          <p class="related-meta">Ahmedabad &nbsp;/&nbsp; 2023</p>
+          <h3 class="related-title">Tanishq CG Road, Ahmedabad</h3>
+          <p class="related-description">Where the spirit of Gujarat's craft traditions meets contemporary retail design</p>
+        </div>
+      </a>
+      <a class="related-card" href="rivaah.html">
+        <div class="related-image">
+          <img src="Rivaah%20Images/web/Foyer.jpg" alt="Rivaah by Tanishq store interior" loading="lazy" decoding="async" />
+        </div>
+        <div class="related-info">
+          <p class="related-meta">Delhi &nbsp;/&nbsp; 2024–25</p>
+          <h3 class="related-title">Rivaah by Tanishq</h3>
+          <p class="related-description">A space designed for stillness — for the woman considering her most meaningful purchase</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <!-- ══════════════════════
        CTA / FOOTER
   ══════════════════════ -->
-  <section id="cta">
-    <p class="cta-eyebrow reveal">Powered by pixels and way too many desserts!</p>
-    <h2 class="cta-heading reveal">Let's work<br><em>together!</em></h2>
-    <a href="mailto:kashishrichhariya0204@gmail.com" class="cta-btn reveal">Get in touch</a>
-    <p class="cta-credit">© 2026 Kashish Richhariya. All rights reserved.</p>
+  <section class="editorial-footer" id="cta">
+    <img class="ef-motif" src="motif.png" alt="" aria-hidden="true" />
+    <img class="ef-note reveal" src="thank-you-note.png" alt="Thank you. Visit again." />
+    <div class="ef-links reveal" role="navigation" aria-label="Footer navigation">
+      <a href="index.html#work">Work</a>
+      <a href="about.html">About</a>
+      <a href="https://www.linkedin.com/in/kashish-richhariya" target="_blank" rel="noopener">LinkedIn</a>
+      <button class="ef-copy-email" data-copy-email type="button">Copy Email</button>
+    </div>
+    <div class="ef-meta">
+      <p class="ef-credit">© 2026 Kashish Richhariya</p>
+      <a class="ef-back-top" href="#hero">Back to top ↑</a>
+    </div>
   </section>
 
   <!-- GSAP -->
@@ -1130,6 +1527,51 @@
       else img.addEventListener('load', sync, { once: true });
       window.addEventListener('resize', () => requestAnimationFrame(sync));
     });
+  </script>
+
+  <!-- Spatial Planning Carousel -->
+  <script>
+    (function () {
+      const items  = Array.from(document.querySelectorAll('#awardsCarousel .award-item'));
+      const dots    = Array.from(document.querySelectorAll('#awardDots .award-dot'));
+      const prevBtn = document.getElementById('awardPrev');
+      const nextBtn = document.getElementById('awardNext');
+      const carousel = document.querySelector('.awards-carousel-wrap');
+      let current = 0;
+
+      items.forEach((item, index) => {
+        item.setAttribute('role', 'group');
+        item.setAttribute('aria-roledescription', 'slide');
+        item.setAttribute('aria-label', `Award ${index + 1} of ${items.length}`);
+        item.setAttribute('aria-hidden', String(index !== current));
+      });
+
+      function goTo(n) {
+        items[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (n + items.length) % items.length;
+        items[current].classList.add('active');
+        dots[current].classList.add('active');
+        items.forEach((item, index) => item.setAttribute('aria-hidden', String(index !== current)));
+        dots.forEach((dot, index) => {
+          if (index === current) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+        });
+      }
+
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
+      dots.forEach(dot => dot.addEventListener('click', () => goTo(+dot.dataset.i)));
+
+      carousel.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')  goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      });
+
+      // Set first item as active on load
+      items[current].classList.add('active');
+      dots[current].classList.add('active');
+    })();
   </script>
 
   <!-- Spatial Planning Carousel -->

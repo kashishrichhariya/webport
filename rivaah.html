@@ -44,7 +44,7 @@
       --oat-beige:    #E3E0CF;
       --serif:        'Playfair Display', Georgia, serif;
       --sans:         'Manrope', system-ui, sans-serif;
-      --nav-h:        96px;
+      --nav-h:        122px;
     }
 
     /* ── Reset ── */
@@ -767,13 +767,14 @@
       .ds-split-r .ds-split-text { padding: 40px 48px; }
     }
     @media (max-width: 1040px) {
+      nav { padding: 0 48px; }
       .phil-split { grid-template-columns: 1fr; padding: 0; }
       .phil-text { padding: 48px; }
       .render-row { grid-template-columns: 1fr 1fr; }
       .ds-row3 { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 860px) {
-      nav { padding: 0 24px; }
+      nav { padding: 0 48px; }
       .wrap, .wrap-md, .wrap-sm { padding-left: 24px; padding-right: 24px; }
       #project-meta, .standing-quote, #quote-mid, #closing, #cta { padding-left: 24px; padding-right: 24px; }
       .meta-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -791,10 +792,11 @@
       .hero-scroll { right: 32px; }
     }
     @media (max-width: 600px) {
+      :root { --nav-h: 88px; }
       nav { padding: 0 20px; }
       .nav-side { display: none; }
       .nav-logo { position: static; left: auto; transform: none; margin-right: auto; }
-      .nav-logo img { height: 52px; }
+      .nav-logo img { width: min(62vw, 220px); height: auto; }
       .nav-links { display: none; }
       .nav-links.open { display: flex; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: rgba(12,11,10,0.97); padding: 24px 20px; gap: 20px; }
       nav.scrolled .nav-links.open a { color: rgba(252,252,252,0.88); }
@@ -831,6 +833,8 @@
       .bts-scroll-track { width: max-content; transform: none !important; will-change: auto; }
     }
   </style>
+  <link rel="stylesheet" href="footer.css" />
+  <script src="footer.js" defer></script>
 </head>
 
 <body>
@@ -839,12 +843,13 @@
        NAV
   ══════════════════════ -->
   <nav id="navbar" aria-label="Primary navigation">
-    <a href="index.html" class="nav-side">Work</a>
+    <a href="index.html#work" class="nav-side">Work</a>
     <a href="index.html" class="nav-logo" aria-label="Kashish Richhariya — home"><img src="Logo-web.png" alt="Kashish Richhariya" /></a>
     <a href="about.html" class="nav-side">About</a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Work</a></li>
+      <li><a href="index.html#work">Work</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="#cta">Contact</a></li>
     </ul>
     <button class="nav-hamburger" id="hamburger" type="button" aria-controls="navLinks" aria-expanded="false" aria-label="Open navigation menu">
       <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
@@ -1281,16 +1286,38 @@
 
   </section>
 
+  <section class="project-related" aria-labelledby="related-heading">
+    <h2 class="project-related-heading" id="related-heading">Related works</h2>
+    <div class="project-related-grid">
+      <a class="project-related-card" href="rivaahmotif.html">
+        <div class="project-related-image"><img src="Rivaah%20Motif/web/DSC1141-thumbnail.jpg" alt="Rivaah twin-lotus motif identity" width="1600" height="2400" loading="lazy" decoding="async" /></div>
+        <div class="project-related-info">
+          <p class="project-related-meta">Brand Identity &nbsp;/&nbsp; 2024–25</p>
+          <h3 class="project-related-title">Rivaah Motif Identity</h3>
+          <p class="project-related-description">A twin-lotus emblem designed to carry new beginnings across space, gifting and brand touchpoints</p>
+        </div>
+      </a>
+      <a class="project-related-card" href="miroadjaipur.html">
+        <div class="project-related-image"><img src="Jaipur%20Images/Foyer.jpg" alt="Tanishq MI Road, Jaipur interior" loading="lazy" decoding="async" /></div>
+        <div class="project-related-info">
+          <p class="project-related-meta">Jaipur &nbsp;/&nbsp; 2024</p>
+          <h3 class="project-related-title">Tanishq MI Road, Jaipur</h3>
+          <p class="project-related-description">Retail flagship rooted in the heritage of Jaipur's historic streetscape</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <!-- ══════════════════════
        CTA / FOOTER
   ══════════════════════ -->
-  <section id="cta">
-    <p class="cta-eyebrow reveal">Other Work</p>
-    <h2 class="cta-heading reveal">
-      Jaipur <em>MI Road</em><br>Next Case Study
-    </h2>
-    <a href="miroadjaipur.html" class="cta-btn reveal">View Project</a>
-    <p class="cta-credit">© 2026 Kashish Richhariya. All rights reserved.</p>
+  <section class="editorial-footer" id="cta">
+    <img class="ef-motif" src="motif.png" alt="" aria-hidden="true" />
+    <img class="ef-note reveal" src="thank-you-note.png" alt="Thank you. Visit again." />
+    <div class="ef-links reveal" role="navigation" aria-label="Footer navigation">
+      <a href="index.html#work">Work</a><a href="about.html">About</a><a href="https://www.linkedin.com/in/kashish-richhariya" target="_blank" rel="noopener">LinkedIn</a><button class="ef-copy-email" data-copy-email type="button">Copy Email</button>
+    </div>
+    <div class="ef-meta"><p class="ef-credit">© 2026 Kashish Richhariya</p><a class="ef-back-top" href="#hero">Back to top ↑</a></div>
   </section>
 
   <!-- GSAP -->

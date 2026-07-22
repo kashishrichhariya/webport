@@ -36,7 +36,7 @@
       --gold: #9a735f;
       --serif: "Playfair Display", Georgia, serif;
       --sans: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --nav-h: 88px;
+      --nav-h: 122px;
       --page-x: clamp(20px, 4.45vw, 72px);
       --content: 1240px;
     }
@@ -105,7 +105,7 @@
     .wrap {
       width: min(100%, var(--content));
       margin-inline: auto;
-      padding-inline: var(--page-x);
+      padding-inline: 64px;
     }
     .wrap-wide {
       width: min(100%, 1540px);
@@ -160,7 +160,10 @@
       position: absolute;
       inset: 0;
       z-index: -1;
-      background: rgba(231, 218, 212, 0);
+      background: rgba(252, 251, 248, 0.9);
+      box-shadow: 0 1px 0 rgba(57, 53, 50, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
     }
     .site-nav:not(.scrolled) .nav-side { color: var(--ink); }
@@ -175,7 +178,7 @@
     .nav-side {
       position: relative;
       z-index: 2;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.19em;
       text-transform: uppercase;
@@ -200,7 +203,7 @@
     }
     .nav-logo img {
       width: auto;
-      height: 56px;
+      height: 62px;
       filter: brightness(0);
       transition: filter 0.3s ease;
     }
@@ -637,11 +640,12 @@
 
     /* Mobile navigation and layout */
     @media (max-width: 760px) {
-      :root { --nav-h: 72px; --page-x: 20px; }
+      :root { --nav-h: 88px; --page-x: 20px; }
+      .site-nav { padding-inline: 20px; }
       body { line-height: 1.68; }
       .desktop-nav { display: none; }
       .nav-logo { left: var(--page-x); transform: none; }
-      .nav-logo img { height: 46px; }
+      .nav-logo img { width: min(62vw, 220px); height: auto; }
       .nav-toggle {
         position: absolute;
         right: 12px;
@@ -779,13 +783,15 @@
       .media-zoom:hover img { transform: none; }
     }
   </style>
+  <link rel="stylesheet" href="footer.css" />
+  <script src="footer.js" defer></script>
 </head>
 
 <body>
   <a class="skip-link" href="#main">Skip to project</a>
 
   <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
-    <a class="nav-side desktop-nav" href="index.html">Work</a>
+    <a class="nav-side desktop-nav" href="index.html#work">Work</a>
     <a class="nav-logo" href="index.html" aria-label="Kashish Richhariya — home">
       <img src="Logo-web.png" alt="Kashish Richhariya" />
     </a>
@@ -798,8 +804,9 @@
   </nav>
 
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-    <a href="index.html">Work</a>
+    <a href="index.html#work">Work</a>
     <a href="about.html">About</a>
+    <a href="mailto:kashishrichhariya0204@gmail.com">Contact</a>
   </div>
 
   <header class="hero" id="hero">
@@ -893,10 +900,6 @@
           <video data-ambient muted loop playsinline preload="metadata" poster="Rivaah%20Motif/web/lotus-poster.jpg" aria-label="Lotus inspiration for the Rivaah motif">
             <source src="Rivaah%20Motif/web/lotus.m4v" type="video/mp4" />
           </video>
-          <button class="video-toggle paused" type="button" aria-label="Play lotus inspiration film" aria-pressed="false">
-            <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z" /></svg>
-            <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-          </button>
         </figure>
 
         <div>
@@ -1039,16 +1042,35 @@
 
   </main>
 
-  <footer class="next-project">
-    <div class="next-inner reveal">
-      <p class="section-label">Continue the story</p>
-      <h2 class="next-title">Rivaah<br /><em>the space</em></h2>
-      <a class="next-link" href="rivaah.html">View next project <span aria-hidden="true">→</span></a>
+  <section class="project-related" aria-labelledby="related-heading">
+    <h2 class="project-related-heading" id="related-heading">Related works</h2>
+    <div class="project-related-grid">
+      <a class="project-related-card" href="rivaah.html">
+        <div class="project-related-image"><img src="Rivaah%20Images/web/Foyer.jpg" alt="Rivaah by Tanishq store interior" loading="lazy" decoding="async" /></div>
+        <div class="project-related-info">
+          <p class="project-related-meta">Delhi &nbsp;/&nbsp; 2024–25</p>
+          <h3 class="project-related-title">Rivaah by Tanishq</h3>
+          <p class="project-related-description">A space designed for stillness — for the woman considering her most meaningful purchase</p>
+        </div>
+      </a>
+      <a class="project-related-card" href="cgroad.html">
+        <div class="project-related-image"><img src="CG%20Road%20Images/web/gf-cash-counter-thumbnail.jpg" alt="Tanishq CG Road, Ahmedabad interior" width="2000" height="1333" loading="lazy" decoding="async" /></div>
+        <div class="project-related-info">
+          <p class="project-related-meta">Ahmedabad &nbsp;/&nbsp; 2023</p>
+          <h3 class="project-related-title">Tanishq CG Road, Ahmedabad</h3>
+          <p class="project-related-description">Where the spirit of Gujarat's craft traditions meets contemporary retail design</p>
+        </div>
+      </a>
     </div>
-    <div class="footer-line">
-      <span>© 2026 Kashish Richhariya</span>
-      <span>Spatial &amp; experience design</span>
+  </section>
+
+  <footer class="editorial-footer" id="footer">
+    <img class="ef-motif" src="motif.png" alt="" aria-hidden="true" />
+    <img class="ef-note reveal" src="thank-you-note.png" alt="Thank you. Visit again." />
+    <div class="ef-links reveal" role="navigation" aria-label="Footer navigation">
+      <a href="index.html#work">Work</a><a href="about.html">About</a><a href="https://www.linkedin.com/in/kashish-richhariya" target="_blank" rel="noopener">LinkedIn</a><button class="ef-copy-email" data-copy-email type="button">Copy Email</button>
     </div>
+    <div class="ef-meta"><p class="ef-credit">© 2026 Kashish Richhariya</p><a class="ef-back-top" href="#hero">Back to top ↑</a></div>
   </footer>
 
   <script>
